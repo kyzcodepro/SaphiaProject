@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 747" role="img" aria-label="Emplacement de la couverture de l'ebook">
+  <rect width="560" height="747" fill="#5b3a4a"/>
+  <rect x="40" y="40" width="480" height="667" fill="none" stroke="#c4795f" stroke-width="2"/>
+  <text x="280" y="300" font-family="Georgia, serif" font-size="46" fill="#fbf7f2" text-anchor="middle">Reprendre</text>
+  <text x="280" y="358" font-family="Georgia, serif" font-size="46" fill="#fbf7f2" text-anchor="middle">le contrôle</text>
+  <line x1="200" y1="400" x2="360" y2="400" stroke="#c4795f" stroke-width="3"/>
+  <text x="280" y="450" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#e6d7c7" text-anchor="middle">7 étapes pour sortir</text>
+  <text x="280" y="478" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#e6d7c7" text-anchor="middle">d'une période de blocage</text>
+  <text x="280" y="680" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#a88b98" text-anchor="middle">Couverture à remplacer</text>
+</svg>

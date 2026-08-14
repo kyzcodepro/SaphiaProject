@@ -16,6 +16,30 @@ cp .env.example .env.local
 npm run dev
 ```
 
+### Sous Windows, depuis l'invite de commandes (cmd)
+
+Vérifier d'abord que Node.js est installé — `node -v` doit afficher **v20 ou
+plus**. Sinon, installer la version LTS depuis [nodejs.org](https://nodejs.org)
+et **rouvrir une nouvelle fenêtre cmd** (le PATH n'est lu qu'au démarrage).
+
+```cmd
+cd %USERPROFILE%\Documents
+git clone https://github.com/kyzcodepro/SaphiaProject.git
+cd SaphiaProject
+npm install
+copy .env.example .env.local
+notepad .env.local
+npm run dev
+```
+
+Dans le Bloc-notes, renseigner au minimum `NEXT_PUBLIC_SITE_URL=http://localhost:3000`,
+enregistrer, fermer. Le site est ensuite accessible sur <http://localhost:3000>.
+
+Pour arrêter le serveur : `Ctrl + C`, puis `O` et Entrée.
+
+> `cp` n'existe pas sous cmd : utiliser `copy`. Les mêmes commandes fonctionnent
+> telles quelles dans PowerShell.
+
 Le site tourne sur <http://localhost:3000>. Aucune clé n'est nécessaire : les
 fonctionnalités qui dépendent d'un service externe affichent un message explicite
 au lieu de planter.

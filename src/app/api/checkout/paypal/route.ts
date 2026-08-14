@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { getOffer } from "@/content/site.config";
+import { checkoutReturnPath, getPurchasable } from "@/content/site.config";
 import { createOrder, paypalConfigured } from "@/lib/payments/paypal";
 import { checkoutSchema } from "@/lib/validation";
 import { siteOrigin } from "@/lib/request";
 
-/** Crée un ordre de paiement PayPal (§34). */
+/** Crée un ordre de paiement PayPal (§34), pour une séance ou l'ebook. */
 export async function POST(request: Request) {
   if (!paypalConfigured()) {
     return NextResponse.json(
@@ -28,11 +28,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Informations client incomplètes." }, { status: 400 });
   }
 
-  const offer = getOffer(parsed.data.offerSlug);
-  if (!offer) {
+  const product = getPurchasable(parsed.data.offerSlug);
+  if (!product) {
     return NextResponse.json({ error: "Prestation inconnue." }, { status: 404 });
   }
-  if (offer.price <= 0) {
+  if (product.price <= 0) {
     return NextResponse.json(
       { error: "Cette prestation est gratuite, aucun paiement n'est nécessaire." },
       { status: 400 },
@@ -40,16 +40,17 @@ export async function POST(request: Request) {
   }
 
   const origin = siteOrigin(request);
+  const returnPath = checkoutReturnPath(product.slug);
 
   try {
     const { approveUrl, order } = await createOrder({
-      offerSlug: offer.slug,
-      offerName: offer.name,
+      offerSlug: product.slug,
+      offerName: product.name,
       // Montant issu de la configuration serveur, jamais du client.
-      amountEuros: offer.price,
-      customId: `${offer.slug}|${parsed.data.email}`,
-      returnUrl: `${origin}/reserver/${offer.slug}?payment=paypal`,
-      cancelUrl: `${origin}/reserver/${offer.slug}?payment=cancelled`,
+      amountEuros: product.price,
+      customId: `${product.slug}|${parsed.data.email}`,
+      returnUrl: `${origin}${returnPath}?payment=paypal`,
+      cancelUrl: `${origin}${returnPath}?payment=cancelled`,
     });
 
     return NextResponse.json({ url: approveUrl, id: order.id });

@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { getOffer } from "@/content/site.config";
+import { checkoutReturnPath, getPurchasable } from "@/content/site.config";
 import { createCheckoutSession, stripeConfigured } from "@/lib/payments/stripe";
 import { checkoutSchema } from "@/lib/validation";
 import { siteOrigin } from "@/lib/request";
 
-/** Crée une session de paiement Stripe Checkout (§33). */
+/** Crée une session de paiement Stripe Checkout (§33), pour une séance ou l'ebook. */
 export async function POST(request: Request) {
   if (!stripeConfigured()) {
     return NextResponse.json(
@@ -28,11 +28,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Informations client incomplètes." }, { status: 400 });
   }
 
-  const offer = getOffer(parsed.data.offerSlug);
-  if (!offer) {
+  const product = getPurchasable(parsed.data.offerSlug);
+  if (!product) {
     return NextResponse.json({ error: "Prestation inconnue." }, { status: 404 });
   }
-  if (offer.price <= 0) {
+  if (product.price <= 0) {
     return NextResponse.json(
       { error: "Cette prestation est gratuite, aucun paiement n'est nécessaire." },
       { status: 400 },
@@ -40,19 +40,21 @@ export async function POST(request: Request) {
   }
 
   const origin = siteOrigin(request);
+  const returnPath = checkoutReturnPath(product.slug);
 
   try {
     const session = await createCheckoutSession({
-      offerSlug: offer.slug,
-      offerName: offer.name,
-      offerDescription: offer.shortDescription,
+      offerSlug: product.slug,
+      offerName: product.name,
+      offerDescription: product.description,
       // Le montant provient toujours de la configuration serveur, jamais du client.
-      amountEuros: offer.price,
+      amountEuros: product.price,
       customerEmail: parsed.data.email,
-      successUrl: `${origin}/reserver/${offer.slug}?payment=stripe&session_id={CHECKOUT_SESSION_ID}`,
-      cancelUrl: `${origin}/reserver/${offer.slug}?payment=cancelled`,
+      successUrl: `${origin}${returnPath}?payment=stripe&session_id={CHECKOUT_SESSION_ID}`,
+      cancelUrl: `${origin}${returnPath}?payment=cancelled`,
       metadata: {
         client: `${parsed.data.firstName} ${parsed.data.lastName}`.slice(0, 100),
+        firstName: parsed.data.firstName.slice(0, 60),
       },
     });
 

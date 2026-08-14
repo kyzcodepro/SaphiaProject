@@ -1,9 +1,13 @@
-# Fichier de l'ebook
+# ⚠️ Ne pas placer l'ebook payant ici
 
-Déposer ici le PDF final de l'ebook, puis vérifier que le chemin correspond au
-champ `ebook.fileUrl` dans `src/content/site.config.ts`.
+Tout fichier présent dans `public/` est accessible publiquement, sans paiement.
 
-Valeur attendue par défaut : `public/ebook/reprendre-le-controle.pdf`
-→ servi à l'adresse `/ebook/reprendre-le-controle.pdf`.
+Le PDF de l'ebook doit être placé dans le dossier **`private/`** à la racine du
+projet, ou hébergé sur un stockage privé via la variable `EBOOK_FILE_URL`.
+Il est alors servi par `/api/ebook/download`, qui revérifie le paiement auprès
+de Stripe ou PayPal avant chaque téléchargement.
 
-Tant que ce fichier est absent, le lien de téléchargement renvoie une erreur 404.
+Voir **docs/EBOOK.md**.
+
+Ce dossier ne sert qu'aux ressources librement téléchargeables (extrait gratuit,
+sommaire, etc.).

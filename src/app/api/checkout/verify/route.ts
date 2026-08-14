@@ -1,14 +1,18 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { formatPrice, getOffer } from "@/content/site.config";
+import { EBOOK_SLUG, formatPrice, getPurchasable } from "@/content/site.config";
 import { captureOrder } from "@/lib/payments/paypal";
 import { retrieveCheckoutSession } from "@/lib/payments/stripe";
 import { adminEmail, definitionList, emailLayout, sendEmail } from "@/lib/email";
+import { downloadUrl, notifyEbookSale, sendEbookToBuyer } from "@/lib/ebook-delivery";
+import { siteOrigin } from "@/lib/request";
 
 /**
- * Vérifie côté serveur qu'un paiement est bien encaissé avant d'autoriser la
- * sélection d'un créneau (§11 : « La réservation ne doit pas être considérée
- * comme définitive si le paiement échoue »).
+ * Vérifie côté serveur qu'un paiement est bien encaissé (§11 : « La réservation
+ * ne doit pas être considérée comme définitive si le paiement échoue »).
+ *
+ * Pour une séance, cela débloque la sélection du créneau.
+ * Pour l'ebook, cela déclenche l'envoi du lien de téléchargement.
  *
  * Le client ne peut pas se déclarer payé lui-même : l'état est toujours relu
  * auprès de Stripe ou de PayPal.
@@ -19,6 +23,8 @@ const verifySchema = z.object({
   reference: z.string().min(4).max(255),
   offerSlug: z.string().min(1).max(60),
 });
+
+type Buyer = { email?: string; firstName?: string; fullName?: string };
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -33,62 +39,109 @@ export async function POST(request: Request) {
     return NextResponse.json({ paid: false, error: "Requête invalide." }, { status: 400 });
   }
 
-  const offer = getOffer(parsed.data.offerSlug);
-  if (!offer) {
+  const product = getPurchasable(parsed.data.offerSlug);
+  if (!product) {
     return NextResponse.json({ paid: false, error: "Prestation inconnue." }, { status: 404 });
   }
 
-  const expectedCents = Math.round(offer.price * 100);
+  const { provider, reference } = parsed.data;
+  const expectedCents = Math.round(product.price * 100);
 
   try {
-    if (parsed.data.provider === "stripe") {
-      const session = await retrieveCheckoutSession(parsed.data.reference);
-      const paid = session.payment_status === "paid";
-      const amountMatches = (session.amount_total ?? 0) >= expectedCents;
+    let buyer: Buyer = {};
+    let confirmedReference = reference;
 
-      if (!paid) {
-        return NextResponse.json({ paid: false, error: paymentPendingMessage(paid) });
+    if (provider === "stripe") {
+      const session = await retrieveCheckoutSession(reference);
+
+      if (session.payment_status !== "paid") {
+        return NextResponse.json({ paid: false, error: NOT_PAID_MESSAGE });
       }
-      if (!amountMatches) {
+      if ((session.amount_total ?? 0) < expectedCents) {
         console.error("[verify] Montant Stripe inattendu", session.id, session.amount_total);
-        return NextResponse.json({ paid: false, error: amountMismatchMessage() });
+        return NextResponse.json({ paid: false, error: AMOUNT_MISMATCH_MESSAGE });
       }
 
-      await notifyAdmin({
-        offerName: offer.name,
-        amount: formatPrice(offer.price),
-        method: "Carte bancaire (Stripe)",
-        reference: session.id,
+      confirmedReference = session.id;
+      buyer = {
         email: session.customer_details?.email ?? undefined,
-        name: session.customer_details?.name ?? undefined,
+        firstName: session.metadata?.firstName,
+        fullName: session.customer_details?.name ?? session.metadata?.client,
+      };
+    } else {
+      const order = await captureOrder(reference);
+      const unit = order.purchase_units?.[0];
+      const paidCents = Math.round(Number(unit?.amount?.value ?? "0") * 100);
+
+      if (order.status !== "COMPLETED") {
+        return NextResponse.json({ paid: false, error: NOT_PAID_MESSAGE });
+      }
+      if (paidCents < expectedCents) {
+        console.error("[verify] Montant PayPal inattendu", order.id, unit?.amount?.value);
+        return NextResponse.json({ paid: false, error: AMOUNT_MISMATCH_MESSAGE });
+      }
+
+      confirmedReference = order.id;
+      buyer = {
+        email: order.payer?.email_address,
+        firstName: order.payer?.name?.given_name,
+        fullName: [order.payer?.name?.given_name, order.payer?.name?.surname]
+          .filter(Boolean)
+          .join(" "),
+      };
+    }
+
+    const method = provider === "stripe" ? "Carte bancaire (Stripe)" : "PayPal";
+    const amount = formatPrice(product.price);
+
+    /* ── Ebook : livraison immédiate par email ─────────────────────────────── */
+    if (product.slug === EBOOK_SLUG) {
+      const origin = siteOrigin(request);
+      const link = downloadUrl(origin, provider, confirmedReference);
+
+      if (buyer.email) {
+        await sendEbookToBuyer({
+          to: buyer.email,
+          firstName: buyer.firstName,
+          link,
+          origin,
+        });
+      }
+      await notifyEbookSale({
+        email: buyer.email,
+        firstName: buyer.fullName ?? buyer.firstName,
+        amount,
+        method,
+        reference: confirmedReference,
       });
 
-      return NextResponse.json({ paid: true, reference: session.id });
+      return NextResponse.json({
+        paid: true,
+        reference: confirmedReference,
+        // Permet le téléchargement immédiat depuis la page, sans attendre l'email.
+        downloadUrl: link,
+        email: buyer.email,
+      });
     }
 
-    const order = await captureOrder(parsed.data.reference);
-    const unit = order.purchase_units?.[0];
-    const paidValue = Number(unit?.amount?.value ?? "0");
-    const completed = order.status === "COMPLETED";
-
-    if (!completed) {
-      return NextResponse.json({ paid: false, error: paymentPendingMessage(false) });
-    }
-    if (Math.round(paidValue * 100) < expectedCents) {
-      console.error("[verify] Montant PayPal inattendu", order.id, unit?.amount?.value);
-      return NextResponse.json({ paid: false, error: amountMismatchMessage() });
-    }
-
-    await notifyAdmin({
-      offerName: offer.name,
-      amount: formatPrice(offer.price),
-      method: "PayPal",
-      reference: order.id,
-      email: order.payer?.email_address,
-      name: [order.payer?.name?.given_name, order.payer?.name?.surname].filter(Boolean).join(" "),
+    /* ── Séance : le client passe ensuite au choix du créneau ──────────────── */
+    await sendEmail({
+      to: adminEmail(),
+      subject: `Paiement reçu — ${product.name} (${amount})`,
+      html: emailLayout(
+        "Nouveau paiement encaissé",
+        `${definitionList([
+          ["Prestation", product.name],
+          ["Montant", amount],
+          ["Moyen de paiement", method],
+          ["Cliente", buyer.fullName || undefined],
+          ["Email", buyer.email || undefined],
+          ["Référence", confirmedReference],
+        ])}<p style="margin-top:18px;">La cliente choisit maintenant son créneau dans Calendly. Tu recevras la confirmation du rendez-vous séparément.</p>`,
+      ),
     });
 
-    return NextResponse.json({ paid: true, reference: order.id });
+    return NextResponse.json({ paid: true, reference: confirmedReference });
   } catch (error) {
     console.error("[verify] Vérification du paiement échouée:", error);
     return NextResponse.json(
@@ -102,38 +155,8 @@ export async function POST(request: Request) {
   }
 }
 
-function paymentPendingMessage(paid: boolean): string {
-  return paid
-    ? "Paiement en cours de traitement, merci de patienter quelques instants."
-    : "Le paiement n'a pas été validé. Aucun rendez-vous n'a été réservé et aucune somme n'est due.";
-}
+const NOT_PAID_MESSAGE =
+  "Le paiement n'a pas été validé. Aucune commande n'a été enregistrée et aucune somme n'est due.";
 
-function amountMismatchMessage(): string {
-  return "Le montant réglé ne correspond pas à la prestation choisie. Contacte-moi pour régulariser.";
-}
-
-/** Notifie l'accompagnatrice qu'un paiement vient d'être encaissé. */
-async function notifyAdmin(payment: {
-  offerName: string;
-  amount: string;
-  method: string;
-  reference: string;
-  email?: string;
-  name?: string;
-}) {
-  await sendEmail({
-    to: adminEmail(),
-    subject: `Paiement reçu — ${payment.offerName} (${payment.amount})`,
-    html: emailLayout(
-      "Nouveau paiement encaissé",
-      `${definitionList([
-        ["Prestation", payment.offerName],
-        ["Montant", payment.amount],
-        ["Moyen de paiement", payment.method],
-        ["Client", payment.name || undefined],
-        ["Email", payment.email || undefined],
-        ["Référence", payment.reference],
-      ])}<p style="margin-top:18px;">Le client choisit maintenant son créneau dans Calendly. Tu recevras la confirmation du rendez-vous séparément.</p>`,
-    ),
-  });
-}
+const AMOUNT_MISMATCH_MESSAGE =
+  "Le montant réglé ne correspond pas à la prestation choisie. Contacte-moi pour régulariser.";

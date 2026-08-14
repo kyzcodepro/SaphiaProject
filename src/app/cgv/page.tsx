@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
-import { bookingRules, brand, formatPrice, offers } from "@/content/site.config";
+import { bookingRules, brand, ebook, formatPrice, offers } from "@/content/site.config";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Conditions générales de vente",
   description:
-    "Conditions générales de vente des séances d'accompagnement : prestations, tarifs, paiement, déroulement, annulation et droit de rétractation.",
+    "Conditions générales de vente des séances d'accompagnement et de l'ebook : prestations, tarifs, paiement, livraison du contenu numérique, annulation et droit de rétractation.",
   path: "/cgv",
 });
 
@@ -15,7 +15,7 @@ export default function CgvPage() {
   return (
     <LegalPage
       title="Conditions générales de vente"
-      intro="Ces conditions encadrent la réservation et le déroulement des séances d'accompagnement proposées sur ce site."
+      intro="Ces conditions encadrent la réservation des séances d'accompagnement et l'achat de l'ebook proposés sur ce site."
       updatedAt="14 août 2026"
     >
       <h2>1. Objet</h2>
@@ -42,6 +42,10 @@ export default function CgvPage() {
           <strong>Accompagnements 6 et 12 mois</strong> — contenu, durée, nombre de séances et tarif
           définis dans une proposition individuelle remise après l&apos;appel découverte, acceptée
           par écrit avant le démarrage.
+        </li>
+        <li>
+          <strong>Ebook «&nbsp;{ebook.title}&nbsp;»</strong> — contenu numérique au format PDF,
+          {" "}{ebook.pageCount} pages — {formatPrice(ebook.price)}.
         </li>
       </ul>
       <p>
@@ -72,7 +76,38 @@ export default function CgvPage() {
         de l&apos;accompagnement après relance restée sans réponse pendant {"{{ délai }}"} jours.
       </p>
 
-      <h2>4. Réservation et déroulement</h2>
+      <h2>4. Ebook — contenu numérique</h2>
+      <p>
+        L&apos;ebook est un contenu numérique fourni sur support immatériel. Après validation du
+        paiement, un lien de téléchargement personnel est envoyé par email et affiché à
+        l&apos;écran. Ce lien reste valable tant que le produit est proposé à la vente.
+      </p>
+      <p>
+        <strong>
+          Conformément à l&apos;article L.221-28 13° du Code de la consommation, le Client
+          reconnaît qu&apos;en validant son achat, il demande expressément l&apos;exécution
+          immédiate de la fourniture du contenu numérique et renonce de ce fait à son droit de
+          rétractation de 14 jours.
+        </strong>{" "}
+        Cette mention est rappelée à l&apos;écran avant la validation du paiement. En conséquence,
+        l&apos;ebook n&apos;est ni repris ni remboursé une fois le lien de téléchargement délivré,
+        sauf défaut technique avéré rendant le fichier inutilisable.
+      </p>
+      <p>
+        En cas de problème de téléchargement, il suffit d&apos;écrire à{" "}
+        <a href={`mailto:${brand.email}`}>{brand.email}</a> : le fichier est renvoyé directement.
+      </p>
+      <p>
+        L&apos;ebook est destiné à un usage strictement personnel. Sa revente, son partage ou sa
+        diffusion, en tout ou partie, sont interdits.
+      </p>
+      <p>
+        L&apos;ebook a une vocation informative et de développement personnel. Il ne constitue ni un
+        avis médical, ni un traitement, et ne remplace pas l&apos;accompagnement d&apos;un
+        professionnel de santé.
+      </p>
+
+      <h2>5. Réservation et déroulement</h2>
       <p>
         Les rendez-vous sont proposés du lundi au samedi, aux horaires affichés sur le site, et
         doivent être réservés au minimum{" "}
@@ -80,7 +115,7 @@ export default function CgvPage() {
         {bookingRules.bufferMinutes} minutes est automatiquement respecté entre deux séances.
       </p>
       <p>
-        Les séances se déroulent à distance, par visioconférence (Zoom) ou par appel WhatsApp, selon
+        Les séances se déroulent à distance, par appel WhatsApp ou par visioconférence (Zoom), selon
         le choix effectué par le Client lors de la réservation. Le lien de connexion ou les
         instructions sont transmis par email avec la confirmation.
       </p>
@@ -91,7 +126,7 @@ export default function CgvPage() {
         la séance est reportée sans frais ou intégralement remboursée.
       </p>
 
-      <h2>5. Droit de rétractation</h2>
+      <h2>6. Droit de rétractation des séances</h2>
       <p>
         Conformément à l&apos;article L.221-18 du Code de la consommation, le Client dispose
         d&apos;un délai de <strong>14 jours</strong> à compter de la réservation pour exercer son
@@ -111,7 +146,7 @@ export default function CgvPage() {
         délai maximum de 14 jours, par le même moyen de paiement.
       </p>
 
-      <h2>6. Annulation, report et absence</h2>
+      <h2>7. Annulation, report et absence</h2>
       <p>
         Les conditions détaillées figurent sur la page{" "}
         <Link href="/annulation-et-remboursement">Annulation &amp; remboursement</Link>. En résumé&nbsp;:
@@ -128,19 +163,19 @@ export default function CgvPage() {
         <li>Absence sans prévenir : la séance est due.</li>
       </ul>
 
-      <h2>7. Confidentialité</h2>
+      <h2>8. Confidentialité</h2>
       <p>
         Tout ce qui est échangé pendant les séances est strictement confidentiel. Les séances ne font
         l&apos;objet d&apos;aucun enregistrement, sauf accord écrit préalable et explicite du Client.
       </p>
 
-      <h2>8. Propriété intellectuelle</h2>
+      <h2>9. Propriété intellectuelle</h2>
       <p>
         Les supports, exercices, documents et l&apos;ebook remis au Client sont réservés à son usage
         strictement personnel. Toute diffusion, revente ou reproduction est interdite.
       </p>
 
-      <h2>9. Responsabilité</h2>
+      <h2>10. Responsabilité</h2>
       <p>
         La responsabilité de la Prestataire ne saurait être engagée en cas de dommage résultant des
         décisions prises par le Client à la suite d&apos;un accompagnement, ni en cas
@@ -149,13 +184,13 @@ export default function CgvPage() {
         frais.
       </p>
 
-      <h2>10. Données personnelles</h2>
+      <h2>11. Données personnelles</h2>
       <p>
         Le traitement des données est détaillé dans la{" "}
         <Link href="/politique-de-confidentialite">politique de confidentialité</Link>.
       </p>
 
-      <h2>11. Litiges et médiation</h2>
+      <h2>12. Litiges et médiation</h2>
       <p>
         En cas de difficulté, le Client est invité à contacter la Prestataire afin de rechercher une
         solution amiable. À défaut d&apos;accord, il peut recourir gratuitement au médiateur de la

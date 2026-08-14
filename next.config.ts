@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  // Le PDF de l'ebook vit hors de /public pour ne pas être téléchargeable sans
+  // paiement : il faut donc l'inclure explicitement dans le déploiement de la
+  // route qui le sert.
+  outputFileTracingIncludes: {
+    "/api/ebook/download": ["./private/**"],
+  },
   async headers() {
     return [
       {

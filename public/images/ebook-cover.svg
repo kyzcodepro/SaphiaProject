@@ -1,10 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 747" role="img" aria-label="Emplacement de la couverture de l'ebook">
   <rect width="560" height="747" fill="#5b3a4a"/>
-  <rect x="40" y="40" width="480" height="667" fill="none" stroke="#c4795f" stroke-width="2"/>
-  <text x="280" y="300" font-family="Georgia, serif" font-size="46" fill="#fbf7f2" text-anchor="middle">Reprendre</text>
-  <text x="280" y="358" font-family="Georgia, serif" font-size="46" fill="#fbf7f2" text-anchor="middle">le contrôle</text>
-  <line x1="200" y1="400" x2="360" y2="400" stroke="#c4795f" stroke-width="3"/>
-  <text x="280" y="450" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#e6d7c7" text-anchor="middle">7 étapes pour sortir</text>
-  <text x="280" y="478" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#e6d7c7" text-anchor="middle">d'une période de blocage</text>
-  <text x="280" y="680" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#a88b98" text-anchor="middle">Couverture à remplacer</text>
+  <rect x="34" y="34" width="492" height="679" fill="none" stroke="#c4795f" stroke-width="2"/>
+  <text x="280" y="150" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="5" fill="#c4795f" text-anchor="middle">UN GUIDE POUR TOI</text>
+  <text x="280" y="300" font-family="Georgia, serif" font-size="42" fill="#fbf7f2" text-anchor="middle">Reprendre le contrôle</text>
+  <text x="280" y="356" font-family="Georgia, serif" font-size="42" fill="#fbf7f2" text-anchor="middle">de ta vie émotionnelle</text>
+  <line x1="210" y1="404" x2="350" y2="404" stroke="#c4795f" stroke-width="3"/>
+  <text x="280" y="452" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#e6d7c7" text-anchor="middle">Comprendre, se détacher</text>
+  <text x="280" y="480" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#e6d7c7" text-anchor="middle">et se reconstruire</text>
+  <text x="280" y="618" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="4" fill="#c4795f" text-anchor="middle">PAR SAPHIA</text>
+  <text x="280" y="678" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#a88b98" text-anchor="middle">Couverture provisoire — à remplacer</text>
 </svg>

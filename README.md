@@ -2,8 +2,8 @@
 
 Site vitrine et moteur de conversion pour une activité d'accompagnement mindset :
 présentation des offres, réservation en ligne via Calendly, paiement Stripe et
-PayPal avant confirmation, distribution d'un ebook, pages légales et suivi
-analytique.
+PayPal avant confirmation, vente d'un ebook en téléchargement protégé, pages
+légales et suivi analytique.
 
 Le site est construit à partir du PRD « Site web d'accompagnement & réservation »
 et couvre le périmètre **MVP (§42)**. Les références `§n` présentes dans le code
@@ -125,6 +125,22 @@ Si le client ferme son onglet juste après avoir payé, le webhook Stripe
 (`/api/webhooks/stripe`) notifie tout de même l'accompagnatrice, qui peut
 relancer la personne pour qu'elle choisisse son créneau.
 
+### Ebook (9,90 €)
+
+```
+/ebook → prénom + email → paiement → vérification serveur
+       → lien de téléchargement affiché et envoyé par email
+```
+
+Le PDF n'est **jamais** servi depuis `public/` : il vit dans `private/` (non
+versionné) ou sur un stockage privé, et transite par `/api/ebook/download`, qui
+revérifie le paiement auprès de Stripe ou PayPal **à chaque téléchargement**. Un
+lien partagé sans paiement valide ne donne rien.
+
+Mettre `ebook.price` à `0` dans la configuration rebascule automatiquement le
+produit en téléchargement gratuit contre un email. Voir
+[docs/EBOOK.md](docs/EBOOK.md).
+
 ---
 
 ## Configuration des services
@@ -150,6 +166,11 @@ tarifs, durées, textes, témoignages, ebook, liens sociaux, horaires affichés,
 questions fréquentes. Modifier ce fichier suffit — aucune autre partie du code
 n'a besoin d'être touchée.
 
+⚠️ Avant d'écrire un nouveau texte, lire **[docs/VOIX-DE-MARQUE.md](docs/VOIX-DE-MARQUE.md)** :
+les contenus du site reprennent la manière d'écrire de Saphia telle qu'elle
+apparaît dans son ebook (tutoiement, adresse au féminin, phrases courtes,
+recadrages en deux temps, aucun jargon).
+
 Les **disponibilités réelles** (créneaux, congés, plages bloquées) se gèrent
 directement dans Calendly, sans intervention sur le site.
 
@@ -162,7 +183,7 @@ le PRD (§45) et doivent être complétés avant la mise en production.
 | --- | --- |
 | `public/images/portrait.svg` | Photo de la page d'accueil — à remplacer par une photo professionnelle |
 | `public/images/ebook-cover.svg` | Couverture de l'ebook |
-| `public/ebook/…pdf` | Fichier de l'ebook envoyé aux lecteurs |
+| `private/…pdf` | Fichier de l'ebook — **hors de `public/`**, voir [docs/EBOOK.md](docs/EBOOK.md) |
 | `public/icon.svg` | Favicon |
 
 Les deux images sont des placeholders SVG. Après remplacement par des `.jpg`,
@@ -233,6 +254,12 @@ seule la saisie des identifiants des comptes Stripe et PayPal est requise.
 
 **Avant la mise en production**
 
+- Déposer le PDF de l'ebook (`private/` ou `EBOOK_FILE_URL`) et corriger le
+  lien de réservation resté à l'état de gabarit en page 17 du fichier — voir
+  [docs/EBOOK.md](docs/EBOOK.md).
+- Remplacer les trois témoignages de démonstration, ou vider le tableau
+  `testimonials` : la section disparaît alors du site. Publier de faux avis est
+  une pratique commerciale trompeuse.
 - Compléter les informations légales (identité, SIREN, hébergeur, médiateur)
   dans les pages `mentions-legales`, `cgv` et `annulation-et-remboursement` :
   elles contiennent des marqueurs `{{ … }}` explicites. Une relecture par un

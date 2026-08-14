@@ -12,8 +12,10 @@
  *      se gèrent directement dans Calendly — voir docs/ADMINISTRATION.md.
  *      Les horaires ci-dessous sont uniquement l'affichage indicatif du site.
  *
- *  Les valeurs marquées « À DÉFINIR » correspondent au §45 du PRD et doivent
- *  être complétées avant la mise en production.
+ *  TON ÉDITORIAL — les textes reprennent la voix de l'ebook « Reprendre le
+ *  contrôle de ta vie émotionnelle » : tutoiement, adresse au féminin, phrases
+ *  courtes, recadrages en deux temps (« ce n'est pas X, c'est Y »), aucun
+ *  jargon. Voir docs/VOIX-DE-MARQUE.md avant d'écrire un nouveau texte.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -29,7 +31,7 @@ export type Offer = {
   calendlyEvent: string;
   shortDescription: string;
   description: string;
-  /** Problématiques concernées (§8 du PRD). */
+  /** Situations concernées. */
   problems: string[];
   benefits: string[];
   /** Déroulement de la séance. */
@@ -46,7 +48,7 @@ export type Program = {
   tagline: string;
   description: string;
   includes: string[];
-  /** Prix affiché. `null` => « Sur devis, défini pendant l'appel découverte ». */
+  /** Prix affiché. `null` => « Tarif défini lors de l'appel découverte ». */
   priceLabel: string | null;
   benefits: string[];
 };
@@ -54,14 +56,15 @@ export type Program = {
 /* ───────────────────────────── Marque & contacts ─────────────────────────── */
 
 export const brand = {
-  /** À DÉFINIR (§45) — nom commercial définitif. */
   name: "Saphia",
+  /** À COMPLÉTER — dénomination légale exacte de l'activité. */
   legalName: "Saphia Accompagnement",
-  tagline: "Accompagnement mindset & développement personnel",
+  tagline: "Accompagnement individuel pour reprendre le contrôle de ta vie émotionnelle",
   /** Utilisé pour les URLs absolues, le sitemap et les balises Open Graph. */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.saphia.fr",
+  /** À COMPLÉTER — adresse email professionnelle réelle. */
   email: "contact@saphia.fr",
-  /** Format international sans espaces, utilisé pour les liens wa.me. */
+  /** À COMPLÉTER — format international sans espaces, pour les liens wa.me. */
   whatsapp: "33600000000",
   whatsappMessage:
     "Bonjour Saphia, je viens de votre site et j'aimerais des informations sur votre accompagnement.",
@@ -95,7 +98,7 @@ export const calendly = {
 export const bookingRules = {
   minimumNoticeHours: 24,
   bufferMinutes: 15,
-  /** Jours ouvrés affichés (§13). */
+  /** Jours ouvrés affichés (§13). À AJUSTER selon les horaires réels. */
   openingHours: [
     { day: "Lundi", hours: "09h00 – 18h00" },
     { day: "Mardi", hours: "09h00 – 18h00" },
@@ -115,110 +118,113 @@ export const offers: Offer[] = [
   {
     slug: "appel-decouverte",
     name: "Appel découverte",
-    tagline: "Faisons connaissance",
+    tagline: "On fait le point, sans engagement",
     durationMinutes: 30,
     price: 0,
     calendlyEvent: "appel-decouverte",
     shortDescription:
-      "30 minutes offertes pour faire le point sur ta situation et déterminer l'accompagnement le plus adapté.",
+      "30 minutes offertes pour poser des mots sur ce que tu traverses et voir ensemble ce dont tu as besoin.",
     description:
-      "Un premier échange sans engagement, pensé pour comprendre où tu en es aujourd'hui. On parle de ta situation, de ce qui te bloque et de ce que tu aimerais changer. À la fin de l'appel, tu repars avec une vision claire de la suite — que tu décides de continuer avec moi ou non.",
+      "Un premier échange, simplement. Tu me racontes où tu en es, ce qui pèse, ce que tu n'arrives plus à porter seule. Je t'écoute sans te juger et je te dis honnêtement si — et comment — je peux t'aider. Tu n'as rien à préparer, rien à prouver, rien à décider ensuite.",
     problems: [
-      "Tu hésites entre plusieurs accompagnements",
       "Tu ne sais pas par où commencer",
       "Tu veux savoir si le courant passe avant de t'engager",
+      "Tu n'arrives pas encore à mettre des mots dessus",
     ],
     benefits: [
-      "Comprendre ta situation actuelle",
-      "Identifier tes attentes et tes priorités",
-      "Découvrir ma méthode d'accompagnement",
-      "Repartir avec l'offre la plus adaptée à ton besoin",
+      "Poser des mots sur ce que tu ressens",
+      "Comprendre ce qui se joue vraiment",
+      "Repartir avec une première piste concrète",
+      "Savoir si l'accompagnement est fait pour toi",
     ],
     steps: [
-      "Tu remplis un court questionnaire pour que je prépare notre échange",
+      "Tu remplis un court questionnaire — uniquement ce que tu veux bien partager",
       "Tu choisis ton créneau dans mon agenda",
-      "On échange 30 minutes en visio ou par WhatsApp",
+      "On échange 30 minutes, par téléphone ou en visio",
       "Je te propose la suite la plus adaptée, sans pression",
     ],
     terms: [
       "Entièrement gratuit, aucun paiement demandé",
-      "En visioconférence (Zoom) ou par WhatsApp, au choix",
+      "Par appel WhatsApp ou en visioconférence, au choix",
       "Réservation au minimum 24 h à l'avance",
       "Annulable ou déplaçable jusqu'à 24 h avant",
+      "Strictement confidentiel",
     ],
     featured: true,
   },
   {
     slug: "seance-individuelle",
     name: "Séance individuelle",
-    tagline: "Débloquer une situation précise",
+    tagline: "Y voir clair sur une situation",
     durationMinutes: 60,
     price: 50,
     calendlyEvent: "seance-individuelle",
     shortDescription:
-      "Une heure pour travailler un sujet précis et repartir avec un plan d'action concret.",
+      "Une heure pour comprendre ce qui se joue dans une situation précise et savoir quoi en faire.",
     description:
-      "Une séance ciblée sur une problématique unique : une décision à prendre, une période de doute, un besoin de clarté. On analyse la situation ensemble, on identifie ce qui te freine réellement, et on construit un plan d'action que tu peux appliquer dès le lendemain.",
+      "Une relation qui te fait douter. Une décision que tu repousses. Une émotion qui revient sans que tu saches pourquoi. On prend une heure pour regarder la situation en face, ensemble. Pas pour la juger : pour comprendre ce qu'elle essaie de te dire, et pour que tu repartes avec quelque chose de concret à poser.",
     problems: [
-      "Une décision difficile à prendre",
-      "Un manque de confiance ponctuel",
-      "Une baisse de motivation",
-      "Un besoin de prendre du recul",
+      "Une relation qui te fait douter en permanence",
+      "Une décision que tu n'arrives pas à prendre",
+      "Une émotion qui revient et qui te submerge",
+      "Une limite que tu n'arrives pas à poser",
     ],
     benefits: [
-      "Y voir clair sur une situation précise",
-      "Identifier le blocage réel derrière le symptôme",
-      "Repartir avec des actions concrètes et réalisables",
-      "Un suivi écrit par email après la séance",
+      "Comprendre ce qui se joue derrière la situation",
+      "Nommer ce que tu ressens, sans le minimiser",
+      "Repartir avec une action précise, à ta portée",
+      "Un retour écrit par email après la séance",
     ],
     steps: [
       "Tu remplis le questionnaire préalable",
       "Tu règles la séance en ligne (carte bancaire ou PayPal)",
       "Tu choisis ton créneau dans mon agenda",
-      "On travaille ensemble pendant 1 heure",
+      "On échange une heure, par téléphone ou en visio",
     ],
     terms: [
       "Paiement obligatoire avant la confirmation du rendez-vous",
-      "En visioconférence (Zoom) ou par WhatsApp, au choix",
+      "Par appel WhatsApp ou en visioconférence, au choix",
       "Réservation au minimum 24 h à l'avance",
       "Report possible jusqu'à 24 h avant la séance",
+      "Strictement confidentiel",
     ],
     featured: true,
   },
   {
     slug: "seance-approfondie",
     name: "Séance approfondie",
-    tagline: "Aller au fond des choses",
+    tagline: "Reprendre le fil, en profondeur",
     durationMinutes: 120,
     price: 100,
     calendlyEvent: "seance-approfondie",
     shortDescription:
-      "Deux heures pour prendre de la hauteur sur plusieurs aspects de ta vie et construire une feuille de route.",
+      "Deux heures pour relier les fils : ce qui se répète, ce qui s'est installé, et par où recommencer.",
     description:
-      "Le format le plus complet en séance unique. On prend le temps d'explorer plusieurs dimensions à la fois — personnelle, familiale, professionnelle — pour comprendre comment elles s'influencent. Tu repars avec une feuille de route structurée sur les semaines à venir.",
+      "Quand ce n'est pas une situation isolée mais un schéma qui revient — les mêmes relations, les mêmes doutes, le même épuisement — une heure ne suffit pas. On prend deux heures pour remonter le fil : ce qui se répète, depuis quand, et ce que ça protège chez toi. Tu repars avec un plan clair pour les semaines à venir.",
     problems: [
-      "Un changement de vie important",
-      "Plusieurs domaines bloqués en même temps",
-      "Difficulté à concilier vie pro et vie familiale",
-      "Un sentiment de blocage global",
+      "Les mêmes schémas qui se répètent dans tes relations",
+      "Une rupture ou une séparation à traverser",
+      "Un épuisement qui dure depuis des mois",
+      "Le sentiment d'avoir perdu qui tu es",
     ],
     benefits: [
-      "Une vision d'ensemble de ta situation",
-      "Un travail en profondeur sur les causes",
-      "Une feuille de route structurée",
-      "Un suivi écrit détaillé après la séance",
+      "Voir clairement ce qui se répète, et pourquoi",
+      "Comprendre ce que ces schémas protègent chez toi",
+      "Un plan concret, étape par étape",
+      "Un retour écrit détaillé après la séance",
     ],
     steps: [
       "Tu remplis le questionnaire préalable",
       "Tu règles la séance en ligne (carte bancaire ou PayPal)",
       "Tu choisis ton créneau dans mon agenda",
-      "On travaille ensemble pendant 2 heures, avec une pause",
+      "On échange deux heures, avec une pause au milieu",
     ],
     terms: [
       "Paiement obligatoire avant la confirmation du rendez-vous",
-      "En visioconférence (Zoom) ou par WhatsApp, au choix",
+      "Par appel WhatsApp ou en visioconférence, au choix",
       "Réservation au minimum 24 h à l'avance",
       "Report possible jusqu'à 24 h avant la séance",
+      "Strictement confidentiel",
     ],
     featured: true,
   },
@@ -234,40 +240,40 @@ export const programs: Program[] = [
     slug: "accompagnement-6-mois",
     name: "Accompagnement 6 mois",
     duration: "6 mois",
-    tagline: "Installer un changement durable",
+    tagline: "Se détacher et se reconstruire",
     description:
-      "Un accompagnement personnalisé sur six mois, construit autour de tes objectifs. Des séances régulières pour avancer étape par étape, et un suivi entre les séances pour ne jamais rester bloquée seule.",
+      "Six mois pour traverser les quatre étapes : prendre conscience, prendre de la distance, te reconstruire, installer de nouvelles habitudes. Des séances régulières, et un fil entre les séances pour ne pas rester seule quand ça remonte.",
     includes: [
       "Des séances régulières tout au long du programme",
-      "Un plan d'action revu à chaque étape",
+      "Un point d'étape à chaque séance",
       "Un suivi entre les séances par WhatsApp",
-      "Des ressources et exercices personnalisés",
+      "Des exercices adaptés à ta situation",
     ],
     priceLabel: null,
     benefits: [
-      "Un cadre qui tient dans la durée",
-      "Des ajustements au fil de ton évolution",
-      "Une progression mesurable, mois après mois",
+      "Un cadre qui tient quand la motivation retombe",
+      "Quelqu'un à qui parler dans les moments difficiles",
+      "Des changements qui s'installent, au lieu de retomber",
     ],
   },
   {
     slug: "accompagnement-12-mois",
     name: "Accompagnement 12 mois",
     duration: "12 mois",
-    tagline: "Une transformation en profondeur",
+    tagline: "Te retrouver, durablement",
     description:
-      "Le programme le plus complet : une année entière pour transformer durablement ton rapport à toi-même, à ta famille et à ton travail. Le format adapté aux changements de vie importants.",
+      "Une année entière, pour les situations qui demandent du temps : une séparation, un schéma installé depuis longtemps, une reconstruction complète. On avance à ton rythme, sans étape sautée.",
     includes: [
-      "Un programme construit sur douze mois",
+      "Un accompagnement construit sur douze mois",
       "Des séances régulières et un suivi continu",
       "Un accompagnement WhatsApp entre les séances",
-      "Des ressources, exercices et documents inclus",
+      "Des ressources et exercices personnalisés",
     ],
     priceLabel: null,
     benefits: [
-      "Le temps nécessaire pour ancrer les changements",
-      "Un accompagnement présent dans les moments clés",
-      "Un bilan régulier de ta progression",
+      "Le temps nécessaire pour que ça tienne",
+      "Un soutien présent dans les moments clés",
+      "Un regard sur le chemin parcouru, régulièrement",
     ],
   },
 ];
@@ -275,142 +281,236 @@ export const programs: Program[] = [
 /* ─────────────────────────── Contenus éditoriaux ─────────────────────────── */
 
 export const hero = {
-  title: "Transforme ton mindset et avance avec un accompagnement adapté à ta situation.",
+  title: "Tu donnes beaucoup, tu ressens tout, et tu finis par t'oublier.",
   subtitle:
-    "J'accompagne les femmes et les hommes qui traversent une période de doute, de blocage ou de changement — pour retrouver de la clarté, de la confiance et une direction.",
+    "Je t'accompagne pour comprendre ce qui se joue en toi, poser tes limites et te reconstruire — par téléphone, à ton rythme, sans jugement.",
   primaryCta: { label: "Réserver mon appel découverte", href: "/reserver/appel-decouverte" },
   secondaryCta: { label: "Découvrir les accompagnements", href: "/accompagnements" },
   /** À DÉFINIR (§45) : photo professionnelle. */
   image: "/images/portrait.svg",
-  imageAlt: "Portrait de Saphia, accompagnatrice mindset",
+  imageAlt: "Portrait de Saphia, accompagnante",
 };
 
+/* Bio adaptée de la page « Qui suis-je » de l'ebook. À faire relire par Saphia
+   avant mise en ligne, notamment la mention de sa qualification. */
 export const about = {
-  /** À DÉFINIR (§45) : biographie définitive. */
   title: "Bonjour, moi c'est Saphia",
   paragraphs: [
-    "Je suis accompagnatrice en développement personnel et mindset. Mon rôle n'est pas de te dire quoi faire, mais de t'aider à voir clair dans ta situation et à retrouver ta capacité à décider.",
-    "J'ai moi-même traversé des périodes de blocage, de doute et de remise en question. C'est ce parcours qui m'a amenée à me former et à accompagner aujourd'hui des personnes qui veulent changer quelque chose dans leur vie, sans savoir par où commencer.",
-    "Ce qui compte pour moi : un accompagnement humain, sans jugement, concret. On part de là où tu en es, et on avance à ton rythme.",
+    "Ce que je partage avec les personnes que j'accompagne, je l'ai d'abord vécu moi-même : le mal-être qu'on n'arrive pas à nommer, l'oubli de soi pour les autres, et le long chemin pour se reconstruire.",
+    "Mon parcours personnel, associé à mon expérience professionnelle d'aide médico-psychologique, m'a donné les compétences et la sensibilité nécessaires pour accompagner des personnes en souffrance, avec justesse et sans jugement.",
+    "Je sais à quel point il est difficile de mettre des mots sur ce que l'on ressent. Et à quel point être accompagnée, vraiment, peut tout changer. C'est cette conviction qui m'a poussée à créer cet accompagnement individuel.",
   ],
   values: [
-    { title: "Sans jugement", text: "Un espace où tu peux tout dire, en confiance." },
-    { title: "Concret", text: "Des actions applicables, pas de théorie abstraite." },
-    { title: "À ton rythme", text: "On avance selon ta situation, pas selon un programme figé." },
+    { title: "Sans jugement", text: "Un espace où tu peux tout dire, vraiment tout." },
+    { title: "Confidentiel", text: "Ce qui se dit pendant nos échanges reste entre nous." },
+    { title: "À ton rythme", text: "Aucune étape sautée, aucune pression à aller plus vite." },
   ],
 };
 
 export const problems = {
   title: "Tu te reconnais dans l'une de ces situations ?",
   subtitle:
-    "Ce sont les sujets qui reviennent le plus souvent dans mes accompagnements. Si l'un d'eux te parle, on peut en discuter.",
+    "Ce sont les mots qui reviennent le plus souvent dans mes accompagnements. Si l'un d'eux te parle, on peut en parler.",
   items: [
-    { title: "Manque de confiance", text: "Tu doutes de toi, de tes choix, de ta légitimité." },
-    { title: "Perte de motivation", text: "Tu n'arrives plus à te mettre en mouvement." },
-    { title: "Changement de vie", text: "Une nouvelle étape s'ouvre et tu ne sais pas comment l'aborder." },
-    { title: "Difficultés familiales", text: "Les relations à la maison pèsent sur ton quotidien." },
-    { title: "Difficultés professionnelles", text: "Ton travail ne te correspond plus, ou t'épuise." },
-    { title: "Besoin d'organisation", text: "Tu te sens débordée et tu n'arrives plus à prioriser." },
-    { title: "Sentiment de blocage", text: "Tu tournes en rond depuis des mois sans avancer." },
-    { title: "Décision à prendre", text: "Un choix important t'attend et tu hésites." },
+    {
+      title: "Tu te sens mal sans savoir pourquoi",
+      text: "Rien de grave sur le papier, et pourtant ça ne va pas.",
+    },
+    {
+      title: "Tu t'oublies pour les autres",
+      text: "Tu fais passer leurs besoins avant les tiens, tout le temps.",
+    },
+    {
+      title: "Tu cours après quelqu'un",
+      text: "Plus la personne s'éloigne, plus tu fais d'efforts.",
+    },
+    {
+      title: "Tu pardonnes tout",
+      text: "Même quand ça te blesse. Même quand ça recommence.",
+    },
+    {
+      title: "Tu doutes en permanence",
+      text: "Tu anticipes ses réactions avant même de parler.",
+    },
+    {
+      title: "Tu n'arrives pas à dire non",
+      text: "Et quand tu y arrives, tu culpabilises pendant des heures.",
+    },
+    {
+      title: "Tu te trouves « trop »",
+      text: "Trop sensible, trop gentille, trop attachée.",
+    },
+    {
+      title: "Tu voudrais partir",
+      text: "Tu sais que ce n'est pas bon pour toi. Tu restes quand même.",
+    },
   ],
 };
 
+/* La méthode reprend les quatre étapes du chapitre 07 de l'ebook. */
 export const method = {
-  title: "Comment se passe l'accompagnement",
-  subtitle: "Une méthode simple, en quatre temps, quel que soit le format choisi.",
+  title: "Comment on avance ensemble",
+  subtitle: "S'en sortir, ce n'est pas un déclic. C'est un processus, en quatre temps.",
   steps: [
-    { number: "01", title: "Échange", text: "On analyse ensemble ta situation actuelle, sans filtre." },
-    { number: "02", title: "Objectifs", text: "On identifie précisément ce que tu veux changer." },
-    { number: "03", title: "Plan d'action", text: "On définit des actions concrètes et réalisables." },
-    { number: "04", title: "Accompagnement", text: "On ajuste au fil des séances jusqu'à l'objectif." },
+    {
+      number: "01",
+      title: "Prise de conscience",
+      text: "Arrêter de minimiser. Nommer les choses telles qu'elles sont.",
+    },
+    {
+      number: "02",
+      title: "Prendre de la distance",
+      text: "Observer. Moins donner. Laisser de l'espace entre ce que tu ressens et ce que tu fais.",
+    },
+    {
+      number: "03",
+      title: "Te reconstruire",
+      text: "Revenir à toi. Réinvestir ce que tu avais mis de côté.",
+    },
+    {
+      number: "04",
+      title: "Nouvelles habitudes",
+      text: "Ne plus accepter l'inacceptable. Ne plus courir après. Te choisir.",
+    },
   ],
 };
 
-/* À DÉFINIR (§45) : témoignages réels, avec accord écrit des personnes citées. */
+/**
+ * ⚠️ TÉMOIGNAGES DE DÉMONSTRATION — À REMPLACER IMPÉRATIVEMENT
+ *
+ * Ces trois témoignages sont des exemples de mise en page. Publier de faux avis
+ * est une pratique commerciale trompeuse (art. L.121-2 du Code de la
+ * consommation). Remplacer par de vrais retours, avec l'accord écrit des
+ * personnes concernées, ou vider ce tableau : la section disparaît alors du site.
+ */
 export const testimonials = [
   {
     quote:
-      "J'ai commencé par l'appel découverte sans trop y croire. Six mois plus tard, j'ai changé de poste et je me sens enfin à ma place.",
-    author: "Marie",
+      "Je pensais que j'étais juste « trop sensible ». En une séance, j'ai compris que je m'oubliais depuis des années.",
+    author: "Exemple — à remplacer",
+    context: "Séance individuelle",
+  },
+  {
+    quote:
+      "Saphia ne juge jamais. C'est la première fois que je peux tout dire sans avoir peur de la réaction en face.",
+    author: "Exemple — à remplacer",
     context: "Accompagnement 6 mois",
   },
   {
     quote:
-      "En deux heures, Saphia m'a aidée à comprendre ce qui me bloquait vraiment. Je suis repartie avec un plan clair.",
-    author: "Sonia",
+      "J'ai enfin réussi à dire non. Ça paraît petit. Pour moi, ça a tout changé.",
+    author: "Exemple — à remplacer",
     context: "Séance approfondie",
-  },
-  {
-    quote:
-      "Ce que j'apprécie, c'est qu'il n'y a aucun jugement. On peut tout dire, et ça change tout.",
-    author: "Julien",
-    context: "Séances individuelles",
   },
 ];
 
-export const ebook = {
-  /** À DÉFINIR (§45) : titre, couverture, prix et fichier définitifs. */
-  title: "Reprendre le contrôle",
-  subtitle: "Le guide pour sortir d'une période de blocage en 7 étapes",
+/* ────────────────────────────── Ebook (§19) ──────────────────────────────── */
+
+export const EBOOK_SLUG = "ebook";
+
+export type Ebook = {
+  title: string;
+  subtitle: string;
+  description: string;
+  /** Prix en euros. 0 = distribué gratuitement contre un email. */
+  price: number;
+  cover: string;
+  pageCount: number;
+  chapters: string[];
+  bonuses: string[];
+  benefits: string[];
+  audience: string[];
+  quote: string;
+  fileName: string;
+};
+
+export const ebook: Ebook = {
+  title: "Reprendre le contrôle de ta vie émotionnelle",
+  subtitle: "Comprendre, se détacher et se reconstruire",
   description:
-    "Un guide pratique qui reprend les fondamentaux que j'utilise en accompagnement : comprendre ce qui te bloque réellement, sortir du mode automatique et remettre du mouvement dans ton quotidien.",
-  /** Prix en euros. 0 = gratuit (téléchargement contre email). */
-  price: 0,
+    "Un guide pour toi qui donnes beaucoup, qui ressens tout intensément, et qui te demandes parfois pourquoi tu te sens mal sans trouver d'explication claire. Ce n'est pas un traité théorique : c'est un accompagnement simple et direct, à lire et surtout à vivre.",
+  /** Prix en euros. Mettre 0 pour le distribuer gratuitement contre un email. */
+  price: 9.9,
   cover: "/images/ebook-cover.svg",
+  pageCount: 18,
   chapters: [
-    "Identifier le vrai blocage derrière le symptôme",
-    "Sortir du pilote automatique",
-    "Reprendre la main sur ton organisation",
-    "Reconstruire ta confiance, étape par étape",
-    "Poser des limites sans culpabiliser",
-    "Décider, même dans l'incertitude",
-    "Tenir dans la durée",
+    "Pourquoi tu te sens mal sans comprendre pourquoi",
+    "Le vrai problème (et pourquoi tu restes bloquée)",
+    "Ce que tu dois arrêter dès maintenant",
+    "Reprendre le contrôle de tes émotions",
+    "Reprendre confiance en toi",
+    "Relations saines vs relations toxiques",
+    "Le plan pour t'en sortir",
+  ],
+  bonuses: [
+    "Un plan d'action en 7 jours, une action simple par jour",
+    "Une checklist à garder sous les yeux",
+    "Des questions à te poser à la fin de chaque chapitre",
   ],
   benefits: [
-    "Des exercices concrets à faire chez toi",
-    "Des situations réelles rencontrées en accompagnement",
-    "Un format court, lisible en une soirée",
+    "Comprendre ce qui se joue en toi, sans jargon",
+    "Savoir quoi faire de ce que tu ressens",
+    "Poser des limites sans devenir dure",
+    "Reconnaître une relation qui te fait douter",
   ],
   audience: [
-    "Tu traverses une période de doute ou de blocage",
-    "Tu veux commencer à avancer seule avant d'être accompagnée",
-    "Tu cherches des outils concrets plutôt que de la théorie",
+    "Tu donnes beaucoup et tu reçois rarement autant",
+    "Tu te sens mal sans arriver à l'expliquer",
+    "Tu veux commencer seule, à ton rythme",
+    "Tu cherches du concret, pas de la théorie",
   ],
-  /** Fichier servi après inscription. Placer le PDF dans /public/ebook/. */
-  fileUrl: "/ebook/reprendre-le-controle.pdf",
+  quote: "Tu n'as pas besoin d'être parfaite. Tu as juste besoin de commencer.",
+  /**
+   * Nom du fichier livré après paiement.
+   * Le PDF n'est PAS servi depuis /public : il est lu depuis le dossier
+   * `private/` par la route protégée /api/ebook/download, qui revérifie le
+   * paiement avant de l'envoyer. Voir docs/EBOOK.md.
+   */
+  fileName: "reprendre-le-controle-de-ta-vie-emotionnelle.pdf",
 };
+
+/* ──────────────────────────────── FAQ ────────────────────────────────────── */
 
 export const faq = [
   {
     question: "L'appel découverte est-il vraiment gratuit ?",
     answer:
-      "Oui, totalement. Aucun paiement n'est demandé et tu n'as aucune obligation de continuer ensuite. C'est un échange de 30 minutes pour faire le point et voir si mon accompagnement correspond à ton besoin.",
-  },
-  {
-    question: "Comment se déroulent les séances ?",
-    answer:
-      "En visioconférence via Zoom, ou par appel WhatsApp — tu choisis au moment de la réservation. Le lien Zoom ou les instructions WhatsApp te sont envoyés automatiquement avec ta confirmation.",
-  },
-  {
-    question: "Quand dois-je payer ?",
-    answer:
-      "Pour les séances payantes, le règlement se fait en ligne avant de choisir ton créneau, par carte bancaire (Stripe) ou via PayPal. Tant que le paiement n'est pas validé, la réservation n'est pas confirmée.",
-  },
-  {
-    question: "Puis-je annuler ou déplacer un rendez-vous ?",
-    answer:
-      "Oui, jusqu'à 24 heures avant la séance, directement depuis le lien présent dans ton email de confirmation. Passé ce délai, la séance est due — les conditions détaillées figurent dans les CGV.",
-  },
-  {
-    question: "À quel moment puis-je réserver ?",
-    answer:
-      "Les rendez-vous sont proposés du lundi au samedi, et doivent être réservés au minimum 24 heures à l'avance. Les créneaux réellement disponibles s'affichent automatiquement dans le calendrier.",
+      "Oui, totalement. Aucun paiement n'est demandé et tu n'as aucune obligation de continuer ensuite. C'est 30 minutes pour poser des mots sur ce que tu traverses et voir si mon accompagnement correspond à ton besoin.",
   },
   {
     question: "Es-tu psychologue ou thérapeute ?",
     answer:
-      "Non. Mon accompagnement relève du développement personnel et du coaching de vie : il ne constitue ni un acte médical, ni une psychothérapie, et ne remplace pas un suivi par un professionnel de santé.",
+      "Non. Je suis aide médico-psychologique de formation, et j'accompagne aujourd'hui en tant qu'accompagnante individuelle. Mon travail relève du soutien et du développement personnel : il ne constitue ni un acte médical, ni une psychothérapie, et ne remplace pas un suivi par un professionnel de santé. Si tu traverses une souffrance importante, je t'orienterai vers la personne la plus adaptée — et je te le dirai franchement.",
+  },
+  {
+    question: "Comment se déroulent les séances ?",
+    answer:
+      "Par appel WhatsApp ou en visioconférence, comme tu préfères — tu choisis au moment de la réservation. Beaucoup de personnes préfèrent le téléphone : on se sent souvent plus libre de parler sans être vue.",
+  },
+  {
+    question: "Est-ce que c'est confidentiel ?",
+    answer:
+      "Oui. Ce qui se dit pendant nos échanges reste entre nous. Les séances ne sont jamais enregistrées, et les informations que tu partages ne sont utilisées que pour préparer et suivre ton accompagnement.",
+  },
+  {
+    question: "Quand dois-je payer ?",
+    answer:
+      "Pour les séances payantes, le règlement se fait en ligne avant de choisir ton créneau, par carte bancaire ou via PayPal. Tant que le paiement n'est pas validé, la réservation n'est pas confirmée.",
+  },
+  {
+    question: "Puis-je annuler ou déplacer un rendez-vous ?",
+    answer:
+      "Oui, jusqu'à 24 heures avant la séance, directement depuis les liens présents dans ton email de confirmation. Passé ce délai, la séance est due — les conditions détaillées figurent dans les CGV. En cas d'imprévu grave, écris-moi : on trouve une solution.",
+  },
+  {
+    question: "Dois-je répondre à toutes les questions du formulaire ?",
+    answer:
+      "Non. Seuls ton prénom, ton nom et ton email sont nécessaires pour organiser le rendez-vous. Tout le reste est facultatif : tu partages uniquement ce que tu as envie de partager, et tu peux garder le reste pour notre échange.",
+  },
+  {
+    question: "L'ebook est-il inclus dans l'accompagnement ?",
+    answer:
+      "L'ebook se vend séparément. C'est un bon point de départ si tu veux commencer seule, mais il n'est pas nécessaire pour être accompagnée — et si tu l'as déjà lu, on part simplement de plus loin ensemble.",
   },
 ];
 
@@ -442,13 +542,51 @@ export function getProgram(slug: string): Program | undefined {
   return programs.find((program) => program.slug === slug);
 }
 
+/** Tout ce qui peut être payé sur le site : les séances et l'ebook. */
+export type Purchasable = {
+  slug: string;
+  name: string;
+  description: string;
+  price: number;
+  /** `true` pour un bien numérique livré immédiatement (impact sur les CGV). */
+  digital: boolean;
+};
+
+export function getPurchasable(slug: string): Purchasable | undefined {
+  if (slug === EBOOK_SLUG) {
+    return {
+      slug: EBOOK_SLUG,
+      name: `Ebook — ${ebook.title}`,
+      description: ebook.subtitle,
+      price: ebook.price,
+      digital: true,
+    };
+  }
+
+  const offer = getOffer(slug);
+  if (!offer) return undefined;
+
+  return {
+    slug: offer.slug,
+    name: offer.name,
+    description: offer.shortDescription,
+    price: offer.price,
+    digital: false,
+  };
+}
+
+/** Page vers laquelle le client revient après un paiement. */
+export function checkoutReturnPath(slug: string): string {
+  return slug === EBOOK_SLUG ? "/ebook" : `/reserver/${slug}`;
+}
+
 export function formatPrice(price: number): string {
   return price === 0
     ? "Gratuit"
     : new Intl.NumberFormat("fr-FR", {
         style: "currency",
         currency: "EUR",
-        minimumFractionDigits: 0,
+        minimumFractionDigits: Number.isInteger(price) ? 0 : 2,
       }).format(price);
 }
 

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: `%s — ${brand.name}`,
   },
   description:
-    "Accompagnement mindset et développement personnel : appel découverte gratuit de 30 minutes, séances individuelles et programmes sur 6 ou 12 mois, en visio ou par WhatsApp.",
+    "Accompagnement individuel pour comprendre ce qui se joue en toi, poser tes limites et te reconstruire. Appel découverte gratuit de 30 minutes, par téléphone ou en visio.",
   applicationName: brand.name,
   authors: [{ name: brand.name }],
   creator: brand.name,

@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { EbookForm } from "@/components/EbookForm";
+import { Suspense } from "react";
+import { EbookPurchase } from "@/components/EbookPurchase";
 import { JsonLd } from "@/components/JsonLd";
 import { CheckList, Pill, Section, SectionHeading } from "@/components/ui";
-import { ebook, formatPrice, testimonials } from "@/content/site.config";
+import { ebook, formatPrice } from "@/content/site.config";
 import { breadcrumbJsonLd, ebookJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: `Ebook — ${ebook.title}`,
-  description: ebook.description,
+  description: `${ebook.subtitle}. ${ebook.description}`,
   path: "/ebook",
 });
 
@@ -31,7 +32,11 @@ export default function EbookPage() {
           </div>
 
           <div>
-            <Pill tone="clay">{ebook.price === 0 ? "Gratuit" : formatPrice(ebook.price)}</Pill>
+            <div className="flex flex-wrap items-center gap-3">
+              <Pill tone="clay">{ebook.price === 0 ? "Gratuit" : formatPrice(ebook.price)}</Pill>
+              <Pill tone="plum">{ebook.pageCount} pages · PDF</Pill>
+            </div>
+
             <h1 className="mt-5 text-4xl leading-tight text-ink md:text-5xl">{ebook.title}</h1>
             <p className="mt-3 font-display text-xl text-clay">{ebook.subtitle}</p>
             <p className="mt-6 text-base leading-relaxed text-muted md:text-lg">
@@ -43,82 +48,86 @@ export default function EbookPage() {
             </div>
 
             <div className="mt-9">
-              <a href="#recevoir" className="btn btn-primary">
-                {ebook.price === 0 ? "Recevoir l'ebook gratuitement" : "Obtenir l'ebook"}
+              <a href="#obtenir" className="btn btn-primary">
+                {ebook.price === 0
+                  ? "Recevoir l'ebook gratuitement"
+                  : `Obtenir l'ebook — ${formatPrice(ebook.price)}`}
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contenu */}
+      {/* À qui il s'adresse */}
       <Section tone="white">
-        <div className="mx-auto grid max-w-4xl gap-12 md:grid-cols-2">
-          <div>
-            <SectionHeading eyebrow="Au sommaire" title="Ce que tu vas y trouver" align="left" />
-            <ol className="mt-7 space-y-3">
-              {ebook.chapters.map((chapter, index) => (
-                <li key={chapter} className="flex gap-3.5">
-                  <span
-                    aria-hidden="true"
-                    className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-plum-soft text-sm font-semibold text-plum"
-                  >
-                    {index + 1}
-                  </span>
-                  <span className="text-sm leading-relaxed text-muted">{chapter}</span>
-                </li>
-              ))}
-            </ol>
+        <div className="mx-auto max-w-3xl">
+          <SectionHeading
+            eyebrow="Avant de commencer"
+            title="Ce guide est fait pour toi si…"
+            align="left"
+          />
+          <div className="mt-7">
+            <CheckList items={ebook.audience} />
           </div>
 
-          <div>
-            <SectionHeading eyebrow="Pour qui" title="Cet ebook est fait pour toi si…" align="left" />
-            <div className="mt-7">
-              <CheckList items={ebook.audience} />
-            </div>
+          <blockquote className="mt-10 border-l-2 border-clay pl-6">
+            <p className="font-display text-xl leading-relaxed text-ink md:text-2xl">
+              «&nbsp;{ebook.quote}&nbsp;»
+            </p>
+          </blockquote>
+        </div>
+      </Section>
 
-            <div className="card mt-8 p-6">
-              <p className="text-sm leading-relaxed text-muted">
-                Cet ebook reprend les fondamentaux que j&apos;utilise en accompagnement. Il ne
-                remplace pas un suivi personnalisé, mais il te permet de commencer seule, à ton
-                rythme.
-              </p>
+      {/* Sommaire réel du guide */}
+      <Section tone="sand">
+        <div className="mx-auto max-w-4xl">
+          <SectionHeading
+            eyebrow="Au sommaire"
+            title={`${ebook.chapters.length} chapitres, et ce qu'il faut pour les mettre en pratique`}
+          />
+
+          <ol className="mt-12 grid gap-3 md:grid-cols-2">
+            {ebook.chapters.map((chapter, index) => (
+              <li key={chapter} className="card flex gap-4 p-5">
+                <span
+                  aria-hidden="true"
+                  className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-plum-soft font-display text-sm font-semibold text-plum"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="text-sm leading-relaxed text-ink">{chapter}</span>
+              </li>
+            ))}
+          </ol>
+
+          <div className="card mt-6 p-6 md:p-8">
+            <span className="eyebrow">Inclus également</span>
+            <div className="mt-5">
+              <CheckList items={[...ebook.bonuses]} />
             </div>
           </div>
         </div>
       </Section>
 
-      {/* Formulaire de récupération */}
-      <Section id="recevoir" tone="sand">
+      {/* Achat */}
+      <Section id="obtenir" tone="cream">
         <div className="mx-auto max-w-xl">
           <SectionHeading
-            eyebrow="Télécharger"
-            title={ebook.price === 0 ? "Reçois ton exemplaire" : "Obtiens ton exemplaire"}
+            eyebrow={ebook.price === 0 ? "Télécharger" : "Commander"}
+            title="Reçois ton exemplaire"
+            subtitle="Format PDF, à lire sur téléphone, tablette ou ordinateur."
           />
           <div className="mt-10">
-            <EbookForm />
+            <Suspense
+              fallback={
+                <p role="status" className="text-center text-sm text-muted">
+                  Chargement…
+                </p>
+              }
+            >
+              <EbookPurchase />
+            </Suspense>
           </div>
-        </div>
-      </Section>
-
-      {/* Témoignages */}
-      <Section tone="white">
-        <SectionHeading eyebrow="Retours" title="Ce qu'en disent les lecteurs" />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {testimonials.map((testimonial) => (
-            <figure key={testimonial.author} className="card flex h-full flex-col p-7">
-              <span aria-hidden="true" className="font-display text-4xl leading-none text-clay">
-                “
-              </span>
-              <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-muted">
-                {testimonial.quote}
-              </blockquote>
-              <figcaption className="mt-5 border-t border-sand-deep/60 pt-4">
-                <span className="block font-display text-base text-ink">{testimonial.author}</span>
-                <span className="text-xs text-muted">{testimonial.context}</span>
-              </figcaption>
-            </figure>
-          ))}
         </div>
       </Section>
 
@@ -127,17 +136,18 @@ export default function EbookPage() {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl leading-tight text-cream md:text-4xl">Tu veux aller plus loin ?</h2>
           <p className="mt-4 text-base leading-relaxed text-cream/80">
-            L&apos;ebook te donne les bases. Si tu sens que tu as besoin d&apos;un regard extérieur
-            sur ta situation, on peut en parler 30 minutes, gratuitement et sans engagement.
+            Ce que tu liras dans ce guide peut déjà changer beaucoup de choses. Ce que tu vivras en
+            accompagnement ira plus vite, et plus loin — parce que ce sera le tien, pas un cas
+            général.
           </p>
           <div className="mt-9">
-            <Link
-              href="/reserver/appel-decouverte"
-              className="btn bg-cream text-plum hover:bg-white"
-            >
+            <Link href="/reserver/appel-decouverte" className="btn bg-cream text-plum hover:bg-white">
               Réserver mon appel découverte
             </Link>
           </div>
+          <p className="mt-5 text-sm text-cream/70">
+            30 minutes, gratuit, sans engagement. Par téléphone ou en visio.
+          </p>
         </div>
       </Section>
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
-import { bookingRules, brand } from "@/content/site.config";
+import { bookingRules, brand, ebook } from "@/content/site.config";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -81,7 +81,20 @@ export default function AnnulationPage() {
         Les modalités précises figurent dans la proposition individuelle acceptée avant le démarrage.
       </p>
 
-      <h2>7. Cas de force majeure</h2>
+      <h2>7. Ebook</h2>
+      <p>
+        L&apos;ebook «&nbsp;{ebook.title}&nbsp;» est un contenu numérique livré immédiatement après
+        le paiement. En validant l&apos;achat, tu demandes sa fourniture immédiate et renonces à ton
+        droit de rétractation&nbsp;: il n&apos;est donc <strong>ni repris ni remboursé</strong> une
+        fois le lien de téléchargement délivré.
+      </p>
+      <p>
+        Cette règle a une exception&nbsp;: si le fichier est illisible, corrompu ou si le lien ne
+        fonctionne pas, écris-moi — je te renvoie le fichier, et si le problème persiste, je te
+        rembourse intégralement.
+      </p>
+
+      <h2>8. Cas de force majeure</h2>
       <p>
         En cas d&apos;événement grave et imprévisible (maladie, accident, deuil, hospitalisation),
         les délais ci-dessus ne s&apos;appliquent pas&nbsp;: la séance est reportée sans frais.
@@ -89,9 +102,9 @@ export default function AnnulationPage() {
         <a href={`mailto:${brand.email}`}>{brand.email}</a>.
       </p>
 
-      <h2>8. Droit de rétractation</h2>
+      <h2>9. Droit de rétractation</h2>
       <p>
-        Le droit de rétractation légal de 14 jours est détaillé à l&apos;article 5 des{" "}
+        Le droit de rétractation légal de 14 jours est détaillé à l&apos;article 6 des{" "}
         <Link href="/cgv">conditions générales de vente</Link>.
       </p>
     </LegalPage>

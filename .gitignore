@@ -12,6 +12,10 @@ build/
 .env.test.local
 .env.production.local
 
+# Produit payant : le PDF de l'ebook n'est pas versionné.
+# Voir docs/EBOOK.md pour les deux modes de livraison possibles.
+/private/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

@@ -9,6 +9,7 @@ import {
   bookingRules,
   ebook,
   faq,
+  formatPrice,
   hero,
   method,
   offers,
@@ -22,9 +23,9 @@ import { faqJsonLd, pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   // La page d'accueil ne bénéficie pas du gabarit de titre défini dans le
   // layout racine (même segment) : le nom de la marque y est donc explicite.
-  title: `${brand.name} — accompagnement mindset & développement personnel`,
+  title: `${brand.name} — accompagnement émotionnel et relationnel`,
   description:
-    "Retrouve clarté, confiance et motivation avec un accompagnement personnalisé. Appel découverte gratuit de 30 minutes, séances individuelles dès 50 €, en visio ou par WhatsApp.",
+    "Tu donnes beaucoup, tu ressens tout, et tu finis par t'oublier. Accompagnement individuel pour comprendre, poser tes limites et te reconstruire. Appel découverte gratuit de 30 minutes.",
   path: "/",
 });
 
@@ -68,7 +69,7 @@ export default function HomePage() {
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wider text-muted">Format</dt>
-                <dd className="mt-1 font-display text-lg text-ink">Zoom ou WhatsApp</dd>
+                <dd className="mt-1 font-display text-lg text-ink">Téléphone ou visio</dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wider text-muted">Premier échange</dt>
@@ -92,7 +93,7 @@ export default function HomePage() {
             </div>
             <div className="card absolute -bottom-6 left-1/2 w-[min(20rem,90%)] -translate-x-1/2 p-5 md:left-auto md:right-4 md:translate-x-0">
               <p className="text-sm leading-relaxed text-muted">
-                «&nbsp;On part de là où tu en es, et on avance à ton rythme.&nbsp;»
+                «&nbsp;{ebook.quote}&nbsp;»
               </p>
             </div>
           </div>
@@ -147,8 +148,8 @@ export default function HomePage() {
       <Section id="accompagnements" tone="cream">
         <SectionHeading
           eyebrow="Les accompagnements"
-          title="Trouve le format qui correspond à ton besoin"
-          subtitle="Une séance ponctuelle pour débloquer une situation, ou un accompagnement dans la durée pour transformer en profondeur."
+          title="Le format qui correspond à là où tu en es"
+          subtitle="Une séance pour y voir clair sur une situation précise, ou un accompagnement dans la durée quand ce qui se répète demande du temps."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -189,29 +190,31 @@ export default function HomePage() {
         </ol>
       </Section>
 
-      {/* ────────────────────────────── Témoignages ───────────────────────── */}
-      <Section tone="white">
-        <SectionHeading
-          eyebrow="Elles et ils en parlent"
-          title="Ce que disent les personnes accompagnées"
-        />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {testimonials.map((testimonial) => (
-            <figure key={testimonial.author} className="card flex h-full flex-col p-7">
-              <span aria-hidden="true" className="font-display text-4xl leading-none text-clay">
-                “
-              </span>
-              <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-muted">
-                {testimonial.quote}
-              </blockquote>
-              <figcaption className="mt-5 border-t border-sand-deep/60 pt-4">
-                <span className="block font-display text-base text-ink">{testimonial.author}</span>
-                <span className="text-xs text-muted">{testimonial.context}</span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </Section>
+      {/* ─── Témoignages — masqués tant que le tableau est vide (voir config) ── */}
+      {testimonials.length > 0 ? (
+        <Section tone="white">
+          <SectionHeading
+            eyebrow="Elles en parlent"
+            title="Ce que disent les personnes que j'accompagne"
+          />
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {testimonials.map((testimonial) => (
+              <figure key={testimonial.quote} className="card flex h-full flex-col p-7">
+                <span aria-hidden="true" className="font-display text-4xl leading-none text-clay">
+                  “
+                </span>
+                <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-muted">
+                  {testimonial.quote}
+                </blockquote>
+                <figcaption className="mt-5 border-t border-sand-deep/60 pt-4">
+                  <span className="block font-display text-base text-ink">{testimonial.author}</span>
+                  <span className="text-xs text-muted">{testimonial.context}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </Section>
+      ) : null}
 
       {/* ──────────────────────────────── Ebook ───────────────────────────── */}
       <Section tone="sand">
@@ -232,6 +235,9 @@ export default function HomePage() {
             <h2 className="mt-3 text-3xl text-ink md:text-4xl">{ebook.title}</h2>
             <p className="mt-2 font-display text-lg text-clay">{ebook.subtitle}</p>
             <p className="mt-4 text-base leading-relaxed text-muted">{ebook.description}</p>
+            <p className="mt-4 text-sm text-muted">
+              {ebook.chapters.length} chapitres · {ebook.pageCount} pages · {formatPrice(ebook.price)}
+            </p>
             <div className="mt-8">
               <Link href="/ebook" className="btn btn-primary">
                 Découvrir l&apos;ebook
@@ -266,10 +272,10 @@ export default function HomePage() {
       <Section tone="plum">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl leading-tight text-cream md:text-4xl">
-            Tu ne sais pas quel accompagnement choisir ?
+            Tu ne sais pas par où commencer ?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-cream/80">
-            Réserve 30 minutes gratuitement. On fait le point sur ta situation et je te dis
+            Réserve 30 minutes gratuitement. Tu me racontes où tu en es, et je te dis
             honnêtement si — et comment — je peux t&apos;aider.
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
@@ -292,7 +298,8 @@ export default function HomePage() {
               items={[
                 "Aucun paiement, aucun engagement",
                 "Créneaux du lundi au samedi",
-                "En visio ou par téléphone via WhatsApp",
+                "Par téléphone via WhatsApp, ou en visio",
+                "Strictement confidentiel",
               ]}
             />
           </div>

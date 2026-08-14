@@ -19,6 +19,7 @@ renvoient aux sections de ce PRD.
 - [Parcours de réservation](#parcours-de-réservation)
 - [Configuration des services](#configuration-des-services)
 - [Modifier le contenu du site](#modifier-le-contenu-du-site)
+- [Tester le site](#tester-le-site)
 - [Déploiement](#déploiement)
 - [Couverture du MVP](#couverture-du-mvp)
 - [Ce qui reste à faire](#ce-qui-reste-à-faire)
@@ -166,6 +167,19 @@ le PRD (§45) et doivent être complétés avant la mise en production.
 
 Les deux images sont des placeholders SVG. Après remplacement par des `.jpg`,
 mettre à jour les chemins `hero.image` et `ebook.cover` dans `site.config.ts`.
+
+---
+
+## Tester le site
+
+Le protocole complet est dans **[docs/TESTS.md](docs/TESTS.md)** : ce qui se
+teste sans aucun compte, comment dérouler le parcours de bout en bout avec
+Calendly, les cartes de test Stripe et le sandbox PayPal, puis la checklist
+d'avant-ouverture.
+
+⚠️ Pour tester les paiements en local, `NEXT_PUBLIC_SITE_URL` doit valoir
+`http://localhost:3000` — sinon Stripe et PayPal renvoient le client vers le
+domaine de production après le paiement.
 
 ---
 

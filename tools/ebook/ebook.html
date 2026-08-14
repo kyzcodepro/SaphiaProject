@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Reprendre le contrôle de ta vie émotionnelle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      ═══════════════════════════════════════════════════════════════════════
+      SOURCE DE L'EBOOK — « Reprendre le contrôle de ta vie émotionnelle »
+      ═══════════════════════════════════════════════════════════════════════
+
+      Modifier ce fichier, puis régénérer le PDF :
+
+          cd tools/ebook && npm install && npm run build
+
+      Le PDF est écrit dans `private/`, hors du dossier public : il n'est
+      téléchargeable qu'après paiement (voir docs/EBOOK.md).
+
+      Le texte des chapitres est celui de Saphia, repris tel quel.
+      Les ajouts par rapport à la première version sont signalés par
+      un commentaire « AJOUT ».
+      ═══════════════════════════════════════════════════════════════════════
+    -->
+
+    <style>
+      /* ─────────────────────────── Format A5 ─────────────────────────── */
+      @page {
+        size: 148mm 210mm;
+        margin: 0;
+      }
+
+      :root {
+        --plum: #5b3a4a;
+        --plum-dark: #452b38;
+        --clay: #c4795f;
+        --cream: #fbf7f2;
+        --sand: #f2e8dd;
+        --sand-deep: #e6d7c7;
+        --ink: #241e1b;
+        --muted: #5f554e;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        color: var(--ink);
+        font-size: 10.2pt;
+        line-height: 1.62;
+        background: #fff;
+      }
+
+      .page {
+        width: 148mm;
+        height: 210mm;
+        padding: 16mm 15mm 13mm;
+        position: relative;
+        overflow: hidden;
+        background: var(--cream);
+        break-after: page;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page:last-child {
+        break-after: auto;
+      }
+
+      .page--plum {
+        background: var(--plum);
+        color: var(--cream);
+      }
+
+      .page--sand {
+        background: var(--sand);
+      }
+
+      /* ───────────────────────── Éléments communs ───────────────────── */
+      .eyebrow {
+        font-size: 7.4pt;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--clay);
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Fraunces", Georgia, serif;
+        font-weight: 500;
+        letter-spacing: -0.015em;
+        line-height: 1.15;
+      }
+
+      h1 {
+        font-size: 27pt;
+      }
+
+      h2 {
+        font-size: 18pt;
+        margin-top: 4mm;
+      }
+
+      h3 {
+        font-size: 11.5pt;
+        font-weight: 600;
+        margin-top: 6mm;
+        margin-bottom: 1.5mm;
+        color: var(--plum);
+        letter-spacing: 0.01em;
+      }
+
+      p {
+        margin-bottom: 3.4mm;
+      }
+
+      strong {
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      em {
+        font-style: italic;
+      }
+
+      .lead {
+        font-size: 11.4pt;
+        line-height: 1.55;
+      }
+
+      /* Listes à puces sobres */
+      ul.marks {
+        list-style: none;
+        margin: 0 0 3.4mm;
+      }
+
+      ul.marks li {
+        position: relative;
+        padding-left: 6mm;
+        margin-bottom: 1.6mm;
+      }
+
+      ul.marks li::before {
+        content: "";
+        position: absolute;
+        left: 1mm;
+        top: 2.1mm;
+        width: 2.2mm;
+        height: 2.2mm;
+        border-radius: 50%;
+        background: var(--clay);
+      }
+
+      /* Citation-signature : les recadrages en deux temps */
+      .pull {
+        font-family: "Fraunces", Georgia, serif;
+        font-size: 13.5pt;
+        line-height: 1.35;
+        color: var(--plum);
+        border-left: 2.2pt solid var(--clay);
+        padding: 1mm 0 1mm 5mm;
+        margin: 5mm 0;
+      }
+
+      .page--plum .pull {
+        color: var(--cream);
+        border-color: var(--clay);
+      }
+
+      /* Encadré « À toi de jouer » */
+      .exercise {
+        margin-top: auto;
+        background: #fff;
+        border: 0.6pt solid var(--sand-deep);
+        border-radius: 4mm;
+        padding: 6mm 6mm 5mm;
+      }
+
+      .exercise .eyebrow {
+        color: var(--plum);
+      }
+
+      .exercise ol {
+        list-style: none;
+        counter-reset: q;
+        margin-top: 3mm;
+      }
+
+      .exercise ol li {
+        counter-increment: q;
+        position: relative;
+        padding-left: 7mm;
+        margin-bottom: 4mm;
+        font-size: 9.6pt;
+        line-height: 1.45;
+      }
+
+      .exercise ol li::before {
+        content: counter(q);
+        position: absolute;
+        left: 0;
+        top: 0.2mm;
+        width: 4.6mm;
+        height: 4.6mm;
+        border-radius: 50%;
+        background: var(--sand);
+        color: var(--plum);
+        font-size: 7.6pt;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* AJOUT — lignes d'écriture, pour que le guide se remplisse */
+      .rule {
+        display: block;
+        margin-top: 2.5mm;
+        border-bottom: 0.5pt dotted var(--sand-deep);
+        height: 4.5mm;
+      }
+
+      /* Pied de page */
+      .folio {
+        position: absolute;
+        left: 15mm;
+        right: 15mm;
+        bottom: 8mm;
+        display: flex;
+        justify-content: space-between;
+        font-size: 7.4pt;
+        color: #9a8d83;
+        letter-spacing: 0.04em;
+      }
+
+      .page--plum .folio {
+        color: rgba(251, 247, 242, 0.55);
+      }
+
+      /* Bouton / lien d'action */
+      .cta {
+        display: inline-block;
+        background: var(--plum);
+        color: var(--cream);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 10pt;
+        padding: 3.6mm 8mm;
+        border-radius: 20mm;
+      }
+
+      .page--plum .cta {
+        background: var(--cream);
+        color: var(--plum);
+      }
+
+      .link {
+        color: var(--plum);
+        text-decoration: none;
+        border-bottom: 0.6pt solid var(--clay);
+      }
+
+      .page--plum .link {
+        color: var(--cream);
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      .spacer {
+        flex: 1;
+      }
+
+      .small {
+        font-size: 8.4pt;
+        line-height: 1.5;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ═══════════════════ 1. Couverture ═══════════════════ -->
+    <section class="page page--plum" data-folio="none" style="padding: 0">
+      <div
+        style="
+          margin: 8mm;
+          border: 0.8pt solid rgba(196, 121, 95, 0.75);
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 14mm 12mm;
+        "
+      >
+        <span class="eyebrow">Un guide pour toi</span>
+
+        <h1 style="margin-top: 14mm; color: var(--cream); font-size: 25pt">
+          Reprendre le contrôle<br />de ta vie émotionnelle
+        </h1>
+
+        <div style="width: 26mm; height: 1.6pt; background: var(--clay); margin: 9mm 0"></div>
+
+        <p style="font-size: 12pt; color: var(--sand-deep); line-height: 1.5; margin: 0">
+          Comprendre, se détacher<br />et se reconstruire
+        </p>
+
+        <div class="spacer"></div>
+
+        <span class="eyebrow" style="letter-spacing: 0.32em">Par Saphia</span>
+        <p class="small" style="color: rgba(251, 247, 242, 0.65); margin-top: 4mm">
+          Un accompagnement pas à pas, écrit avec le cœur
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 2. Sommaire ═══════════════════ -->
+    <section class="page" data-section="Reprendre le contrôle de ta vie émotionnelle">
+      <span class="eyebrow">Sommaire</span>
+      <h2>Table des matières</h2>
+
+      <div style="margin-top: 9mm">
+        <!-- Les entrées sont cliquables dans le PDF -->
+        <a class="toc" href="#ch01"></a>
+      </div>
+
+      <ol
+        style="
+          list-style: none;
+          counter-reset: toc;
+          border-top: 0.5pt solid var(--sand-deep);
+          margin-top: 8mm;
+        "
+      >
+        <li style="counter-increment: toc; border-bottom: 0.5pt solid var(--sand-deep)">
+          <a
+            href="#ch01"
+            style="
+              display: flex;
+              gap: 5mm;
+              padding: 3.6mm 0;
+              text-decoration: none;
+              color: var(--ink);
+            "
+          >
+            <span style="font-family: 'Fraunces', serif; color: var(--clay); width: 8mm">01</span>
+            <span style="flex: 1">Pourquoi tu te sens mal sans comprendre pourquoi</span>
+          </a>
+        </li>
+        <li style="border-bottom: 0.5pt solid var(--sand-deep)">
+          <a
+            href="#ch02"
+            style="display: flex; gap: 5mm; padding: 3.6mm 0; text-decoration: none; color: var(--ink)"
+          >
+            <span style="font-family: 'Fraunces', serif; color: var(--clay); width: 8mm">02</span>
+            <span style="flex: 1">Le vrai problème (et pourquoi tu restes bloquée)</span>
+          </a>
+        </li>
+        <li style="border-bottom: 0.5pt solid var(--sand-deep)">
+          <a
+            href="#ch03"
+            style="display: flex; gap: 5mm; padding: 3.6mm 0; text-decoration: none; color: var(--ink)"
+          >
+            <span style="font-family: 'Fraunces', serif; color: var(--clay); width: 8mm">03</span>
+            <span style="flex: 1">Ce que tu dois arrêter dès maintenant</span>
+          </a>
+        </li>
+        <li style="border-bottom: 0.5pt solid var(--sand-deep)">
+          <a
+            href="#ch04"
+            style="display: flex; gap: 5mm; padding: 3.6mm 0; text-decoration: none; color: var(--ink)"
+          >
+            <span style="font-family: 'Fraunces', serif; color: var(--clay); width: 8mm">04</span>
+            <span style="flex: 1">Reprendre le contrôle de tes émotions</span>
+          </a>
+        </li>
+        <li style="border-bottom: 0.5pt solid var(--sand-deep)">
+          <a
+            href="#ch05"
+            style="display: flex; gap: 5mm; padding: 3.6mm 0; text-decoration: none; color: var(--ink)"
+          >
+            <span style="font-family: 'Fraunces', serif; color: var(--clay); width: 8mm">05</span>
+            <span style="flex: 1">Reprendre confiance en toi</span>
+          </a>
+        </li>
+        <li style="border-bottom: 0.5pt solid var(--sand-deep)">
+          <a
+            href="#ch06"
+            style="display: flex; gap: 5mm; padding: 3.6mm 0; text-decoration: none; color: var(--ink)"
+          >
+            <span style="font-family: 'Fraunces', serif; color: var(--clay); width: 8mm">06</span>
+            <span style="flex: 1">Relations saines vs relations toxiques</span>
+          </a>
+        </li>
+        <li style="border-bottom: 0.5pt solid var(--sand-deep)">
+          <a
+            href="#ch07"
+            style="display: flex; gap: 5mm; padding: 3.6mm 0; text-decoration: none; color: var(--ink)"
+          >
+            <span style="font-family: 'Fraunces', serif; color: var(--clay); width: 8mm">07</span>
+            <span style="flex: 1">Le plan pour t'en sortir</span>
+          </a>
+        </li>
+        <li style="border-bottom: 0.5pt solid var(--sand-deep)">
+          <a
+            href="#bonus"
+            style="display: flex; gap: 5mm; padding: 3.6mm 0; text-decoration: none; color: var(--ink)"
+          >
+            <span style="font-family: 'Fraunces', serif; color: var(--clay); width: 8mm">+</span>
+            <span style="flex: 1">Bonus — Ton plan d'action en 7 jours</span>
+          </a>
+        </li>
+        <li style="border-bottom: 0.5pt solid var(--sand-deep)">
+          <a
+            href="#checklist"
+            style="display: flex; gap: 5mm; padding: 3.6mm 0; text-decoration: none; color: var(--ink)"
+          >
+            <span style="font-family: 'Fraunces', serif; color: var(--clay); width: 8mm">+</span>
+            <span style="flex: 1">Ta checklist à garder sous les yeux</span>
+          </a>
+        </li>
+      </ol>
+
+      <div class="spacer"></div>
+      <p class="small">
+        Les titres ci-dessus sont cliquables&nbsp;: touche une ligne pour aller directement au
+        chapitre.
+      </p>
+
+    </section>
+
+    <!-- ═══════════════════ 3. Avant de commencer ═══════════════════ -->
+    <section class="page" data-section="Avant de commencer">
+      <span class="eyebrow">Avant de commencer</span>
+      <h2>À qui s'adresse ce livre</h2>
+
+      <div style="margin-top: 7mm">
+        <p class="lead">
+          Ce livre s'adresse à toi qui donnes beaucoup, qui ressens tout intensément, et qui te
+          demandes parfois pourquoi tu te sens mal sans trouver d'explication claire.
+        </p>
+        <p>
+          Il ne s'agit pas d'un traité théorique, mais d'un accompagnement simple et direct pour
+          t'aider à comprendre ce qui se joue en toi, à poser des limites, et à te reconstruire,
+          étape par étape.
+        </p>
+        <p>
+          À la fin de chaque chapitre, tu trouveras quelques questions à te poser. Prends un carnet
+          si tu veux&nbsp;: ce livre se lit, mais il se vit surtout en le mettant en pratique.
+        </p>
+
+        <div class="pull">Tu n'as pas besoin d'être parfaite.<br />Tu as juste besoin de commencer.</div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <!-- AJOUT — cadre de lecture et ressources d'urgence -->
+      <div
+        style="
+          background: var(--sand);
+          border-radius: 4mm;
+          padding: 5mm 6mm;
+          border-left: 2.2pt solid var(--clay);
+        "
+      >
+        <span class="eyebrow" style="color: var(--plum)">Important</span>
+        <p class="small" style="margin-top: 2.5mm; margin-bottom: 2.5mm">
+          Ce guide relève du développement personnel. Il ne remplace ni un avis médical, ni un suivi
+          psychologique. Si tu traverses une période de grande souffrance, parles-en à ton médecin ou
+          à un psychologue&nbsp;: demander de l'aide n'est pas un échec.
+        </p>
+        <p class="small" style="margin: 0">
+          <strong>En France, à toute heure&nbsp;:</strong> 3114 (prévention du suicide, gratuit) ·
+          3919 (violences faites aux femmes, anonyme et gratuit) · 15 ou 112 en cas d'urgence.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Chapitre 01 ═══════════════════ -->
+    <section class="page" data-section="Chapitre 01" id="ch01">
+      <span class="eyebrow">Chapitre 01</span>
+      <h2>Pourquoi tu te sens mal sans comprendre pourquoi</h2>
+
+      <div style="margin-top: 6mm">
+        <p>Tu ressens peut-être un mal-être difficile à expliquer.</p>
+        <p>
+          Il n'y a pas forcément un gros problème dans ta vie… et pourtant, tu ne te sens pas bien.
+        </p>
+        <p>
+          Tu réfléchis beaucoup. Tu doutes. Tu ressens tout très fort. Et surtout, tu as
+          l'impression d'être «&nbsp;trop&nbsp;»&nbsp;:
+        </p>
+        <ul class="marks">
+          <li>trop sensible</li>
+          <li>trop gentille</li>
+          <li>trop attachée</li>
+        </ul>
+
+        <h3>Tu finis par t'oublier</h3>
+        <p>
+          Quand tu donnes beaucoup aux autres, que tu fais passer leurs besoins avant les tiens, et
+          que tu cherches à être aimée ou acceptée… tu te perds.
+        </p>
+
+        <h3>Ce n'est pas un défaut</h3>
+        <p>
+          C'est un signal. Tu peux aussi avoir peur de perdre les gens. Peur d'être seule. Peur de ne
+          pas être suffisante. Alors tu fais des efforts. Tu t'adaptes. Tu pardonnes… même quand ça
+          te fait du mal.
+        </p>
+      </div>
+
+    </section>
+
+    <section class="page" data-section="Chapitre 01">
+      <div>
+        <p>
+          Et c'est comme ça que la souffrance s'installe. Pas forcément à cause d'un événement
+          précis, mais à cause de tout ce que tu gardes en toi.
+        </p>
+        <p>
+          Ça peut ressembler à une fatigue qui ne part pas, même après une bonne nuit de sommeil. À
+          un poids dans la poitrine avant de répondre à un message. À cette petite voix qui te dit de
+          ne pas trop en demander, pour ne déranger personne.
+        </p>
+
+        <div class="pull">Si tu te reconnais dans ces mots, ce n'est pas un défaut.<br />C'est le signe que tu as besoin de te retrouver.</div>
+      </div>
+
+      <div class="exercise">
+        <span class="eyebrow">✎ À toi de jouer</span>
+        <ol>
+          <li>
+            Depuis quand ressens-tu ce mal-être, même quand tout va «&nbsp;bien&nbsp;» sur le
+            papier&nbsp;?<span class="rule"></span>
+          </li>
+          <li>Dans quelles situations te dis-tu que tu es «&nbsp;trop&nbsp;»&nbsp;?<span class="rule"></span></li>
+          <li>Qu'est-ce que tu mets de côté, en ce moment, pour être acceptée&nbsp;?<span class="rule"></span></li>
+        </ol>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Chapitre 02 ═══════════════════ -->
+    <section class="page" data-section="Chapitre 02" id="ch02">
+      <span class="eyebrow">Chapitre 02</span>
+      <h2>Le vrai problème (et pourquoi tu restes bloquée)</h2>
+
+      <div style="margin-top: 6mm">
+        <p>Le problème, ce n'est pas que tu ressens trop.</p>
+        <p><strong>Le problème, c'est que tu t'oublies pour les autres.</strong></p>
+        <p>Tu donnes&nbsp;:</p>
+        <ul class="marks">
+          <li>ton temps</li>
+          <li>ton énergie</li>
+          <li>ton attention</li>
+        </ul>
+        <p>Mais tu ne reçois pas toujours la même chose en retour. Et malgré ça… tu continues.</p>
+
+        <h3>Pourquoi&nbsp;?</h3>
+        <p>Parce que tu espères. Parce que tu t'attaches. Parce que tu veux que ça marche.</p>
+        <p>
+          Tu penses que si tu donnes encore un peu plus, alors la personne finira par te donner ce
+          que tu attends. Mais la vérité, c'est que ça ne fonctionne pas comme ça.
+        </p>
+      </div>
+
+    </section>
+
+    <section class="page" data-section="Chapitre 02">
+      <div>
+        <p>
+          Quand tu acceptes trop, quand tu pardonnes tout, quand tu restes même quand tu souffres…
+          Tu envoies un message&nbsp;:
+        </p>
+
+        <div class="pull">«&nbsp;Je suis prête à rester,<br />même si ça me fait du mal.&nbsp;»</div>
+
+        <p>
+          Ce n'est pas parce que tu n'as pas de valeur. C'est parce que tu ne la protèges pas.
+        </p>
+        <p>
+          Protéger ta valeur, ce n'est pas devenir exigeante ou dure. C'est simplement arrêter de
+          considérer que ta patience et ta compréhension sont illimitées. Elles ne le sont pas, et ce
+          n'est pas grave de le rappeler, même à toi-même.
+        </p>
+        <p><strong>Tu mérites autant que ce que tu donnes.</strong></p>
+      </div>
+
+      <div class="exercise">
+        <span class="eyebrow">✎ À toi de jouer</span>
+        <ol>
+          <li>À qui donnes-tu le plus, en ce moment&nbsp;?<span class="rule"></span></li>
+          <li>Qu'attends-tu vraiment en retour, et l'obtiens-tu&nbsp;?<span class="rule"></span></li>
+          <li>
+            Que voudrait dire, concrètement, «&nbsp;protéger ta valeur&nbsp;» cette
+            semaine&nbsp;?<span class="rule"></span>
+          </li>
+        </ol>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Chapitre 03 ═══════════════════ -->
+    <section class="page" data-section="Chapitre 03" id="ch03">
+      <span class="eyebrow">Chapitre 03</span>
+      <h2>Ce que tu dois arrêter dès maintenant</h2>
+
+      <div style="margin-top: 6mm">
+        <p>Si tu veux aller mieux, il y a certaines choses que tu dois arrêter.</p>
+
+        <h3>1 · Courir après les gens</h3>
+        <p>
+          Quand quelqu'un s'éloigne, tu fais plus d'efforts. Mais plus tu cours après quelqu'un, plus
+          tu t'oublies.
+        </p>
+
+        <h3>2 · Tout pardonner</h3>
+        <p>
+          Comprendre ne veut pas dire tout accepter. À force, tu t'habitues à être blessée.
+        </p>
+
+        <h3>3 · Ignorer ce que tu ressens</h3>
+        <p>
+          Tu sais quand quelque chose ne va pas. Mais tu minimises. Et ça s'accumule… jusqu'à devenir
+          trop lourd.
+        </p>
+
+        <h3>4 · Croire que tu dois mériter l'amour</h3>
+        <p>
+          Tu n'as pas à prouver ta valeur. L'amour sain ne te fait pas douter en permanence.
+        </p>
+      </div>
+
+    </section>
+
+    <section class="page" data-section="Chapitre 03">
+      <div>
+        <p>
+          Ces quatre réflexes ont souvent un point commun&nbsp;: ils te demandent de faire toujours
+          plus, pendant que l'autre n'a rien à ajuster. Repérer lequel revient le plus chez toi,
+          c'est déjà commencer à en sortir.
+        </p>
+
+        <div class="pull">Te respecter, ce n'est pas devenir froide.<br />C'est commencer à te choisir.</div>
+      </div>
+
+      <div class="exercise">
+        <span class="eyebrow">✎ À toi de jouer</span>
+        <ol>
+          <li>
+            Lequel de ces quatre comportements te concerne le plus en ce moment&nbsp;?<span
+              class="rule"
+            ></span>
+          </li>
+          <li>Quelle situation récente l'illustre bien&nbsp;?<span class="rule"></span></li>
+          <li>
+            Que pourrais-tu faire différemment la prochaine fois que ça se présente&nbsp;?<span
+              class="rule"
+            ></span>
+          </li>
+        </ol>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Chapitre 04 ═══════════════════ -->
+    <section class="page" data-section="Chapitre 04" id="ch04">
+      <span class="eyebrow">Chapitre 04</span>
+      <h2>Reprendre le contrôle de tes émotions</h2>
+
+      <div style="margin-top: 6mm">
+        <p>Reprendre le contrôle ne veut pas dire ne plus rien ressentir. Au contraire.</p>
+
+        <div class="pull">Une émotion n'est pas un ordre.<br />C'est une information.</div>
+
+        <ul class="marks">
+          <li>La peur → insécurité</li>
+          <li>La tristesse → manque</li>
+          <li>La colère → limite dépassée</li>
+        </ul>
+
+        <p>Le problème n'est pas ce que tu ressens. C'est ce que tu en fais.</p>
+        <p>
+          Une émotion qui monte n'a pas besoin d'être obéie tout de suite. Elle a besoin d'être
+          nommée. Le simple fait de te dire «&nbsp;ce que je ressens là, c'est de la peur&nbsp;» ou
+          «&nbsp;c'est de la colère&nbsp;» suffit souvent à en abaisser l'intensité, parce que tu
+          passes du rôle de «&nbsp;celle qui subit&nbsp;» à celle qui observe.
+        </p>
+
+        <h3>À faire dès maintenant</h3>
+        <ul class="marks">
+          <li>Prendre du recul avant de réagir</li>
+          <li>Écrire ce que tu ressens</li>
+          <li>Identifier tes déclencheurs</li>
+        </ul>
+
+        <p><strong>Comprendre diminue l'intensité.</strong></p>
+      </div>
+    </section>
+
+    <!-- Page d'exercice dédiée -->
+    <section class="page page--sand" data-section="Chapitre 04">
+      <span class="eyebrow" style="color: var(--plum)">✎ À toi de jouer</span>
+      <h2 style="font-size: 15pt">Écouter ce que tes émotions te disent</h2>
+
+      <div class="spacer" style="flex: 0 0 6mm"></div>
+<div class="exercise" style="margin-top: 0; background: transparent; border: 0; padding: 0">
+                <ol>
+          <li>
+            Quelle émotion revient le plus souvent chez toi ces derniers temps&nbsp;?<span
+              class="rule"
+            ></span>
+          </li>
+          <li>Qu'est-ce qu'elle essaie de te dire, si tu l'écoutes vraiment&nbsp;?<span class="rule"></span><span class="rule"></span></li>
+          <li>
+            Quel petit geste pourrais-tu adopter pour l'accueillir sans qu'elle te
+            submerge&nbsp;?<span class="rule"></span><span class="rule"></span>
+          </li>
+        </ol>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Chapitre 05 ═══════════════════ -->
+    <section class="page" data-section="Chapitre 05" id="ch05">
+      <span class="eyebrow">Chapitre 05</span>
+      <h2>Reprendre confiance en toi</h2>
+
+      <div style="margin-top: 6mm">
+        <p>La confiance ne vient pas des autres. Elle vient de la manière dont tu te traites.</p>
+
+        <h3>Te choisis-tu vraiment&nbsp;?</h3>
+        <p>Avoir confiance, ce n'est pas être parfaite. C'est savoir que tu mérites le respect.</p>
+        <p>
+          Observe un instant la voix intérieure que tu utilises quand tu te trompes. Serait-elle
+          acceptable si tu la disais à voix haute à quelqu'un que tu aimes&nbsp;? Si la réponse est
+          non, c'est un bon point de départ pour la changer.
+        </p>
+
+        <h3>À mettre en place</h3>
+        <ul class="marks">
+          <li>Arrêter de te comparer</li>
+          <li>Te parler correctement</li>
+          <li>Respecter tes choix</li>
+          <li>Dire non</li>
+        </ul>
+
+        <div class="pull">La confiance en soi, ce n'est pas une sensation.<br />C'est une décision.</div>
+      </div>
+    </section>
+
+    <!-- Page d'exercice dédiée -->
+    <section class="page page--sand" data-section="Chapitre 05">
+      <span class="eyebrow" style="color: var(--plum)">✎ À toi de jouer</span>
+      <h2 style="font-size: 15pt">Regarder comment tu te traites</h2>
+
+      <div class="spacer" style="flex: 0 0 6mm"></div>
+<div class="exercise" style="margin-top: 0; background: transparent; border: 0; padding: 0">
+                <ol>
+          <li>Comment te parles-tu quand tu échoues ou que tu te trompes&nbsp;?<span class="rule"></span><span class="rule"></span></li>
+          <li>
+            Qu'accepterais-tu chez une amie que tu ne t'autorises pas à toi-même&nbsp;?<span
+              class="rule"
+            ></span>
+          </li>
+          <li>Quelle petite limite pourrais-tu poser cette semaine&nbsp;?<span class="rule"></span><span class="rule"></span></li>
+        </ol>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Chapitre 06 ═══════════════════ -->
+    <section class="page" data-section="Chapitre 06" id="ch06">
+      <span class="eyebrow">Chapitre 06</span>
+      <h2>Relations saines vs relations toxiques</h2>
+
+      <div style="margin-top: 6mm">
+        <p>Une relation saine te fait te sentir&nbsp;:</p>
+        <ul class="marks">
+          <li>respectée</li>
+          <li>écoutée</li>
+          <li>en sécurité</li>
+        </ul>
+
+        <p><strong>Une relation toxique te fait douter en permanence.</strong></p>
+        <p>
+          Le plus souvent, ce n'est pas un seul grand signe qui alerte, mais une accumulation de
+          petits détails&nbsp;: tu t'excuses pour des choses qui ne le méritent pas, tu anticipes les
+          réactions de l'autre avant de parler, tu te sens soulagée quand la personne est absente
+          plutôt que quand elle est là.
+        </p>
+        <p>Ce n'est pas parce que tu aimes quelqu'un que cette personne est bonne pour toi.</p>
+
+        <div class="pull">Partir, ce n'est pas échouer.<br />C'est te choisir.</div>
+      </div>
+    </section>
+
+    <!-- Page d'exercice dédiée -->
+    <section class="page page--sand" data-section="Chapitre 06">
+      <span class="eyebrow" style="color: var(--plum)">✎ À toi de jouer</span>
+      <h2 style="font-size: 15pt">Faire le point sur tes relations</h2>
+
+      <div class="spacer" style="flex: 0 0 6mm"></div>
+<div class="exercise" style="margin-top: 0; background: transparent; border: 0; padding: 0">
+                <ol>
+          <li>
+            Repense à un échange récent&nbsp;: en sors-tu plus légère, ou plus lourde&nbsp;?<span
+              class="rule"
+            ></span>
+          </li>
+          <li>Quels signaux ignores-tu depuis un moment, par habitude&nbsp;?<span class="rule"></span><span class="rule"></span></li>
+          <li>
+            Que représenterait «&nbsp;partir&nbsp;» ou «&nbsp;prendre de la distance&nbsp;» pour toi
+            aujourd'hui&nbsp;?<span class="rule"></span><span class="rule"></span>
+          </li>
+        </ol>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Chapitre 07 ═══════════════════ -->
+    <section class="page" data-section="Chapitre 07" id="ch07">
+      <span class="eyebrow">Chapitre 07</span>
+      <h2>Le plan pour t'en sortir</h2>
+
+      <div style="margin-top: 6mm">
+        <p><strong>S'en sortir, ce n'est pas un déclic. C'est un processus.</strong></p>
+
+        <h3>1 · Prise de conscience</h3>
+        <p>Arrêter de minimiser. Nommer les choses telles qu'elles sont, même quand c'est inconfortable.</p>
+
+        <h3>2 · Prendre de la distance</h3>
+        <p>Observer. Moins donner. Laisser un peu d'espace entre ce que tu ressens et ce que tu fais.</p>
+
+        <h3>3 · Te reconstruire</h3>
+        <p>Revenir à toi. Réinvestir ce que tu avais mis de côté&nbsp;: tes envies, ton rythme, tes proches.</p>
+
+        <h3>4 · Nouvelles habitudes</h3>
+        <ul class="marks">
+          <li>Ne plus accepter l'inacceptable</li>
+          <li>Ne plus courir après</li>
+          <li>Prendre du recul</li>
+        </ul>
+
+        <div class="pull">Chaque fois que tu te choisis, tu avances.</div>
+      </div>
+
+    </section>
+
+    <section class="page" data-section="Chapitre 07">
+      <div>
+        <p class="lead">Si tu es arrivée jusqu'ici, ce n'est pas un hasard.</p>
+        <p class="lead"><strong>Tu n'as pas besoin d'être parfaite. Tu as juste besoin de commencer.</strong></p>
+      </div>
+
+      <div class="exercise">
+        <span class="eyebrow">✎ À toi de jouer</span>
+        <ol>
+          <li>
+            À quelle étape du processus te situes-tu aujourd'hui&nbsp;: prise de conscience,
+            distance, reconstruction, ou nouvelles habitudes&nbsp;?<span class="rule"></span>
+          </li>
+          <li>
+            Quelle est la toute première chose que tu peux ajuster, dès aujourd'hui&nbsp;?<span
+              class="rule"
+            ></span>
+          </li>
+          <li>
+            À quoi ressemblera ta vie dans six mois si tu continues à te choisir&nbsp;?<span
+              class="rule"
+            ></span>
+          </li>
+        </ol>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Bonus — 7 jours ═══════════════════ -->
+    <section class="page page--sand" data-section="Bonus — 7 jours" id="bonus" style="padding-top: 12mm">
+      <span class="eyebrow">Bonus</span>
+      <h2>Ton plan d'action en 7 jours</h2>
+
+      <p class="small" style="margin-top: 3.5mm">
+        Une action simple par jour, issue de chaque chapitre. Pas besoin de tout faire
+        parfaitement&nbsp;: l'idée est d'avancer, un jour à la fois.
+      </p>
+
+      <div style="margin-top: 1mm">
+        <!-- AJOUT — case à cocher pour chaque jour -->
+        <div style="display: flex; gap: 4mm; padding: 1.5mm 0; border-top: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4mm; height: 4mm; border: 0.7pt solid var(--plum); border-radius: 1mm; margin-top: 1mm; flex: none"></span>
+          <span style="flex: 1">
+            <strong style="font-family: 'Fraunces', serif; color: var(--plum)">Jour 1 — Nommer</strong><br />
+            <span style="font-size: 9pt; line-height: 1.42">Écris ce que tu ressens en ce moment, sans le juger ni chercher à l'expliquer tout de suite.</span>
+          </span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 1.5mm 0; border-top: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4mm; height: 4mm; border: 0.7pt solid var(--plum); border-radius: 1mm; margin-top: 1mm; flex: none"></span>
+          <span style="flex: 1">
+            <strong style="font-family: 'Fraunces', serif; color: var(--plum)">Jour 2 — Observer</strong><br />
+            <span style="font-size: 9pt; line-height: 1.42">Repère un moment de ta journée où tu t'es «&nbsp;oubliée&nbsp;» pour quelqu'un d'autre.</span>
+          </span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 1.5mm 0; border-top: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4mm; height: 4mm; border: 0.7pt solid var(--plum); border-radius: 1mm; margin-top: 1mm; flex: none"></span>
+          <span style="flex: 1">
+            <strong style="font-family: 'Fraunces', serif; color: var(--plum)">Jour 3 — Arrêter un réflexe</strong><br />
+            <span style="font-size: 9pt; line-height: 1.42">Choisis un des quatre comportements du chapitre 3 et interromps-le, ne serait-ce qu'une fois.</span>
+          </span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 1.5mm 0; border-top: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4mm; height: 4mm; border: 0.7pt solid var(--plum); border-radius: 1mm; margin-top: 1mm; flex: none"></span>
+          <span style="flex: 1">
+            <strong style="font-family: 'Fraunces', serif; color: var(--plum)">Jour 4 — Décoder une émotion</strong><br />
+            <span style="font-size: 9pt; line-height: 1.42">La prochaine fois qu'une émotion forte arrive, nomme-la et demande-toi ce qu'elle essaie de te dire.</span>
+          </span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 1.5mm 0; border-top: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4mm; height: 4mm; border: 0.7pt solid var(--plum); border-radius: 1mm; margin-top: 1mm; flex: none"></span>
+          <span style="flex: 1">
+            <strong style="font-family: 'Fraunces', serif; color: var(--plum)">Jour 5 — Dire non</strong><br />
+            <span style="font-size: 9pt; line-height: 1.42">Dis non à quelque chose, même petit, sans te justifier pendant dix minutes.</span>
+          </span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 1.5mm 0; border-top: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4mm; height: 4mm; border: 0.7pt solid var(--plum); border-radius: 1mm; margin-top: 1mm; flex: none"></span>
+          <span style="flex: 1">
+            <strong style="font-family: 'Fraunces', serif; color: var(--plum)">Jour 6 — Regarder une relation en face</strong><br />
+            <span style="font-size: 9pt; line-height: 1.42">Choisis une relation et demande-toi honnêtement si elle te fait te sentir respectée, écoutée et en sécurité.</span>
+          </span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 1.5mm 0; border-top: 0.5pt solid var(--sand-deep); border-bottom: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4mm; height: 4mm; border: 0.7pt solid var(--plum); border-radius: 1mm; margin-top: 1mm; flex: none"></span>
+          <span style="flex: 1">
+            <strong style="font-family: 'Fraunces', serif; color: var(--plum)">Jour 7 — Te choisir</strong><br />
+            <span style="font-size: 9pt; line-height: 1.42">Relis la citation qui t'a le plus marquée. Note une décision, même petite, que tu prends pour toi à partir d'aujourd'hui.</span>
+          </span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Checklist ═══════════════════ -->
+    <section class="page" data-section="Checklist" id="checklist">
+      <span class="eyebrow">Pour toi</span>
+      <h2>Ta checklist à garder sous les yeux</h2>
+
+      <div style="margin-top: 8mm">
+        <div style="display: flex; gap: 4mm; padding: 3.6mm 0; border-bottom: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4.2mm; height: 4.2mm; border: 0.7pt solid var(--clay); border-radius: 1mm; flex: none; margin-top: 0.6mm"></span>
+          <span>Je nomme ce que je ressens au lieu de le minimiser</span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 3.6mm 0; border-bottom: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4.2mm; height: 4.2mm; border: 0.7pt solid var(--clay); border-radius: 1mm; flex: none; margin-top: 0.6mm"></span>
+          <span>Je ne cours plus après les gens qui s'éloignent</span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 3.6mm 0; border-bottom: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4.2mm; height: 4.2mm; border: 0.7pt solid var(--clay); border-radius: 1mm; flex: none; margin-top: 0.6mm"></span>
+          <span>Je pardonne sans tout accepter</span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 3.6mm 0; border-bottom: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4.2mm; height: 4.2mm; border: 0.7pt solid var(--clay); border-radius: 1mm; flex: none; margin-top: 0.6mm"></span>
+          <span>Je dis non sans me justifier pendant dix minutes</span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 3.6mm 0; border-bottom: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4.2mm; height: 4.2mm; border: 0.7pt solid var(--clay); border-radius: 1mm; flex: none; margin-top: 0.6mm"></span>
+          <span>Je me parle comme je parlerais à quelqu'un que j'aime</span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 3.6mm 0; border-bottom: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4.2mm; height: 4.2mm; border: 0.7pt solid var(--clay); border-radius: 1mm; flex: none; margin-top: 0.6mm"></span>
+          <span>Je repère les relations qui me font douter en permanence</span>
+        </div>
+        <div style="display: flex; gap: 4mm; padding: 3.6mm 0; border-bottom: 0.5pt solid var(--sand-deep)">
+          <span style="width: 4.2mm; height: 4.2mm; border: 0.7pt solid var(--clay); border-radius: 1mm; flex: none; margin-top: 0.6mm"></span>
+          <span>Je me choisis, un peu plus chaque jour</span>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+      <p class="small center">
+        Imprime cette page, ou garde-la en photo dans ton téléphone.
+      </p>
+
+    </section>
+
+    <!-- ═══════════════════ Qui suis-je ═══════════════════ -->
+    <section class="page" data-section="Qui suis-je">
+      <span class="eyebrow">Qui suis-je</span>
+      <h2>Saphia</h2>
+      <p class="eyebrow" style="color: var(--muted); margin-top: 2mm">Auteure &amp; accompagnante</p>
+
+      <div style="margin-top: 7mm">
+        <p>
+          Je m'appelle Saphia. Ce que je partage dans ce livre, je l'ai d'abord vécu moi-même&nbsp;:
+          le mal-être qu'on n'arrive pas à nommer, l'oubli de soi pour les autres, et le long chemin
+          pour se reconstruire.
+        </p>
+        <p>
+          Mon parcours personnel, associé à mon expérience professionnelle en tant qu'<strong
+            >aide médico-psychologique</strong
+          >, m'a donné les compétences et la sensibilité nécessaires pour accompagner des personnes en
+          souffrance psychologique, avec justesse et sans jugement.
+        </p>
+        <p>
+          Je sais à quel point il peut être difficile de mettre des mots sur ce que l'on ressent, et à
+          quel point être accompagnée, vraiment, peut tout changer.
+        </p>
+        <p>
+          C'est cette conviction qui m'a poussée à créer un accompagnement individuel, pour aller plus
+          loin que les mots de ce livre.
+        </p>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="pull" style="margin-bottom: 0">
+        On part de là où tu en es,<br />et on avance à ton rythme.
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ Aller plus loin ═══════════════════ -->
+    <section class="page page--plum" data-section="Aller plus loin">
+      <span class="eyebrow">Aller plus loin</span>
+
+      <div style="margin-top: 8mm">
+        <h2 style="color: var(--cream); font-size: 17pt">
+          Ce que tu as lu peut changer ta vie.<br />Ce que tu vas vivre en accompagnement, encore plus
+          vite.
+        </h2>
+
+        <p style="margin-top: 6mm; color: rgba(251, 247, 242, 0.85)">
+          Un accompagnement individuel par téléphone, pour transformer chaque page de ce guide en
+          changement réel dans ta vie — à ton rythme, en toute confidentialité.
+        </p>
+
+        <ul class="marks" style="color: rgba(251, 247, 242, 0.85); margin-top: 5mm">
+          <li>Un premier appel de 30 minutes, offert et sans engagement</li>
+          <li>Par téléphone ou en visio, comme tu préfères</li>
+          <li>Aucun jugement, rien à préparer</li>
+        </ul>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="center">
+        <!--
+          AJOUT — remplace le gabarit « [Ton lien de réservation ici] ».
+          L'adresse est injectée par tools/ebook/build.mjs (option --url).
+        -->
+        <a class="cta" href="__BOOKING_URL__">Je réserve mon appel offert →</a>
+        <p class="small" style="color: rgba(251, 247, 242, 0.65); margin-top: 4mm">
+          __BOOKING_LABEL__
+        </p>
+      </div>
+
+      <div class="spacer"></div>
+
+      <p class="small center" style="color: rgba(251, 247, 242, 0.7)">
+        Une question&nbsp;? Écris-moi à <a class="link" href="mailto:__EMAIL__">__EMAIL__</a>
+      </p>
+
+    </section>
+
+    <!-- ═══════════════════ Dernière page ═══════════════════ -->
+    <section class="page center" data-folio="none" style="justify-content: center">
+      <div>
+        <h2 style="font-size: 19pt">
+          Tu as tout pour avancer.<br />Il ne te manque qu'un premier pas de plus.
+        </h2>
+
+        <div style="width: 20mm; height: 1.4pt; background: var(--clay); margin: 8mm auto"></div>
+
+        <p class="lead" style="color: var(--plum)">
+          Tu n'es pas seule.<br />Et tu peux vraiment t'en sortir.
+        </p>
+      </div>
+
+      <div class="spacer"></div>
+
+      <!-- AJOUT — mention de propriété, pour un produit vendu -->
+      <p class="small" style="color: #9a8d83">
+        © __YEAR__ Saphia. Tous droits réservés.<br />
+        Cet exemplaire est destiné à un usage strictement personnel&nbsp;: sa revente, son partage ou
+        sa reproduction, même partielle, ne sont pas autorisés.
+      </p>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "saphia-ebook",
+  "private": true,
+  "type": "module",
+  "description": "Générateur du PDF de l'ebook, isolé des dépendances du site.",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

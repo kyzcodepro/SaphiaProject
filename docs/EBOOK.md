@@ -112,19 +112,25 @@ La réponse doit être un refus, jamais le fichier.
 
 ---
 
-## Deux corrections à apporter au PDF
+## Régénérer le fichier
 
-Relevées à la lecture du fichier fourni :
+Le PDF n'est plus un fichier figé : il est produit à partir d'une source
+modifiable, dans `tools/ebook/`.
 
-1. **Page 17**, le lien de réservation est resté à l'état de gabarit :
-   `[Ton lien de réservation ici]`. Le remplacer par l'adresse réelle avant toute
-   vente, par exemple :
-   `https://www.saphia.fr/reserver/appel-decouverte?utm_source=ebook`
-2. **Les titres en gras sont dessinés deux fois** dans le fichier. À l'écran
-   c'est invisible, mais au copier-coller le texte apparaît en double
-   (« aideaide médico-psychologiquemédico-psychologique »). Les lecteurs
-   d'écran lisent aussi ce doublon. À corriger dans l'outil de mise en page en
-   utilisant une vraie graisse de police plutôt qu'un faux gras.
+```bash
+cd tools/ebook
+npm install                 # une seule fois
+npm run build -- --url https://VOTRE-DOMAINE/reserver/appel-decouverte?utm_source=ebook
+```
+
+Le texte se modifie dans `tools/ebook/ebook.html`, et la mise en page se refait
+toute seule. Un contrôle automatique arrête la génération si un texte dépasse de
+sa page — aucune phrase ne peut être coupée dans le fichier vendu.
+
+Détails dans [tools/ebook/README.md](../tools/ebook/README.md).
+
+> ⚠️ **Le lien de réservation par défaut pointe vers `www.saphia.fr`.**
+> Le regénérer avec le domaine réel avant la première vente.
 
 ---
 

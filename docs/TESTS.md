@@ -199,6 +199,30 @@ EMAIL_ADMIN=votre.adresse@exemple.fr
 
 ---
 
+## Montrer une préversion à la cliente
+
+Un déploiement Vercel suffit à partager le site sans domaine ni clés de
+paiement. Renseigner au minimum, dans les variables du projet Vercel :
+
+```env
+NEXT_PUBLIC_SITE_URL=https://<le-projet>.vercel.app
+SITE_NOINDEX=1
+```
+
+Ce qui ne fonctionnera pas sur une préversion sans clés, et c'est normal :
+
+| Ce qui s'affiche | Pourquoi |
+| --- | --- |
+| Le calendrier ne charge pas | L'identifiant Calendly est encore fictif |
+| « Le paiement n'est pas encore actif » | Aucune clé Stripe ni PayPal |
+| Aucun email envoyé | Pas de clé Resend |
+| Le téléchargement de l'ebook échoue | Le PDF n'est pas versionné |
+
+Tout le reste — pages, textes, navigation mobile, formulaires et leurs
+messages d'erreur — est représentatif du rendu final.
+
+---
+
 ## 3. Avant l'ouverture au public
 
 - [ ] `NEXT_PUBLIC_SITE_URL` pointe sur le domaine définitif

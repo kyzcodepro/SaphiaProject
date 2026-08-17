@@ -209,6 +209,27 @@ domaine de production après le paiement.
 Le projet est prévu pour Vercel, mais fonctionne sur tout hébergeur supportant
 Node.js 20+.
 
+### Montrer une préversion avant l'ouverture
+
+Pour faire relire le site à la cliente, un déploiement suffit : Vercel fournit
+une adresse publique, sans domaine ni configuration de paiement.
+
+Une seule précaution — **empêcher le référencement**. Une préversion contient
+des textes provisoires et des mentions légales incomplètes ; la voir apparaître
+dans Google serait un problème.
+
+```env
+SITE_NOINDEX=1        # robots.txt bloquant + balise noindex sur toutes les pages
+```
+
+Les déploiements de *préversion* Vercel (branche ≠ production) sont détectés
+automatiquement et n'ont pas besoin de cette variable. Elle reste nécessaire si
+la branche est déployée en production sur une adresse `.vercel.app`.
+
+Le jour du lancement, retirer la variable — c'est ce qui rouvre l'indexation.
+
+### Mise en production
+
 1. Connecter le dépôt à Vercel (framework détecté automatiquement).
 2. Renseigner les variables d'environnement de `.env.example` dans le projet
    Vercel.

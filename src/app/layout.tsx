@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
 import { brand } from "@/content/site.config";
-import { organizationJsonLd } from "@/lib/seo";
+import { isIndexable, organizationJsonLd } from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,6 +34,7 @@ export const metadata: Metadata = {
   authors: [{ name: brand.name }],
   creator: brand.name,
   formatDetection: { telephone: false },
+  robots: isIndexable() ? undefined : { index: false, follow: false },
   openGraph: {
     type: "website",
     locale: "fr_FR",

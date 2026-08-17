@@ -1,6 +1,23 @@
 import type { Metadata } from "next";
 import { brand, ebook, faq, offers, programs } from "@/content/site.config";
 
+/**
+ * Le site est-il autorisé à être référencé par Google ?
+ *
+ * Une préversion partagée à la cliente ne doit pas apparaître dans les
+ * résultats de recherche : les textes sont provisoires et les mentions légales
+ * incomplètes. Sur Vercel, les déploiements de préversion sont automatiquement
+ * détectés ; ailleurs, `SITE_NOINDEX=1` produit le même effet.
+ */
+export function isIndexable(): boolean {
+  if (process.env.SITE_NOINDEX === "1" || process.env.NEXT_PUBLIC_SITE_NOINDEX === "1") {
+    return false;
+  }
+  const vercelEnv = process.env.VERCEL_ENV;
+  if (vercelEnv && vercelEnv !== "production") return false;
+  return true;
+}
+
 /** Construit les métadonnées d'une page (§35). */
 export function pageMetadata(params: {
   title: string;
@@ -14,7 +31,7 @@ export function pageMetadata(params: {
     title: params.title,
     description: params.description,
     alternates: { canonical: url },
-    robots: params.noIndex ? { index: false, follow: false } : undefined,
+    robots: params.noIndex || !isIndexable() ? { index: false, follow: false } : undefined,
     openGraph: {
       type: "website",
       locale: "fr_FR",

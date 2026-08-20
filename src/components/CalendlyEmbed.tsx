@@ -32,6 +32,20 @@ type CalendlyEmbedProps = {
 
 const WIDGET_SCRIPT = "https://assets.calendly.com/assets/external/widget.js";
 
+/** Hauteur avant que Calendly n'annonce la sienne. */
+const INITIAL_HEIGHT = 780;
+
+/** Garde-fous : ni conteneur écrasé, ni page interminable. */
+const MIN_HEIGHT = 560;
+const MAX_HEIGHT = 1800;
+
+/** Lit la hauteur annoncée par Calendly, transmise sous la forme « 1050px ». */
+function parseAnnouncedHeight(value: unknown): number | null {
+  const parsed = typeof value === "string" ? Number.parseInt(value, 10) : Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) return null;
+  return Math.min(Math.max(parsed, MIN_HEIGHT), MAX_HEIGHT);
+}
+
 /**
  * Chargement du script Calendly, mutualisé entre toutes les instances du
  * composant : il n'est injecté qu'une seule fois par session de navigation.
@@ -89,6 +103,11 @@ export function CalendlyEmbed({
 }: CalendlyEmbedProps) {
   const [scriptReady, setScriptReady] = useState(false);
   const [scriptFailed, setScriptFailed] = useState(false);
+  /* Le widget se dimensionne en pourcentage : sans hauteur explicite sur le
+     conteneur, il s'effondre et affiche sa propre barre de défilement. La
+     valeur de départ couvre l'écran de choix de créneau ; Calendly annonce
+     ensuite la hauteur réelle, qui varie selon l'étape et la largeur. */
+  const [height, setHeight] = useState(INITIAL_HEIGHT);
   const containerRef = useRef<HTMLDivElement>(null);
   const url = useMemo(() => buildUrl(eventSlug, prefill, utm), [eventSlug, prefill, utm]);
 
@@ -122,13 +141,21 @@ export function CalendlyEmbed({
     calendlyApi?.initInlineWidget({ url, parentElement: container });
   }, [scriptReady, url]);
 
-  // Écoute la confirmation de rendez-vous envoyée par l'iframe Calendly.
+  /* Messages envoyés par l'iframe Calendly : hauteur de la page, et
+     confirmation du rendez-vous. */
   useEffect(() => {
-    if (!onScheduled) return;
-
     function handleMessage(event: MessageEvent) {
       if (event.origin !== "https://calendly.com") return;
-      const data = event.data as { event?: string } | undefined;
+      const data = event.data as
+        | { event?: string; payload?: { height?: unknown } }
+        | undefined;
+
+      if (data?.event === "calendly.page_height") {
+        const announced = parseAnnouncedHeight(data.payload?.height);
+        if (announced) setHeight(announced);
+        return;
+      }
+
       if (data?.event === "calendly.event_scheduled") onScheduled?.();
     }
 
@@ -159,7 +186,8 @@ export function CalendlyEmbed({
     <div className={className}>
       <div
         ref={containerRef}
-        className="min-h-[720px] w-full overflow-hidden rounded-[1.75rem] border border-sand-deep/60 bg-white md:min-h-[700px]"
+        style={{ height }}
+        className="w-full min-w-80 overflow-hidden rounded-[1.75rem] border border-sand-deep/60 bg-white"
       />
       {!scriptReady ? (
         <p className="mt-4 text-center text-sm text-muted" role="status">

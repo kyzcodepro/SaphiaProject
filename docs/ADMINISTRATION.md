@@ -101,9 +101,29 @@ rendez-vous et l'insère dans l'email de confirmation.
 Pour les rendez-vous WhatsApp, choisir « Phone call » ou « Custom » et indiquer
 les instructions à transmettre.
 
-> ⚠️ **Ne pas activer la collecte de paiement dans Calendly.** Les séances sont
-> déjà réglées sur le site, avant l'accès au calendrier : activer *Collect
-> payment* côté Calendly ferait payer une seconde fois.
+### 2.5 bis Encaisser les séances
+
+Les séances payantes sont réglées **dans Calendly**, au moment où le créneau est
+choisi. Dans chacun des deux événements payants, section **Payment** :
+
+| Événement | Montant |
+| --- | --- |
+| Séance individuelle | 50 € |
+| Séance approfondie | 100 € |
+
+L'appel découverte reste sans paiement.
+
+Calendly demande de connecter un compte **Stripe** ou **PayPal** : c'est lui qui
+reçoit l'argent, Calendly ne fait que déclencher l'encaissement. Le rendez-vous
+n'est créé qu'une fois le paiement accepté — un règlement échoué ne laisse
+aucune trace dans l'agenda.
+
+> Les montants sont saisis à deux endroits : ici, et dans `site.config.ts` pour
+> l'affichage sur le site. **Ils doivent rester identiques.** Un tarif modifié
+> d'un seul côté fait payer un prix différent de celui annoncé.
+
+> Le site conserve son propre encaissement pour **l'ebook** : Calendly ne vend
+> que des rendez-vous. C'est l'objet des variables Stripe du §3.
 
 ### 2.6 Bloquer des dates
 

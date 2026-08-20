@@ -5,17 +5,21 @@ import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 
 import { CalendlyEmbed } from "@/components/CalendlyEmbed";
 import { PaymentStep } from "@/components/booking/PaymentStep";
 import { PrebookingForm, type PrebookingResult } from "@/components/booking/PrebookingForm";
+import { sessionPayment } from "@/content/site.config";
 import { readAttribution, track } from "@/lib/analytics";
 
 /**
  * Orchestration du parcours de réservation (§10, §11).
  *
  *  Offre gratuite : informations → créneau → confirmation
- *  Offre payante  : informations → paiement → créneau → confirmation
+ *  Offre payante  : selon `sessionPayment` (voir site.config.ts)
+ *      "calendly" → informations → créneau (Calendly encaisse) → confirmation
+ *      "site"     → informations → paiement → créneau → confirmation
  *
- * Le paiement est toujours vérifié côté serveur auprès de Stripe ou PayPal
- * avant d'afficher le calendrier : une réservation ne peut pas être finalisée
- * si le paiement a échoué (§11).
+ * Dans les deux cas, aucun rendez-vous ne peut être confirmé sans paiement.
+ * En mode "site", le paiement est relu côté serveur auprès de Stripe ou PayPal
+ * avant l'affichage du calendrier ; en mode "calendly", c'est Calendly qui
+ * refuse de créer le rendez-vous tant que le règlement n'est pas passé (§11).
  */
 
 export type BookingOffer = {
@@ -60,6 +64,8 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
   const searchParams = useSearchParams();
   const storageKey = `${STORAGE_PREFIX}${offer.slug}`;
   const isFree = offer.price === 0;
+  /** Le site n'encaisse que si la configuration le lui demande. */
+  const chargesOnSite = !isFree && sessionPayment === "site";
 
   const paymentParam = searchParams.get("payment");
   const provider = paymentParam === "stripe" ? "stripe" : paymentParam === "paypal" ? "paypal" : null;
@@ -91,13 +97,15 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
   /** L'étape courante se déduit de l'URL et des actions déjà effectuées. */
   const step: Step =
     stepOverride ??
-    (verification?.paid
-      ? "schedule"
-      : cancelled || verification || awaitingVerification
-        ? "payment"
-        : "form");
+    (!chargesOnSite
+      ? "form"
+      : verification?.paid
+        ? "schedule"
+        : cancelled || verification || awaitingVerification
+          ? "payment"
+          : "form");
 
-  const notice = stepOverride
+  const notice = stepOverride || !chargesOnSite
     ? null
     : cancelled
       ? CANCELLED_NOTICE
@@ -113,9 +121,9 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
     if (cancelled) track("payment_failed", { offer: offer.slug, reason: "cancelled" });
   }, [cancelled, offer.slug]);
 
-  /** Vérification du paiement au retour de Stripe ou PayPal. */
+  /** Vérification du paiement au retour de Stripe ou PayPal (mode "site"). */
   useEffect(() => {
-    if (!provider || !reference) return;
+    if (!chargesOnSite || !provider || !reference) return;
 
     let active = true;
 
@@ -147,7 +155,7 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
     return () => {
       active = false;
     };
-  }, [provider, reference, offer.slug, offer.price]);
+  }, [chargesOnSite, provider, reference, offer.slug, offer.price]);
 
   const handleFormCompleted = useCallback(
     (data: PrebookingResult) => {
@@ -157,9 +165,9 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
       } catch {
         // Sans sessionStorage, le parcours reste fonctionnel dans cet onglet.
       }
-      setStepOverride(isFree ? "schedule" : "payment");
+      setStepOverride(chargesOnSite ? "payment" : "schedule");
     },
-    [isFree, storageKey],
+    [chargesOnSite, storageKey],
   );
 
   const handleScheduled = useCallback(() => {
@@ -198,9 +206,9 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
     };
   }, [offer.slug, verification]);
 
-  const steps = isFree
-    ? ["Tes informations", "Ton créneau"]
-    : ["Tes informations", "Paiement", "Ton créneau"];
+  const steps = chargesOnSite
+    ? ["Tes informations", "Paiement", "Ton créneau"]
+    : ["Tes informations", "Ton créneau"];
   const currentIndex = step === "form" ? 0 : step === "payment" ? 1 : steps.length - 1;
 
   return (
@@ -248,7 +256,7 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
             <PrebookingForm
               offerSlug={offer.slug}
               offerPrice={offer.price}
-              submitLabel={isFree ? "Choisir mon créneau" : "Continuer vers le paiement"}
+              submitLabel={chargesOnSite ? "Continuer vers le paiement" : "Choisir mon créneau"}
               onCompleted={handleFormCompleted}
             />
           ) : null}
@@ -289,7 +297,9 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
               <p className="mt-2 text-sm leading-relaxed text-muted">
                 {isFree
                   ? "Dernière étape : sélectionne le créneau qui t'arrange. Tu recevras la confirmation et les rappels par email."
-                  : "Paiement confirmé. Sélectionne maintenant le créneau qui t'arrange — tu recevras la confirmation et les rappels par email."}
+                  : chargesOnSite
+                    ? "Paiement confirmé. Sélectionne maintenant le créneau qui t'arrange — tu recevras la confirmation et les rappels par email."
+                    : "Dernière étape : choisis ton créneau et règle la séance. Le rendez-vous est confirmé dès le paiement validé, et tu reçois la confirmation ainsi que les rappels par email."}
               </p>
 
               <CalendlyEmbed

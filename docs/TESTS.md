@@ -120,6 +120,13 @@ créneau de 15 h ne doit plus être proposé — le premier disponible est 15 h 
 
 ### 2.2 Stripe (mode test)
 
+> **Selon la configuration retenue.** Le champ `sessionPayment` de
+> `site.config.ts` vaut `"calendly"` : les séances sont réglées dans Calendly,
+> et le parcours de paiement du site ne concerne plus que **l'ebook**. Le
+> tableau des cartes ci-dessous s'applique alors sur `/ebook`, pas sur
+> `/reserver/…`. Repasser `sessionPayment` sur `"site"` rétablit l'ancien
+> parcours et rend ce test valable tel quel.
+
 1. Créer un compte [stripe.com](https://stripe.com) — pas besoin de valider
    l'identité pour le mode test.
 2. **Développeurs → Clés API** → copier la clé secrète de test dans

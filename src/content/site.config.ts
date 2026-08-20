@@ -113,6 +113,20 @@ export const calendly = {
   },
 } as const;
 
+/**
+ * Où se règlent les séances.
+ *
+ *  "calendly" — Calendly encaisse au moment où le créneau est choisi. Le
+ *               rendez-vous n'existe pas tant que le paiement n'est pas passé,
+ *               et le site n'a aucun encaissement à vérifier.
+ *  "site"     — le site encaisse d'abord, vérifie le paiement côté serveur,
+ *               puis ouvre le calendrier.
+ *
+ * L'ebook n'est pas concerné : Calendly ne vend que des rendez-vous, sa vente
+ * reste assurée par le site quelle que soit la valeur choisie ici.
+ */
+export const sessionPayment: "calendly" | "site" = "calendly";
+
 /* ──────────────────────── Règles de réservation (§14) ────────────────────── */
 /* Ces règles sont appliquées par Calendly. Elles sont déclarées ici pour être
    affichées sur le site et rester cohérentes avec la configuration Calendly. */
@@ -199,12 +213,12 @@ export const offers: Offer[] = [
     ],
     steps: [
       "Tu remplis le questionnaire préalable",
-      "Tu règles la séance en ligne (carte bancaire ou PayPal)",
-      "Tu choisis ton créneau dans mon agenda",
+      "Tu choisis ton créneau et tu règles la séance en ligne",
+      "Tu reçois la confirmation et le lien de connexion par email",
       "On échange une heure, par téléphone ou en visio",
     ],
     terms: [
-      "Paiement obligatoire avant la confirmation du rendez-vous",
+      "Le rendez-vous n'est confirmé qu'une fois la séance réglée",
       "Par appel WhatsApp ou en visioconférence, au choix",
       "Réservation au minimum 24 h à l'avance",
       "Report possible jusqu'à 24 h avant la séance",
@@ -237,12 +251,12 @@ export const offers: Offer[] = [
     ],
     steps: [
       "Tu remplis le questionnaire préalable",
-      "Tu règles la séance en ligne (carte bancaire ou PayPal)",
-      "Tu choisis ton créneau dans mon agenda",
+      "Tu choisis ton créneau et tu règles la séance en ligne",
+      "Tu reçois la confirmation et le lien de connexion par email",
       "On échange deux heures, avec une pause au milieu",
     ],
     terms: [
-      "Paiement obligatoire avant la confirmation du rendez-vous",
+      "Le rendez-vous n'est confirmé qu'une fois la séance réglée",
       "Par appel WhatsApp ou en visioconférence, au choix",
       "Réservation au minimum 24 h à l'avance",
       "Report possible jusqu'à 24 h avant la séance",

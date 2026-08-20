@@ -67,23 +67,28 @@ Dans chaque événement, onglet **Availability / Scheduling** :
   rendez-vous.
 - **Date range** — jusqu'à 60 jours dans le futur (recommandé).
 
-### 2.3 La question « Visio ou WhatsApp »
+### 2.3 Visio ou appel : le choix du client
 
-Le site demande déjà au client s'il préfère la visio ou WhatsApp, et transmet la
-réponse à Calendly. Pour que ce transfert fonctionne, ajouter dans chaque
-événement, **en première position** des questions personnalisées
-(*Invitee Questions*) :
+Le mode de rendez-vous se règle dans **Location**, pas dans une question
+personnalisée. Ajouter **deux lieux** à chaque événement :
 
-- Intitulé : `Comment souhaites-tu échanger ?`
-- Type : choix multiple, avec exactement ces deux réponses : `Visio` /
-  `WhatsApp`
+| Lieu | Effet |
+| --- | --- |
+| **Google Meet** | un lien de réunion unique dans l'email de confirmation |
+| **Phone call** — *invitee provides phone number* | Calendly demande le numéro, la confirmation annonce un appel |
 
-Les deux réponses doivent être orthographiées ainsi : le site envoie ce mot
-précis, et Calendly ignore une valeur qui ne correspond à aucun choix proposé.
+Renommer le second `Appel WhatsApp` pour que l'intitulé soit clair.
 
-C'est la première question qui reçoit automatiquement la réponse donnée sur le
-site. Si l'ordre des questions change, la réponse n'est plus pré-remplie — le
-client peut alors la ressaisir, rien n'est cassé.
+C'est Calendly qui pose la question au moment du choix du créneau, et
+**l'email de confirmation s'adapte à la réponse**. Une question personnalisée
+n'aurait pas cet effet : elle enregistre un texte sans rien changer au lieu du
+rendez-vous, et un client ayant demandé WhatsApp recevrait quand même un lien
+de visioconférence.
+
+C'est aussi ce réglage qui collecte le numéro de téléphone, et uniquement
+auprès de ceux qui en ont besoin.
+
+> Le site ne pose donc plus cette question dans son questionnaire préalable.
 
 ### 2.4 Confirmations et rappels
 

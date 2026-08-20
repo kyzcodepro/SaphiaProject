@@ -14,9 +14,13 @@ import {
 /**
  * Questionnaire préalable à la réservation (§15).
  *
- * Seuls prénom, nom, email, mode de rendez-vous et consentement sont
- * obligatoires. Les questions sur la situation familiale ou professionnelle
- * restent facultatives (minimisation des données, §40).
+ * Seuls prénom, nom, email et consentement sont obligatoires. Les questions sur
+ * la situation familiale ou professionnelle restent facultatives (minimisation
+ * des données, §40).
+ *
+ * Le mode de rendez-vous — visio ou appel — n'est plus demandé ici : Calendly
+ * le propose au moment du choix du créneau, et adapte en conséquence l'email
+ * de confirmation, ce qu'une réponse recueillie sur le site ne permettait pas.
  */
 
 const familyLabels: Record<(typeof familySituations)[number], string> = {
@@ -64,7 +68,6 @@ export function PrebookingForm({
       lastName: String(formData.get("lastName") ?? ""),
       email: String(formData.get("email") ?? ""),
       phone: String(formData.get("phone") ?? ""),
-      meetingMode: String(formData.get("meetingMode") ?? ""),
       familySituation: String(formData.get("familySituation") ?? "") || undefined,
       childrenCount: String(formData.get("childrenCount") ?? ""),
       professionalSituation: String(formData.get("professionalSituation") ?? "") || undefined,
@@ -201,50 +204,11 @@ export function PrebookingForm({
               </p>
             ) : (
               <p id="phone-hint" className="field-hint">
-                Nécessaire si tu choisis un échange par WhatsApp.
+                Facultatif — un moyen de te joindre en cas d&apos;imprévu.
               </p>
             )}
           </div>
         </div>
-      </fieldset>
-
-      <fieldset>
-        <legend className="font-display text-xl text-ink">
-          Comment souhaites-tu échanger ? <span className="text-clay">*</span>
-        </legend>
-        <p className="mt-1 text-sm text-muted">
-          Le lien de visioconférence ou les instructions WhatsApp te seront envoyés avec la
-          confirmation.
-        </p>
-
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          {[
-            {
-              value: "visio",
-              title: "Visio",
-              text: "Lien de visioconférence envoyé automatiquement",
-            },
-            { value: "whatsapp", title: "WhatsApp", text: "Appel audio ou vidéo via WhatsApp" },
-          ].map((option) => (
-            <label
-              key={option.value}
-              className="flex cursor-pointer items-start gap-3 rounded-[1.25rem] border border-sand-deep bg-white p-4 transition-colors has-checked:border-plum has-checked:bg-plum-soft"
-            >
-              <input
-                type="radio"
-                name="meetingMode"
-                value={option.value}
-                required
-                className="mt-1 h-4 w-4 accent-[#5b3a4a]"
-              />
-              <span>
-                <span className="block font-semibold text-ink">{option.title}</span>
-                <span className="block text-sm text-muted">{option.text}</span>
-              </span>
-            </label>
-          ))}
-        </div>
-        {errors.meetingMode ? <p className="field-error">{errors.meetingMode}</p> : null}
       </fieldset>
 
       <fieldset className="space-y-5">

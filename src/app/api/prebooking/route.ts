@@ -62,7 +62,6 @@ export async function POST(request: Request) {
         ["Prénom & nom", `${data.firstName} ${data.lastName}`],
         ["Email", data.email],
         ["Téléphone", data.phone],
-        ["Mode du rendez-vous", data.meetingMode === "visio" ? "Visio" : "WhatsApp"],
         [
           "Situation familiale",
           data.familySituation ? familyLabels[data.familySituation] : undefined,

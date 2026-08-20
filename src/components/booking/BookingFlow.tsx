@@ -36,11 +36,6 @@ type Verification = { paid: boolean; reference?: string; error?: string };
 
 const STORAGE_PREFIX = "saphia.booking.";
 
-/* Ces libellés doivent correspondre aux réponses proposées par la question
-   « Comment souhaites-tu échanger ? » dans Calendly, sinon le pré-remplissage
-   est ignoré. */
-const meetingModeLabels = { visio: "Visio", whatsapp: "WhatsApp" } as const;
-
 const CANCELLED_NOTICE =
   "Le paiement a été interrompu — aucune somme n'a été débitée et aucun rendez-vous n'a été réservé. Tu peux réessayer quand tu veux.";
 
@@ -189,10 +184,6 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
         ? {
             name: `${customer.firstName} ${customer.lastName}`.trim(),
             email: customer.email,
-            customAnswers: {
-              // a1 = « Comment souhaites-tu échanger ? » dans l'événement Calendly
-              a1: meetingModeLabels[customer.meetingMode],
-            },
           }
         : undefined,
     [customer],

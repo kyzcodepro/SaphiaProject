@@ -189,10 +189,21 @@ export function PrebookingForm({
               type="tel"
               inputMode="tel"
               autoComplete="tel"
+              maxLength={24}
               className="field-input"
               placeholder="06 12 34 56 78"
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby={errors.phone ? "phone-error" : "phone-hint"}
             />
-            <p className="field-hint">Nécessaire si tu choisis un échange par WhatsApp.</p>
+            {errors.phone ? (
+              <p id="phone-error" className="field-error">
+                {errors.phone}
+              </p>
+            ) : (
+              <p id="phone-hint" className="field-hint">
+                Numéro français, nécessaire si tu choisis un échange par WhatsApp.
+              </p>
+            )}
           </div>
         </div>
       </fieldset>

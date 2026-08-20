@@ -16,6 +16,43 @@ const optionalText = (max: number) =>
     .optional()
     .or(z.literal("").transform(() => undefined));
 
+/**
+ * Téléphone français (§15).
+ *
+ * L'accompagnement se fait par téléphone ou WhatsApp depuis la France : un
+ * numéro étranger ne serait pas joignable. Le champ n'accepte donc que les
+ * numéros français, métropole et outre-mer.
+ *
+ * Les écritures courantes sont tolérées — espaces, points, tirets,
+ * parenthèses, indicatif international — puis normalisées en `06 12 34 56 78`
+ * pour que l'email reçu soit toujours lisible de la même façon.
+ */
+const PHONE_SEPARATORS = /[\s.\-()\u00a0\u202f]/g;
+const FRENCH_NATIONAL = /^0[1-9]\d{8}$/;
+
+/** Renvoie le numéro au format `06 12 34 56 78`, ou `null` s'il n'est pas français. */
+export function normalizeFrenchPhone(value: string): string | null {
+  let digits = value.replace(PHONE_SEPARATORS, "");
+
+  if (digits.startsWith("+33")) digits = `0${digits.slice(3)}`;
+  else if (digits.startsWith("0033")) digits = `0${digits.slice(4)}`;
+  else if (/^33[1-9]\d{8}$/.test(digits)) digits = `0${digits.slice(2)}`;
+
+  if (!FRENCH_NATIONAL.test(digits)) return null;
+
+  return digits.replace(/(\d{2})(?=\d)/g, "$1 ");
+}
+
+const optionalFrenchPhone = z
+  .string()
+  .trim()
+  .max(24, "Ce numéro est trop long.")
+  .refine((value) => value === "" || normalizeFrenchPhone(value) !== null, {
+    message: "Merci d'indiquer un numéro français, par exemple 06 12 34 56 78.",
+  })
+  .transform((value) => (value === "" ? undefined : (normalizeFrenchPhone(value) ?? undefined)))
+  .optional();
+
 export const meetingModes = ["zoom", "whatsapp"] as const;
 export type MeetingMode = (typeof meetingModes)[number];
 
@@ -43,7 +80,7 @@ export const prebookingSchema = z.object({
   firstName: z.string().trim().min(2, "Merci d'indiquer ton prénom.").max(60),
   lastName: z.string().trim().min(2, "Merci d'indiquer ton nom.").max(60),
   email: z.string().trim().email("Merci d'indiquer une adresse email valide.").max(160),
-  phone: optionalText(30),
+  phone: optionalFrenchPhone,
   meetingMode: z.enum(meetingModes, {
     errorMap: () => ({ message: "Merci de choisir Zoom ou WhatsApp." }),
   }),

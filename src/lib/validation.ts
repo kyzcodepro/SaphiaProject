@@ -17,40 +17,47 @@ const optionalText = (max: number) =>
     .or(z.literal("").transform(() => undefined));
 
 /**
- * Téléphone français (§15).
+ * Numéro de téléphone (§15).
  *
- * L'accompagnement se fait par téléphone ou WhatsApp depuis la France : un
- * numéro étranger ne serait pas joignable. Le champ n'accepte donc que les
- * numéros français, métropole et outre-mer.
+ * L'objectif est d'écarter les saisies manifestement fausses — chiffres tapés
+ * au hasard, numéro tronqué — sans refuser les numéros étrangers : le
+ * questionnaire s'adresse aussi aux personnes hors de France.
  *
- * Les écritures courantes sont tolérées — espaces, points, tirets,
- * parenthèses, indicatif international — puis normalisées en `06 12 34 56 78`
- * pour que l'email reçu soit toujours lisible de la même façon.
+ * Deux écritures sont acceptées : le format national à dix chiffres
+ * (`06 12 34 56 78`) et le format international (`+33 6 12 34 56 78`,
+ * `0033…`). Espaces, points, tirets et parenthèses sont tolérés puis retirés.
  */
 const PHONE_SEPARATORS = /[\s.\-()\u00a0\u202f]/g;
-const FRENCH_NATIONAL = /^0[1-9]\d{8}$/;
+const NATIONAL_PHONE = /^0[1-9]\d{8}$/;
+const INTERNATIONAL_PHONE = /^\+[1-9]\d{7,14}$/;
 
-/** Renvoie le numéro au format `06 12 34 56 78`, ou `null` s'il n'est pas français. */
-export function normalizeFrenchPhone(value: string): string | null {
-  let digits = value.replace(PHONE_SEPARATORS, "");
+/**
+ * Renvoie le numéro nettoyé, ou `null` s'il ne peut pas être un vrai numéro.
+ *
+ * Le test des chiffres distincts écarte les suites factices du type
+ * `0999999999` ou `0101010101`, qui passent pourtant le contrôle de forme.
+ */
+export function normalizePhone(value: string): string | null {
+  let compact = value.replace(PHONE_SEPARATORS, "");
+  if (compact.startsWith("00")) compact = `+${compact.slice(2)}`;
 
-  if (digits.startsWith("+33")) digits = `0${digits.slice(3)}`;
-  else if (digits.startsWith("0033")) digits = `0${digits.slice(4)}`;
-  else if (/^33[1-9]\d{8}$/.test(digits)) digits = `0${digits.slice(2)}`;
+  const national = NATIONAL_PHONE.test(compact);
+  if (!national && !INTERNATIONAL_PHONE.test(compact)) return null;
 
-  if (!FRENCH_NATIONAL.test(digits)) return null;
+  const digits = compact.replace("+", "");
+  if (new Set(digits).size < 3) return null;
 
-  return digits.replace(/(\d{2})(?=\d)/g, "$1 ");
+  return national ? compact.replace(/(\d{2})(?=\d)/g, "$1 ") : compact;
 }
 
-const optionalFrenchPhone = z
+const optionalPhone = z
   .string()
   .trim()
   .max(24, "Ce numéro est trop long.")
-  .refine((value) => value === "" || normalizeFrenchPhone(value) !== null, {
-    message: "Merci d'indiquer un numéro français, par exemple 06 12 34 56 78.",
+  .refine((value) => value === "" || normalizePhone(value) !== null, {
+    message: "Ce numéro ne semble pas valide. Exemple : 06 12 34 56 78.",
   })
-  .transform((value) => (value === "" ? undefined : (normalizeFrenchPhone(value) ?? undefined)))
+  .transform((value) => (value === "" ? undefined : (normalizePhone(value) ?? undefined)))
   .optional();
 
 export const meetingModes = ["zoom", "whatsapp"] as const;
@@ -80,7 +87,7 @@ export const prebookingSchema = z.object({
   firstName: z.string().trim().min(2, "Merci d'indiquer ton prénom.").max(60),
   lastName: z.string().trim().min(2, "Merci d'indiquer ton nom.").max(60),
   email: z.string().trim().email("Merci d'indiquer une adresse email valide.").max(160),
-  phone: optionalFrenchPhone,
+  phone: optionalPhone,
   meetingMode: z.enum(meetingModes, {
     errorMap: () => ({ message: "Merci de choisir Zoom ou WhatsApp." }),
   }),

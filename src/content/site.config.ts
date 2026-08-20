@@ -86,8 +86,8 @@ export const brand = {
   url: resolveSiteUrl(),
   /** À COMPLÉTER — adresse email professionnelle réelle. */
   email: "contact@originallife.fr",
-  /** À COMPLÉTER — format international sans espaces, pour les liens wa.me. */
-  whatsapp: "33600000000",
+  /** Format international sans « + » ni espaces, comme l'attend wa.me. */
+  whatsapp: "33652072263",
   whatsappMessage:
     "Bonjour Saphia, je viens de votre site et j'aimerais des informations sur votre accompagnement.",
   socials: {

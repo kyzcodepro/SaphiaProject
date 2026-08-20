@@ -201,7 +201,7 @@ export function PrebookingForm({
               </p>
             ) : (
               <p id="phone-hint" className="field-hint">
-                Numéro français, nécessaire si tu choisis un échange par WhatsApp.
+                Nécessaire si tu choisis un échange par WhatsApp.
               </p>
             )}
           </div>

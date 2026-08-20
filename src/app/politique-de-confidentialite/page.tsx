@@ -93,8 +93,8 @@ export default function ConfidentialitePage() {
       <ul>
         <li><strong>Calendly</strong> — prise de rendez-vous, confirmations et rappels</li>
         <li><strong>Stripe</strong> et <strong>PayPal</strong> — encaissement des paiements</li>
-        <li><strong>{"{{ prestataire d'envoi d'emails — ex. Resend }}"}</strong> — emails transactionnels</li>
-        <li><strong>{"{{ hébergeur — ex. Vercel }}"}</strong> — hébergement du site</li>
+        <li><strong>Resend</strong> — envoi des emails transactionnels</li>
+        <li><strong>Vercel</strong> — hébergement du site</li>
         <li><strong>Google Meet</strong> ou <strong>WhatsApp</strong> — tenue du rendez-vous, selon ton choix</li>
       </ul>
       <p>

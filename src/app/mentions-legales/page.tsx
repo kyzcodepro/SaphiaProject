@@ -30,9 +30,13 @@ export default function MentionsLegalesPage() {
       <h2>2. Hébergement</h2>
       <p>Le site est hébergé par&nbsp;:</p>
       <ul>
-        <li>{"{{ Nom de l'hébergeur — ex. Vercel Inc. }}"}</li>
-        <li>{"{{ Adresse de l'hébergeur }}"}</li>
-        <li>{"{{ Site / téléphone de l'hébergeur }}"}</li>
+        <li>Vercel Inc.</li>
+        <li>340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis</li>
+        <li>
+          <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">
+            vercel.com
+          </a>
+        </li>
       </ul>
 
       <h2>3. Nature de l&apos;activité</h2>

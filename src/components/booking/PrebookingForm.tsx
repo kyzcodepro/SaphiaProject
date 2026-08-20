@@ -213,12 +213,17 @@ export function PrebookingForm({
           Comment souhaites-tu échanger ? <span className="text-clay">*</span>
         </legend>
         <p className="mt-1 text-sm text-muted">
-          Le lien Zoom ou les instructions WhatsApp te seront envoyés avec la confirmation.
+          Le lien de visioconférence ou les instructions WhatsApp te seront envoyés avec la
+          confirmation.
         </p>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {[
-            { value: "zoom", title: "Zoom", text: "Visioconférence, lien envoyé automatiquement" },
+            {
+              value: "visio",
+              title: "Visio",
+              text: "Lien de visioconférence envoyé automatiquement",
+            },
             { value: "whatsapp", title: "WhatsApp", text: "Appel audio ou vidéo via WhatsApp" },
           ].map((option) => (
             <label

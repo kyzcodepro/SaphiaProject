@@ -260,7 +260,7 @@ messages d'erreur — est représentatif du rendu final.
 | 15 min entre deux RDV | Réserver deux créneaux consécutifs |
 | Lundi-samedi seulement | Le dimanche n'apparaît jamais |
 | Informations recueillies avant | Questionnaire à l'étape 1 |
-| Choix Zoom / WhatsApp | Réponse pré-remplie dans Calendly |
+| Choix Visio / WhatsApp | Réponse pré-remplie dans Calendly |
 | Confirmation automatique | Email Calendly reçu |
 | Au moins un rappel | Rappels 24 h et 2 h configurés dans Calendly |
 | Page personnalisée après réservation | Redirection vers `/reservation-confirmee` |

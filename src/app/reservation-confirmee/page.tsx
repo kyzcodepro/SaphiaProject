@@ -68,7 +68,7 @@ export default async function ReservationConfirmeePage({ searchParams }: PagePro
             {[
               {
                 title: "Vérifie ta boîte mail",
-                text: "L'email de confirmation contient la date, l'heure, la durée et le lien Zoom ou les instructions WhatsApp. Pense à regarder tes spams la première fois.",
+                text: "L'email de confirmation contient la date, l'heure, la durée et le lien de visioconférence ou les instructions WhatsApp. Pense à regarder tes spams la première fois.",
               },
               {
                 title: "Tu recevras des rappels",

@@ -60,7 +60,7 @@ const optionalPhone = z
   .transform((value) => (value === "" ? undefined : (normalizePhone(value) ?? undefined)))
   .optional();
 
-export const meetingModes = ["zoom", "whatsapp"] as const;
+export const meetingModes = ["visio", "whatsapp"] as const;
 export type MeetingMode = (typeof meetingModes)[number];
 
 export const familySituations = [
@@ -89,7 +89,7 @@ export const prebookingSchema = z.object({
   email: z.string().trim().email("Merci d'indiquer une adresse email valide.").max(160),
   phone: optionalPhone,
   meetingMode: z.enum(meetingModes, {
-    errorMap: () => ({ message: "Merci de choisir Zoom ou WhatsApp." }),
+    errorMap: () => ({ message: "Merci de choisir la visio ou WhatsApp." }),
   }),
   familySituation: z.enum(familySituations).optional(),
   childrenCount: optionalText(10),

@@ -67,7 +67,7 @@ export default function MentionsLegalesPage() {
 
       <h2>6. Liens externes</h2>
       <p>
-        Ce site contient des liens vers des services tiers (Calendly, Stripe, PayPal, Zoom,
+        Ce site contient des liens vers des services tiers (Calendly, Stripe, PayPal, Google Meet,
         WhatsApp, TikTok, Instagram). L&apos;éditrice n&apos;exerce aucun contrôle sur ces sites et
         décline toute responsabilité quant à leur contenu et à leurs pratiques en matière de données
         personnelles.

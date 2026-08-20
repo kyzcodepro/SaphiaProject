@@ -36,7 +36,10 @@ type Verification = { paid: boolean; reference?: string; error?: string };
 
 const STORAGE_PREFIX = "saphia.booking.";
 
-const meetingModeLabels = { zoom: "Zoom", whatsapp: "WhatsApp" } as const;
+/* Ces libellés doivent correspondre aux réponses proposées par la question
+   « Comment souhaites-tu échanger ? » dans Calendly, sinon le pré-remplissage
+   est ignoré. */
+const meetingModeLabels = { visio: "Visio", whatsapp: "WhatsApp" } as const;
 
 const CANCELLED_NOTICE =
   "Le paiement a été interrompu — aucune somme n'a été débitée et aucun rendez-vous n'a été réservé. Tu peux réessayer quand tu veux.";

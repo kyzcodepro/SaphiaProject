@@ -30,7 +30,7 @@ export default function ConfidentialitePage() {
       <h3>Questionnaire préalable à une réservation</h3>
       <p>
         Lors d&apos;une réservation, les informations suivantes sont demandées&nbsp;: prénom, nom,
-        adresse email, mode de rendez-vous souhaité (Zoom ou WhatsApp), et — de manière strictement
+        adresse email, mode de rendez-vous souhaité (visio ou WhatsApp), et — de manière strictement
         facultative — numéro de téléphone, situation familiale, nombre d&apos;enfants, situation
         professionnelle, objectifs, blocage principal, attentes et informations complémentaires.
       </p>
@@ -95,7 +95,7 @@ export default function ConfidentialitePage() {
         <li><strong>Stripe</strong> et <strong>PayPal</strong> — encaissement des paiements</li>
         <li><strong>{"{{ prestataire d'envoi d'emails — ex. Resend }}"}</strong> — emails transactionnels</li>
         <li><strong>{"{{ hébergeur — ex. Vercel }}"}</strong> — hébergement du site</li>
-        <li><strong>Zoom</strong> ou <strong>WhatsApp</strong> — tenue du rendez-vous, selon ton choix</li>
+        <li><strong>Google Meet</strong> ou <strong>WhatsApp</strong> — tenue du rendez-vous, selon ton choix</li>
       </ul>
       <p>
         Certains de ces prestataires étant établis hors de l&apos;Union européenne, les transferts

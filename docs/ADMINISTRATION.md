@@ -67,15 +67,19 @@ Dans chaque événement, onglet **Availability / Scheduling** :
   rendez-vous.
 - **Date range** — jusqu'à 60 jours dans le futur (recommandé).
 
-### 2.3 La question « Zoom ou WhatsApp »
+### 2.3 La question « Visio ou WhatsApp »
 
-Le site demande déjà au client s'il préfère Zoom ou WhatsApp, et transmet la
+Le site demande déjà au client s'il préfère la visio ou WhatsApp, et transmet la
 réponse à Calendly. Pour que ce transfert fonctionne, ajouter dans chaque
 événement, **en première position** des questions personnalisées
 (*Invitee Questions*) :
 
 - Intitulé : `Comment souhaites-tu échanger ?`
-- Type : réponse courte ou choix multiple (`Zoom` / `WhatsApp`)
+- Type : choix multiple, avec exactement ces deux réponses : `Visio` /
+  `WhatsApp`
+
+Les deux réponses doivent être orthographiées ainsi : le site envoie ce mot
+précis, et Calendly ignore une valeur qui ne correspond à aucun choix proposé.
 
 C'est la première question qui reçoit automatiquement la réponse donnée sur le
 site. Si l'ordre des questions change, la réponse n'est plus pré-remplie — le
@@ -92,11 +96,15 @@ Onglet **Notifications and cancellation policy** de chaque événement :
 - **Cancellation policy** → indiquer que l'annulation est possible jusqu'à 24 h
   avant la séance.
 
-### 2.5 Le lien Zoom
+### 2.5 Le lien de visioconférence
 
-Dans **Location** de l'événement, choisir **Zoom** et connecter le compte Zoom :
-Calendly crée alors automatiquement un lien de réunion unique pour chaque
-rendez-vous et l'insère dans l'email de confirmation.
+Dans **Location** de l'événement, choisir **Google Meet** — disponible dès que
+l'agenda Google est connecté. Calendly crée alors automatiquement un lien de
+réunion unique pour chaque rendez-vous et l'insère dans l'email de confirmation.
+
+Le site ne nomme jamais l'outil : il parle de « visio ». Passer un jour à Zoom
+ou à un autre service ne demande donc aucune modification du site — seulement
+le changement de *Location* dans Calendly.
 
 Pour les rendez-vous WhatsApp, choisir « Phone call » ou « Custom » et indiquer
 les instructions à transmettre.
@@ -278,7 +286,7 @@ Après toute modification, enregistrer le fichier et publier les changements
 - [ ] Informations légales complétées (marqueurs `{{ … }}` remplacés)
 - [ ] Trois événements Calendly créés, avec délai 24 h et buffer 15 min
 - [ ] `NEXT_PUBLIC_CALENDLY_USERNAME` renseigné dans Vercel, site redéployé
-- [ ] Zoom connecté à Calendly
+- [ ] Google Meet actif comme lieu de rendez-vous dans Calendly
 - [ ] Rappels 24 h et 2 h activés
 - [ ] Clés Stripe en mode production, webhook déclaré
 - [ ] Identifiants PayPal en mode `live`

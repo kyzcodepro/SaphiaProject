@@ -115,7 +115,7 @@ export default function CgvPage() {
         {bookingRules.bufferMinutes} minutes est automatiquement respecté entre deux séances.
       </p>
       <p>
-        Les séances se déroulent à distance, par appel WhatsApp ou par visioconférence (Zoom), selon
+        Les séances se déroulent à distance, par appel WhatsApp ou par visioconférence (Google Meet), selon
         le choix effectué par le Client lors de la réservation. Le lien de connexion ou les
         instructions sont transmis par email avec la confirmation.
       </p>
@@ -180,7 +180,7 @@ export default function CgvPage() {
         La responsabilité de la Prestataire ne saurait être engagée en cas de dommage résultant des
         décisions prises par le Client à la suite d&apos;un accompagnement, ni en cas
         d&apos;interruption due à un problème technique indépendant de sa volonté (panne de réseau,
-        indisponibilité de Zoom ou de WhatsApp). Dans ce dernier cas, la séance est reportée sans
+        indisponibilité de Google Meet ou de WhatsApp). Dans ce dernier cas, la séance est reportée sans
         frais.
       </p>
 

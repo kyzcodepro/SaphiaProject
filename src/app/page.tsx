@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -78,17 +79,16 @@ export default function HomePage() {
             </dl>
           </div>
 
-          {/* Photo professionnelle — à remplacer dans /public/images/ (§45) */}
+          {/* Photo professionnelle — fichier à déposer dans /public/images/ (§45) */}
           <div className="relative">
             <div className="relative mx-auto aspect-4/5 w-full max-w-md overflow-hidden rounded-[2.5rem] bg-sand shadow-[var(--shadow-lift)]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={hero.image}
                 alt={hero.imageAlt}
-                className="h-full w-full object-cover"
-                width={640}
-                height={800}
-                fetchPriority="high"
+                fill
+                sizes="(min-width: 768px) 28rem, 100vw"
+                className="object-cover"
+                priority
               />
             </div>
             <div className="card absolute -bottom-6 left-1/2 w-[min(20rem,90%)] -translate-x-1/2 p-5 md:left-auto md:right-4 md:translate-x-0">

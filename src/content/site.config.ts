@@ -308,8 +308,12 @@ export const hero = {
     "Je t'accompagne pour comprendre ce qui se joue en toi, poser tes limites et te reconstruire — par téléphone, à ton rythme, sans jugement.",
   primaryCta: { label: "Réserver mon appel découverte", href: "/reserver/appel-decouverte" },
   secondaryCta: { label: "Découvrir les accompagnements", href: "/accompagnements" },
-  /** À DÉFINIR (§45) : photo professionnelle. */
-  image: "/images/portrait.svg",
+  /**
+   * Photo d'accueil. Déposer le fichier dans `public/images/` sous ce nom
+   * exact pour le remplacer — aucune autre modification n'est nécessaire.
+   * Cadrage portrait (4:5), 1200 × 1500 px suffisent.
+   */
+  image: "/images/portrait.jpg",
   imageAlt: "Portrait de Saphia, accompagnante",
 };
 

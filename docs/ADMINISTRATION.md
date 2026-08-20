@@ -26,7 +26,7 @@ besoin de savoir programmer pour la plupart des opérations décrites ici.
 identifiant qui devient l'adresse publique : `calendly.com/<identifiant>`.
 Il est difficile à changer ensuite, et le site s'en sert pour construire
 l'adresse de chaque calendrier. Prendre quelque chose de court et stable —
-`saphia-accompagnement` par exemple, si `saphia` est déjà pris.
+le compte utilisé ici est `saphia-arabi`.
 
 Cet identifiant doit ensuite être reporté dans la variable
 `NEXT_PUBLIC_CALENDLY_USERNAME` (voir §2.7). Tant qu'il ne correspond pas, les
@@ -154,8 +154,12 @@ Aucune de ces actions ne nécessite d'intervention sur le site.
 Une seule valeur à renseigner — l'identifiant choisi au §2.0 :
 
 ```env
-NEXT_PUBLIC_CALENDLY_USERNAME=saphia-accompagnement
+NEXT_PUBLIC_CALENDLY_USERNAME=saphia-arabi
 ```
+
+Cette valeur est déjà celle utilisée par défaut : la variable ne sert qu'à
+pointer un autre compte — un compte de test, par exemple — sans toucher au
+code.
 
 En local, dans `.env.local`. En production, dans **Vercel → Settings →
 Environment Variables**, suivi d'un **Redeploy** : les variables `NEXT_PUBLIC_*`

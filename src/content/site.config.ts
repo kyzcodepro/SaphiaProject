@@ -102,9 +102,12 @@ export const brand = {
 export const calendly = {
   /**
    * Identifiant du compte Calendly : la partie après calendly.com/
-   * Exemple : https://calendly.com/saphia → "saphia"
+   * Exemple : https://calendly.com/saphia-arabi → "saphia-arabi"
+   *
+   * La variable d'environnement permet de pointer un autre compte — un compte
+   * de test, par exemple — sans modifier ce fichier.
    */
-  username: process.env.NEXT_PUBLIC_CALENDLY_USERNAME?.trim() || "saphia",
+  username: process.env.NEXT_PUBLIC_CALENDLY_USERNAME?.trim() || "saphia-arabi",
   /** Couleurs du widget, alignées sur la charte du site. */
   widget: {
     backgroundColor: "ffffff",

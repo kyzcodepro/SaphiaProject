@@ -303,17 +303,6 @@ export function BookingFlow({ offer }: { offer: BookingOffer }) {
                 utm={calendlyUtm}
                 onScheduled={handleScheduled}
               />
-
-              <p className="mt-6 text-center text-sm text-muted">
-                Ton rendez-vous est confirmé ?{" "}
-                <button
-                  type="button"
-                  onClick={handleScheduled}
-                  className="text-plum underline underline-offset-4"
-                >
-                  Continuer
-                </button>
-              </p>
             </div>
           ) : null}
         </>

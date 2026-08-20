@@ -5,7 +5,7 @@ import { brand } from "@/content/site.config";
  *
  * Variables d'environnement :
  *  - RESEND_API_KEY : clé API (sans elle, les emails sont simplement journalisés)
- *  - EMAIL_FROM     : expéditeur vérifié, ex. "Saphia <contact@saphia.fr>"
+ *  - EMAIL_FROM     : expéditeur vérifié, ex. "Saphia <contact@originallife.fr>"
  *  - EMAIL_ADMIN    : adresse recevant les notifications internes
  *
  * Les confirmations et rappels de rendez-vous (§17) sont envoyés par Calendly.
@@ -26,12 +26,12 @@ export type EmailResult = { sent: boolean; skipped?: boolean; error?: string };
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
 export function adminEmail(): string {
-  return process.env.EMAIL_ADMIN ?? brand.email;
+  return process.env.EMAIL_ADMIN?.trim() || brand.email;
 }
 
 export async function sendEmail(options: SendEmailOptions): Promise<EmailResult> {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.EMAIL_FROM ?? `${brand.name} <${brand.email}>`;
+  const from = process.env.EMAIL_FROM?.trim() || `${brand.name} <${brand.email}>`;
 
   if (!apiKey) {
     // Mode développement : aucune clé configurée, on n'échoue pas le parcours.

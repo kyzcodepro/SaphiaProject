@@ -25,9 +25,9 @@ function option(name, fallback) {
 
 const bookingUrl = option(
   "url",
-  "https://www.saphia.fr/reserver/appel-decouverte?utm_source=ebook&utm_medium=cta",
+  "https://originallife.fr/reserver/appel-decouverte?utm_source=ebook&utm_medium=cta",
 );
-const email = option("email", "contact@saphia.fr");
+const email = option("email", "contact@originallife.fr");
 const output = path.resolve(
   projectRoot,
   option("out", "private/reprendre-le-controle-de-ta-vie-emotionnelle.pdf"),

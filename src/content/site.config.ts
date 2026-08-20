@@ -55,15 +55,37 @@ export type Program = {
 
 /* ───────────────────────────── Marque & contacts ─────────────────────────── */
 
+/**
+ * Adresse publique du site.
+ *
+ * Tolère les saisies approximatives faites dans un tableau de bord d'hébergeur :
+ * variable créée mais laissée vide, protocole oublié, slash final, espaces.
+ * Une valeur inutilisable retombe sur l'adresse par défaut plutôt que de faire
+ * échouer la mise en ligne.
+ */
+function resolveSiteUrl(): string {
+  const fallback = "https://originallife.fr";
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (!raw) return fallback;
+
+  const candidate = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+  try {
+    return new URL(candidate).origin;
+  } catch {
+    return fallback;
+  }
+}
+
+
 export const brand = {
   name: "Saphia",
   /** À COMPLÉTER — dénomination légale exacte de l'activité. */
   legalName: "Saphia Accompagnement",
   tagline: "Accompagnement individuel pour reprendre le contrôle de ta vie émotionnelle",
   /** Utilisé pour les URLs absolues, le sitemap et les balises Open Graph. */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.saphia.fr",
+  url: resolveSiteUrl(),
   /** À COMPLÉTER — adresse email professionnelle réelle. */
-  email: "contact@saphia.fr",
+  email: "contact@originallife.fr",
   /** À COMPLÉTER — format international sans espaces, pour les liens wa.me. */
   whatsapp: "33600000000",
   whatsappMessage:
@@ -82,7 +104,7 @@ export const calendly = {
    * Identifiant du compte Calendly : la partie après calendly.com/
    * Exemple : https://calendly.com/saphia → "saphia"
    */
-  username: process.env.NEXT_PUBLIC_CALENDLY_USERNAME ?? "saphia",
+  username: process.env.NEXT_PUBLIC_CALENDLY_USERNAME?.trim() || "saphia",
   /** Couleurs du widget, alignées sur la charte du site. */
   widget: {
     backgroundColor: "ffffff",

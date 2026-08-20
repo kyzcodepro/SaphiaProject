@@ -129,8 +129,9 @@ sa page — aucune phrase ne peut être coupée dans le fichier vendu.
 
 Détails dans [tools/ebook/README.md](../tools/ebook/README.md).
 
-> ⚠️ **Le lien de réservation par défaut pointe vers `www.saphia.fr`.**
-> Le regénérer avec le domaine réel avant la première vente.
+> ⚠️ **Régénérer le PDF après la mise en ligne du domaine.** Le lien du bouton
+> est figé au moment de la génération : un guide produit avant la mise en ligne
+> renvoie vers une adresse qui ne répond pas encore.
 
 ---
 

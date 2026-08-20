@@ -161,7 +161,7 @@ l'ebook, contact WhatsApp.
 exemple :
 
 ```
-https://www.saphia.fr/ebook?utm_source=tiktok&utm_medium=bio&utm_campaign=ebook
+https://originallife.fr/ebook?utm_source=tiktok&utm_medium=bio&utm_campaign=ebook
 ```
 
 Ces paramètres sont conservés jusqu'à la réservation et transmis à Calendly, ce

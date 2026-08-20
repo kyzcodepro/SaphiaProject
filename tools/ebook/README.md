@@ -20,17 +20,17 @@ Le PDF est écrit dans `private/reprendre-le-controle-de-ta-vie-emotionnelle.pdf
 
 ```bash
 # Adresse réelle du lien « Je réserve mon appel offert »
-npm run build -- --url https://www.saphia.fr/reserver/appel-decouverte?utm_source=ebook
+npm run build -- --url https://originallife.fr/reserver/appel-decouverte?utm_source=ebook
 
 # Adresse de contact affichée en fin de guide
-npm run build -- --email contact@saphia.fr
+npm run build -- --email contact@originallife.fr
 
 # Autre destination
 npm run build -- --out ../../private/ebook-v2.pdf
 ```
 
-Le lien de réservation par défaut pointe vers `www.saphia.fr`. **À mettre à jour
-avec le domaine réel avant toute vente.**
+Le lien de réservation par défaut pointe vers `originallife.fr`, le domaine du
+site. Le repasser en option si l'adresse canonique retenue est `www.originallife.fr`.
 
 ## Modifier le contenu
 

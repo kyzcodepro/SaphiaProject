@@ -8,7 +8,7 @@ import { brand } from "@/content/site.config";
  * détournée vers un domaine tiers.
  */
 export function siteOrigin(request: Request): string {
-  const configured = process.env.NEXT_PUBLIC_SITE_URL ?? brand.url;
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim() || brand.url;
   if (configured) {
     try {
       return new URL(configured).origin;

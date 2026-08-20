@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { formatPrice } from "@/content/site.config";
+import { bookingRules, formatPrice } from "@/content/site.config";
 import { track } from "@/lib/analytics";
 
 /**
@@ -99,7 +99,7 @@ export function PaymentStep({
       <ul className="mt-7 space-y-2 text-sm text-muted">
         <li>Paiement sécurisé — aucune donnée bancaire n&apos;est stockée par le site.</li>
         <li>Un reçu t&apos;est envoyé automatiquement par email.</li>
-        <li>Report possible jusqu&apos;à 24 h avant la séance.</li>
+        <li>Report possible jusqu&apos;à {bookingRules.cancellationNoticeHours} h avant la séance.</li>
       </ul>
 
       <button

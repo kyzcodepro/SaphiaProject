@@ -42,6 +42,13 @@ export default function AnnulationPage() {
           n&apos;est pas remboursée.
         </li>
       </ul>
+      <p>
+        Un rendez-vous peut être pris jusqu&apos;à {bookingRules.minimumNoticeHours} heures avant
+        l&apos;horaire choisi. Une séance réservée à moins de{" "}
+        {bookingRules.cancellationNoticeHours} heures de son début se situe donc d&apos;emblée
+        au-delà du délai d&apos;annulation sans frais&nbsp;: elle est due dès la réservation. En cas
+        d&apos;imprévu sérieux, un message suffit — une solution est toujours cherchée.
+      </p>
 
       <h2>3. Retard</h2>
       <p>

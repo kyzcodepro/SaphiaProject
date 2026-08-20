@@ -135,7 +135,7 @@ export const sessionPayment: "calendly" | "site" = "calendly";
    affichées sur le site et rester cohérentes avec la configuration Calendly. */
 
 export const bookingRules = {
-  minimumNoticeHours: 24,
+  minimumNoticeHours: 4,
   bufferMinutes: 15,
   /** Jours ouvrés affichés (§13). À AJUSTER selon les horaires réels. */
   openingHours: [
@@ -149,6 +149,8 @@ export const bookingRules = {
   ],
   /** Délai au-delà duquel une séance ne peut plus être annulée/déplacée (§18). */
   cancellationNoticeHours: 24,
+  /** Avance du premier rappel automatique envoyé par Calendly (§17). */
+  reminderHours: 24,
 } as const;
 
 /* ──────────────────────────── Offres (§5, §9) ────────────────────────────── */
@@ -185,8 +187,8 @@ export const offers: Offer[] = [
     terms: [
       "Entièrement gratuit, aucun paiement demandé",
       "Par appel WhatsApp ou en visioconférence, au choix",
-      "Réservation au minimum 24 h à l'avance",
-      "Annulable ou déplaçable jusqu'à 24 h avant",
+      `Réservation au minimum ${bookingRules.minimumNoticeHours} h à l'avance`,
+      `Annulable ou déplaçable jusqu'à ${bookingRules.cancellationNoticeHours} h avant`,
       "Strictement confidentiel",
     ],
     featured: true,
@@ -223,8 +225,8 @@ export const offers: Offer[] = [
     terms: [
       "Le rendez-vous n'est confirmé qu'une fois la séance réglée",
       "Par appel WhatsApp ou en visioconférence, au choix",
-      "Réservation au minimum 24 h à l'avance",
-      "Report possible jusqu'à 24 h avant la séance",
+      `Réservation au minimum ${bookingRules.minimumNoticeHours} h à l'avance`,
+      `Report possible jusqu'à ${bookingRules.cancellationNoticeHours} h avant la séance`,
       "Strictement confidentiel",
     ],
     featured: true,
@@ -261,8 +263,8 @@ export const offers: Offer[] = [
     terms: [
       "Le rendez-vous n'est confirmé qu'une fois la séance réglée",
       "Par appel WhatsApp ou en visioconférence, au choix",
-      "Réservation au minimum 24 h à l'avance",
-      "Report possible jusqu'à 24 h avant la séance",
+      `Réservation au minimum ${bookingRules.minimumNoticeHours} h à l'avance`,
+      `Report possible jusqu'à ${bookingRules.cancellationNoticeHours} h avant la séance`,
       "Strictement confidentiel",
     ],
     featured: true,
@@ -543,7 +545,7 @@ export const faq = [
   {
     question: "Puis-je annuler ou déplacer un rendez-vous ?",
     answer:
-      "Oui, jusqu'à 24 heures avant la séance, directement depuis les liens présents dans ton email de confirmation. Passé ce délai, la séance est due — les conditions détaillées figurent dans les CGV. En cas d'imprévu grave, écris-moi : on trouve une solution.",
+      `Oui, jusqu'à ${bookingRules.cancellationNoticeHours} heures avant la séance, directement depuis les liens présents dans ton email de confirmation. Passé ce délai, la séance est due — les conditions détaillées figurent dans les CGV. En cas d'imprévu grave, écris-moi : on trouve une solution.`,
   },
   {
     question: "Dois-je répondre à toutes les questions du formulaire ?",

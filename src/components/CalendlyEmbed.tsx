@@ -7,7 +7,7 @@ import { calendly } from "@/content/site.config";
  * Intégration Calendly en mode « inline widget » (§32).
  *
  * Le visiteur choisit sa date et son horaire sans quitter le site. Les règles
- * de réservation (24 h de délai, buffer de 15 min, disponibilités lundi-samedi)
+ * de réservation (délai minimum, buffer, disponibilités lundi-samedi)
  * sont appliquées par Calendly — voir docs/ADMINISTRATION.md.
  *
  * `onScheduled` est déclenché lorsque Calendly confirme la prise de rendez-vous,

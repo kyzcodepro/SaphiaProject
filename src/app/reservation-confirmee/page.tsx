@@ -72,7 +72,7 @@ export default async function ReservationConfirmeePage({ searchParams }: PagePro
               },
               {
                 title: "Tu recevras des rappels",
-                text: `Un rappel automatique t'est envoyé ${bookingRules.minimumNoticeHours} h avant la séance, puis un second quelques heures avant.`,
+                text: `Un rappel automatique t'est envoyé ${bookingRules.reminderHours} h avant la séance, puis un second quelques heures avant.`,
               },
               {
                 title: "Prépare ton échange",

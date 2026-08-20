@@ -20,6 +20,26 @@ besoin de savoir programmer pour la plupart des opérations décrites ici.
 
 ## 2. Calendly — configuration initiale
 
+### 2.0 Le compte, avant tout le reste
+
+**Choisir l'identifiant du compte.** À l'inscription, Calendly demande un
+identifiant qui devient l'adresse publique : `calendly.com/<identifiant>`.
+Il est difficile à changer ensuite, et le site s'en sert pour construire
+l'adresse de chaque calendrier. Prendre quelque chose de court et stable —
+`saphia-accompagnement` par exemple, si `saphia` est déjà pris.
+
+Cet identifiant doit ensuite être reporté dans la variable
+`NEXT_PUBLIC_CALENDLY_USERNAME` (voir §2.7). Tant qu'il ne correspond pas, les
+calendriers du site affichent une page vide.
+
+**Prévoir la formule payante.** Le plan gratuit ne permet qu'**un seul type
+d'événement**, et les rappels automatiques (§2.4) en sont absents. Trois
+prestations et deux rappels demandent donc la formule **Standard**. À vérifier
+sur leur page tarifs au moment de l'inscription, les offres évoluent.
+
+**Régler le fuseau horaire** sur *Paris* dans **Account settings** dès la
+création : c'est lui qui détermine les horaires affichés aux visiteurs.
+
 ### 2.1 Créer les trois types d'événement
 
 Dans Calendly → **Event Types** → **Create**. Créer un événement par prestation,
@@ -81,6 +101,10 @@ rendez-vous et l'insère dans l'email de confirmation.
 Pour les rendez-vous WhatsApp, choisir « Phone call » ou « Custom » et indiquer
 les instructions à transmettre.
 
+> ⚠️ **Ne pas activer la collecte de paiement dans Calendly.** Les séances sont
+> déjà réglées sur le site, avant l'accès au calendrier : activer *Collect
+> payment* côté Calendly ferait payer une seconde fois.
+
 ### 2.6 Bloquer des dates
 
 - **Une journée entière ou des vacances** → Calendly → **Availability** →
@@ -91,6 +115,26 @@ les instructions à transmettre.
   ou Outlook connecté à Calendly : le créneau disparaît automatiquement du site.
 
 Aucune de ces actions ne nécessite d'intervention sur le site.
+
+### 2.7 Relier le compte au site
+
+Une seule valeur à renseigner — l'identifiant choisi au §2.0 :
+
+```env
+NEXT_PUBLIC_CALENDLY_USERNAME=saphia-accompagnement
+```
+
+En local, dans `.env.local`. En production, dans **Vercel → Settings →
+Environment Variables**, suivi d'un **Redeploy** : les variables `NEXT_PUBLIC_*`
+sont figées au moment de la construction du site.
+
+**Vérifier** en ouvrant `/reserver/appel-decouverte` : le calendrier doit
+s'afficher, avec le prénom et l'email déjà remplis, et la question « Comment
+souhaites-tu échanger ? » pré-remplie avec le choix fait sur le site.
+
+Un calendrier vide signifie presque toujours l'une de ces trois choses :
+l'identifiant du compte ne correspond pas, l'identifiant de l'événement n'est
+pas celui attendu (§2.1), ou l'événement est encore en brouillon côté Calendly.
 
 ---
 
@@ -213,6 +257,7 @@ Après toute modification, enregistrer le fichier et publier les changements
 - [ ] Textes, photos et témoignages réels en place
 - [ ] Informations légales complétées (marqueurs `{{ … }}` remplacés)
 - [ ] Trois événements Calendly créés, avec délai 24 h et buffer 15 min
+- [ ] `NEXT_PUBLIC_CALENDLY_USERNAME` renseigné dans Vercel, site redéployé
 - [ ] Zoom connecté à Calendly
 - [ ] Rappels 24 h et 2 h activés
 - [ ] Clés Stripe en mode production, webhook déclaré

@@ -39,11 +39,6 @@ export default function CgvPage() {
           </li>
         ))}
         <li>
-          <strong>Accompagnements 6 et 12 mois</strong> — contenu, durée, nombre de séances et tarif
-          définis dans une proposition individuelle remise après l&apos;appel découverte, acceptée
-          par écrit avant le démarrage.
-        </li>
-        <li>
           <strong>Ebook «&nbsp;{ebook.title}&nbsp;»</strong> — contenu numérique au format PDF,
           {" "}{ebook.pageCount} pages — {formatPrice(ebook.price)}.
         </li>
@@ -68,12 +63,6 @@ export default function CgvPage() {
       <p>
         L&apos;appel découverte de 30 minutes est gratuit et ne donne lieu à aucun paiement ni à
         aucune obligation d&apos;achat.
-      </p>
-      <p>
-        Pour les accompagnements longue durée, le paiement peut s&apos;effectuer comptant ou de
-        manière échelonnée selon les modalités précisées dans la proposition individuelle. En cas de
-        paiement échelonné, le défaut de règlement d&apos;une échéance peut entraîner la suspension
-        de l&apos;accompagnement après relance restée sans réponse pendant {"{{ délai }}"} jours.
       </p>
 
       <h2>4. Ebook — contenu numérique</h2>

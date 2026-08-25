@@ -41,18 +41,6 @@ export type Offer = {
   featured?: boolean;
 };
 
-export type Program = {
-  slug: string;
-  name: string;
-  duration: string;
-  tagline: string;
-  description: string;
-  includes: string[];
-  /** Prix affiché. `null` => « Tarif défini lors de l'appel découverte ». */
-  priceLabel: string | null;
-  benefits: string[];
-};
-
 /* ───────────────────────────── Marque & contacts ─────────────────────────── */
 
 /**
@@ -271,54 +259,6 @@ export const offers: Offer[] = [
   },
 ];
 
-/* ────────────────── Accompagnements longue durée (§6) ────────────────────── */
-/* À DÉFINIR (§45) : nombre de séances, fréquence, tarif, modalités de paiement.
-   En attendant, ces formules sont présentées sans prix et orientent vers
-   l'appel découverte. */
-
-export const programs: Program[] = [
-  {
-    slug: "accompagnement-6-mois",
-    name: "Accompagnement 6 mois",
-    duration: "6 mois",
-    tagline: "Se détacher et se reconstruire",
-    description:
-      "Six mois pour traverser les quatre étapes : prendre conscience, prendre de la distance, te reconstruire, installer de nouvelles habitudes. Des séances régulières, et un fil entre les séances pour ne pas rester seule quand ça remonte.",
-    includes: [
-      "Des séances régulières tout au long du programme",
-      "Un point d'étape à chaque séance",
-      "Un suivi entre les séances par WhatsApp",
-      "Des exercices adaptés à ta situation",
-    ],
-    priceLabel: null,
-    benefits: [
-      "Un cadre qui tient quand la motivation retombe",
-      "Quelqu'un à qui parler dans les moments difficiles",
-      "Des changements qui s'installent, au lieu de retomber",
-    ],
-  },
-  {
-    slug: "accompagnement-12-mois",
-    name: "Accompagnement 12 mois",
-    duration: "12 mois",
-    tagline: "Te retrouver, durablement",
-    description:
-      "Une année entière, pour les situations qui demandent du temps : une séparation, un schéma installé depuis longtemps, une reconstruction complète. On avance à ton rythme, sans étape sautée.",
-    includes: [
-      "Un accompagnement construit sur douze mois",
-      "Des séances régulières et un suivi continu",
-      "Un accompagnement WhatsApp entre les séances",
-      "Des ressources et exercices personnalisés",
-    ],
-    priceLabel: null,
-    benefits: [
-      "Le temps nécessaire pour que ça tienne",
-      "Un soutien présent dans les moments clés",
-      "Un regard sur le chemin parcouru, régulièrement",
-    ],
-  },
-];
-
 /* ─────────────────────────── Contenus éditoriaux ─────────────────────────── */
 
 export const hero = {
@@ -439,7 +379,7 @@ export const testimonials = [
     quote:
       "Saphia ne juge jamais. C'est la première fois que je peux tout dire sans avoir peur de la réaction en face.",
     author: "Exemple — à remplacer",
-    context: "Accompagnement 6 mois",
+    context: "Séance individuelle",
   },
   {
     quote:
@@ -581,10 +521,6 @@ export const legalPages = [
 
 export function getOffer(slug: string): Offer | undefined {
   return offers.find((offer) => offer.slug === slug);
-}
-
-export function getProgram(slug: string): Program | undefined {
-  return programs.find((program) => program.slug === slug);
 }
 
 /** Tout ce qui peut être payé sur le site : les séances et l'ebook. */

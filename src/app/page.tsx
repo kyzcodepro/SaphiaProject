@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
-import { OfferCard, ProgramCard } from "@/components/OfferCard";
+import { OfferCard } from "@/components/OfferCard";
 import { CheckList, Pill, Section, SectionHeading } from "@/components/ui";
 import {
   about,
@@ -15,7 +15,6 @@ import {
   method,
   offers,
   problems,
-  programs,
   testimonials,
   whatsappLink,
 } from "@/content/site.config";
@@ -149,18 +148,12 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Les accompagnements"
           title="Le format qui correspond à là où tu en es"
-          subtitle="Une séance pour y voir clair sur une situation précise, ou un accompagnement dans la durée quand ce qui se répète demande du temps."
+          subtitle="Une heure pour y voir clair sur une situation précise, ou deux heures quand ce qui se répète demande plus de temps."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {offers.map((offer) => (
             <OfferCard key={offer.slug} offer={offer} highlight={offer.slug === "appel-decouverte"} />
-          ))}
-        </div>
-
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
-          {programs.map((program) => (
-            <ProgramCard key={program.slug} program={program} />
           ))}
         </div>
 

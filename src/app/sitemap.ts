@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { brand, legalPages, offers, programs } from "@/content/site.config";
+import { brand, legalPages, offers } from "@/content/site.config";
 
 /** Sitemap XML (§35). Les pages du tunnel de réservation en sont exclues. */
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: url("/reserver"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: url("/ebook"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: url("/contact"), lastModified: now, changeFrequency: "yearly", priority: 0.6 },
-    ...[...offers, ...programs].map((item) => ({
+    ...offers.map((item) => ({
       url: url(`/accompagnements/${item.slug}`),
       lastModified: now,
       changeFrequency: "monthly" as const,

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { OfferCard } from "@/components/OfferCard";
 import { Section, SectionHeading } from "@/components/ui";
-import { bookingRules, offers, programs } from "@/content/site.config";
+import { bookingRules, offers } from "@/content/site.config";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -72,22 +71,6 @@ export default function ReserverPage() {
               réservation.
             </p>
           </div>
-        </div>
-      </Section>
-
-      <Section tone="sand">
-        <SectionHeading
-          eyebrow="Accompagnement longue durée"
-          title="Tu cherches un suivi sur plusieurs mois ?"
-          subtitle="Les accompagnements 6 et 12 mois se construisent ensemble. Le point de départ est toujours l'appel découverte, pendant lequel nous définissons le programme et le tarif adaptés."
-        />
-        <div className="mt-10 flex flex-col items-center gap-4">
-          <Link href="/reserver/appel-decouverte" className="btn btn-primary">
-            Réserver mon appel découverte
-          </Link>
-          <Link href="/accompagnements" className="text-sm text-muted underline underline-offset-4">
-            Voir le détail des {programs.length} formules
-          </Link>
         </div>
       </Section>
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { brand, ebook, faq, offers, programs } from "@/content/site.config";
+import { brand, ebook, faq, offers } from "@/content/site.config";
 
 /**
  * Le site est-il autorisé à être référencé par Google ?
@@ -96,12 +96,6 @@ export function organizationJsonLd() {
           price: offer.price.toFixed(2),
           priceCurrency: "EUR",
           url: absolute(`/accompagnements/${offer.slug}`),
-        })),
-        ...programs.map((program) => ({
-          "@type": "Offer",
-          name: program.name,
-          description: program.tagline,
-          url: absolute(`/accompagnements/${program.slug}`),
         })),
       ],
     },

@@ -76,19 +76,7 @@ export default function AnnulationPage() {
         personne.
       </p>
 
-      <h2>6. Accompagnements 6 et 12 mois</h2>
-      <p>
-        Les séances incluses dans un programme suivent les mêmes règles de délai. Une séance annulée
-        moins de {bookingRules.cancellationNoticeHours} heures à l&apos;avance est décomptée du
-        forfait.
-      </p>
-      <p>
-        En cas d&apos;interruption anticipée du programme à l&apos;initiative du Client, les séances
-        non consommées sont {"{{ à définir : remboursées au prorata / non remboursées / valables 12 mois }}"}.
-        Les modalités précises figurent dans la proposition individuelle acceptée avant le démarrage.
-      </p>
-
-      <h2>7. Ebook</h2>
+      <h2>6. Ebook</h2>
       <p>
         L&apos;ebook «&nbsp;{ebook.title}&nbsp;» est un contenu numérique livré immédiatement après
         le paiement. En validant l&apos;achat, tu demandes sa fourniture immédiate et renonces à ton
@@ -101,7 +89,7 @@ export default function AnnulationPage() {
         rembourse intégralement.
       </p>
 
-      <h2>8. Cas de force majeure</h2>
+      <h2>7. Cas de force majeure</h2>
       <p>
         En cas d&apos;événement grave et imprévisible (maladie, accident, deuil, hospitalisation),
         les délais ci-dessus ne s&apos;appliquent pas&nbsp;: la séance est reportée sans frais.
@@ -109,7 +97,7 @@ export default function AnnulationPage() {
         <a href={`mailto:${brand.email}`}>{brand.email}</a>.
       </p>
 
-      <h2>9. Droit de rétractation</h2>
+      <h2>8. Droit de rétractation</h2>
       <p>
         Le droit de rétractation légal de 14 jours est détaillé à l&apos;article 6 des{" "}
         <Link href="/cgv">conditions générales de vente</Link>.

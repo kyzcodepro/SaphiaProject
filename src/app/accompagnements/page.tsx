@@ -2,19 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { CheckList, Pill, Section, SectionHeading } from "@/components/ui";
-import {
-  formatDuration,
-  formatPrice,
-  method,
-  offers,
-  programs,
-} from "@/content/site.config";
+import { formatDuration, formatPrice, method, offers } from "@/content/site.config";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Les accompagnements",
   description:
-    "Appel découverte gratuit, séance individuelle d'1 h à 50 €, séance approfondie de 2 h à 100 €, accompagnements personnalisés sur 6 ou 12 mois. Trouve le format adapté à ta situation.",
+    "Appel découverte gratuit, séance individuelle d'1 h à 50 €, séance approfondie de 2 h à 100 €. Trouve le format adapté à ta situation.",
   path: "/accompagnements",
 });
 
@@ -25,7 +19,7 @@ export default function AccompagnementsPage() {
         <SectionHeading
           eyebrow="Les accompagnements"
           title="Un format pour chaque étape de ton cheminement"
-          subtitle="Que tu aies besoin d'un coup de projecteur sur une situation précise ou d'un suivi dans la durée, le point de départ reste le même : comprendre où tu en es."
+          subtitle="Que tu aies besoin d'un coup de projecteur sur une situation précise ou de remonter le fil de ce qui se répète, le point de départ reste le même : comprendre où tu en es."
         />
       </Section>
 
@@ -108,45 +102,6 @@ export default function AccompagnementsPage() {
           </div>
         </Section>
       ))}
-
-      {/* Accompagnements longue durée */}
-      <Section tone="plum">
-        <SectionHeading
-          eyebrow="Longue durée"
-          title="Les accompagnements personnalisés"
-          subtitle="Ces formules se construisent ensemble. Le contenu, le rythme et le tarif sont définis lors de l'appel découverte, en fonction de ta situation et de tes objectifs."
-          tone="light"
-        />
-
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {programs.map((program) => (
-            <article
-              key={program.slug}
-              className="flex h-full flex-col rounded-[1.75rem] border border-cream/15 bg-cream/5 p-7 md:p-9"
-            >
-              <span className="eyebrow !text-sand-deep">{program.duration}</span>
-              <h3 className="mt-3 font-display text-2xl text-cream">{program.name}</h3>
-              <p className="mt-1 text-sm text-clay">{program.tagline}</p>
-              <p className="mt-4 text-sm leading-relaxed text-cream/80">{program.description}</p>
-
-              <div className="mt-6 flex-1">
-                <CheckList items={program.includes} tone="light" />
-              </div>
-
-              <p className="mt-6 border-t border-cream/15 pt-5 text-sm text-cream/70">
-                {program.priceLabel ?? "Tarif et modalités définis lors de l'appel découverte."}
-              </p>
-
-              <Link
-                href={`/accompagnements/${program.slug}`}
-                className="btn mt-6 w-full bg-cream text-plum hover:bg-white"
-              >
-                En savoir plus
-              </Link>
-            </article>
-          ))}
-        </div>
-      </Section>
 
       {/* Méthode */}
       <Section tone="cream">

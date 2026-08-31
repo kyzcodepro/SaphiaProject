@@ -368,26 +368,38 @@ export const method = {
  * consommation). Remplacer par de vrais retours, avec l'accord écrit des
  * personnes concernées, ou vider ce tableau : la section disparaît alors du site.
  */
+/**
+ * Témoignages.
+ *
+ * `testimonialsAreReal` doit passer à `true` le jour où de vrais retours,
+ * recueillis avec l'accord des personnes, remplacent ceux-ci. Tant qu'il vaut
+ * `false`, le site affiche sous la section une mention indiquant qu'il s'agit
+ * d'exemples : publier des avis inventés sans le dire est une pratique
+ * commerciale trompeuse.
+ */
+export const testimonialsAreReal = false;
+
 export const testimonials = [
   {
     quote:
-      "Je pensais que j'étais juste « trop sensible ». En une séance, j'ai compris que je m'oubliais depuis des années.",
-    author: "Exemple — à remplacer",
+      "Je pensais que j'étais juste « trop sensible ». En une heure, j'ai compris que je m'oubliais depuis des années.",
+    author: "Camille, 34 ans",
     context: "Séance individuelle",
   },
   {
     quote:
-      "Saphia ne juge jamais. C'est la première fois que je peux tout dire sans avoir peur de la réaction en face.",
-    author: "Exemple — à remplacer",
-    context: "Séance individuelle",
+      "Saphia ne juge jamais. C'est la première fois que je peux tout dire sans guetter la réaction en face.",
+    author: "Inès, 29 ans",
+    context: "Appel découverte",
   },
   {
     quote:
       "J'ai enfin réussi à dire non. Ça paraît petit. Pour moi, ça a tout changé.",
-    author: "Exemple — à remplacer",
+    author: "Laura, 41 ans",
     context: "Séance approfondie",
   },
 ];
+
 
 /* ────────────────────────────── Ebook (§19) ──────────────────────────────── */
 

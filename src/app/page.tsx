@@ -16,6 +16,7 @@ import {
   offers,
   problems,
   testimonials,
+  testimonialsAreReal,
   whatsappLink,
 } from "@/content/site.config";
 import { faqJsonLd, pageMetadata } from "@/lib/seo";
@@ -206,6 +207,13 @@ export default function HomePage() {
               </figure>
             ))}
           </div>
+
+          {testimonialsAreReal ? null : (
+            <p className="mt-8 text-center text-xs text-muted">
+              Témoignages d&apos;illustration, à remplacer par de vrais retours avant
+              l&apos;ouverture au public.
+            </p>
+          )}
         </Section>
       ) : null}
 

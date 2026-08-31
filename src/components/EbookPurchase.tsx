@@ -222,29 +222,21 @@ export function EbookPurchase() {
   if (status === "payment" && buyer) {
     return (
       <div className="card p-7 md:p-9">
-        <h3 className="font-display text-xl text-ink">Choisis ton moyen de paiement</h3>
+        <h3 className="font-display text-xl text-ink">Paiement sécurisé par carte bancaire</h3>
         <p className="mt-2 text-sm leading-relaxed text-muted">
           {ebook.title} — <strong className="text-ink">{priceLabel}</strong>. Le lien de
           téléchargement t&apos;est envoyé immédiatement après le paiement, à l&apos;adresse{" "}
           <strong className="text-ink">{buyer.email}</strong>.
         </p>
 
-        <div className="mt-7 grid gap-3 sm:grid-cols-2">
+        <div className="mt-7">
           <button
             type="button"
             onClick={() => startCheckout("stripe")}
             disabled={pending !== null}
             className="btn btn-primary w-full disabled:opacity-60"
           >
-            {pending === "stripe" ? "Redirection…" : "Carte bancaire"}
-          </button>
-          <button
-            type="button"
-            onClick={() => startCheckout("paypal")}
-            disabled={pending !== null}
-            className="btn w-full border border-[#003087]/25 bg-[#ffc439] text-[#003087] hover:bg-[#f0b429] disabled:opacity-60"
-          >
-            {pending === "paypal" ? "Redirection…" : "PayPal"}
+            {pending === "stripe" ? "Redirection vers Stripe…" : "Payer par carte bancaire"}
           </button>
         </div>
 
@@ -365,8 +357,7 @@ export function EbookPurchase() {
       </button>
 
       <p className="mt-4 text-center text-xs text-muted">
-        Paiement sécurisé par carte bancaire ou PayPal. Aucune donnée bancaire n&apos;est stockée par
-        le site.
+        Paiement sécurisé par Stripe. Aucune donnée bancaire n&apos;est stockée par le site.
       </p>
     </form>
   );

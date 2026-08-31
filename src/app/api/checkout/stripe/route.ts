@@ -49,6 +49,11 @@ export async function POST(request: Request) {
       offerDescription: product.description,
       // Le montant provient toujours de la configuration serveur, jamais du client.
       amountEuros: product.price,
+      // L’ebook est relié au produit/tarif créé dans le catalogue Stripe.
+      priceId:
+        product.slug === "ebook"
+          ? process.env.STRIPE_EBOOK_PRICE_ID || "price_1UAbH0Dtqk1qvqGzMDAsxvGA"
+          : undefined,
       customerEmail: parsed.data.email,
       successUrl: `${origin}${returnPath}?payment=stripe&session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${origin}${returnPath}?payment=cancelled`,

@@ -77,6 +77,8 @@ export async function createCheckoutSession(params: {
   offerName: string;
   offerDescription: string;
   amountEuros: number;
+  /** Tarif Stripe existant à utiliser, lorsque le produit est déjà catalogué. */
+  priceId?: string;
   customerEmail: string;
   successUrl: string;
   cancelUrl: string;
@@ -99,14 +101,18 @@ export async function createCheckoutSession(params: {
       line_items: [
         {
           quantity: 1,
-          price_data: {
-            currency: "eur",
-            unit_amount: Math.round(params.amountEuros * 100),
-            product_data: {
-              name: params.offerName,
-              description: params.offerDescription.slice(0, 500),
-            },
-          },
+          ...(params.priceId
+            ? { price: params.priceId }
+            : {
+                price_data: {
+                  currency: "eur",
+                  unit_amount: Math.round(params.amountEuros * 100),
+                  product_data: {
+                    name: params.offerName,
+                    description: params.offerDescription.slice(0, 500),
+                  },
+                },
+              }),
         },
       ],
     },
